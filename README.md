@@ -10,7 +10,7 @@ This page lists __karibou.ch learning machine__ project ideas for [Google Summer
 
 
 ## Objectives of this project
-Get a better «friction less» user experience based on stored activities we would like to build a «intelligent» system that will drastically make the order process without friction. 
+Get a better user experience based on stored activities data. We would like to build a «intelligent» system that will drastically reduce the friction to place a new order of products that will fit user needs. 
 
 ## Problem to solve
 Currently a user that want to place a new order have to navigate on different categories and select manually each products. This process could be long and some products may be missed. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
