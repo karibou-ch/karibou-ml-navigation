@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This page lists __karibou.ch learning machine__ project ideas for [Google Summer of Code 2017](https://developers.google.com/open-source/gsoc/). GSoC is a program run every year by Google where students are paid to work on open source projects during their summer break. If you are a student and interested in taking part then please read the [Advice for Students](#advice-for-students) section below. Everybody (not just students) is free to edit this page and add project ideas.
+This page explain __karibou.ch learning machine__ project idea for [Google Summer of Code 2017](https://developers.google.com/open-source/gsoc/). GSoC is a program run every year by Google where students are paid to work on open source projects during their summer break. If you are a student and interested in taking part then please read the [Advice for Students](#advice-for-students) section below. Everybody (not just students) is free to edit this page and add project ideas.
 
 [<img src="http://karibou.ch/img/k-brand.png" alt="karibouCore Logo" height="100%" />](http://karibou.ch/)
 > Karibou.ch is an opensource community project and a online marketplace whose goal is to help a quality and healthy food to be distribued. Our plateform mainly focus on primary food distribution (eg. organic vegetables from farms, artisanal bread, artisanal cheese, meat from farms) 
