@@ -1,4 +1,4 @@
-# karibou-ml-navigation :fire:
+# karibou-ml-navigation  :fire: GSoC :fire:
 Use learning machine to get a better «friction less» user experience (automatic products selection for the next order )
 > Karibou.ch is a community project and a online marketplace whose goal is to create a quality and healthy food distribution system. Our plateform mainly focus on primary food distribution (eg. organic vegetables from farms, artisanal bread, artisanal cheese, meat from farms)
 
