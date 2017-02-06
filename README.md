@@ -20,8 +20,7 @@ This page lists __karibou.ch learning machine__ project ideas for [Google Summer
 
 
 ## Objectives of this project
-Use learning machine to get a better «friction less» user experience (automatic products selection for the next order )
-. Based on existent database orders and other inputs, we would like to build a machine learning system that will drastically make the order process frictionless. 
+Get a better «friction less» user experience based on stored activities we would like to build a «intelligent» system that will drastically make the order process without friction. 
 
 ## Problem to solve
 Currently a user that want to place a new order have to navigate on different categories and select manually each products. This process could be long and some products may be missed. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
@@ -33,6 +32,11 @@ Currently a user that want to place a new order have to navigate on different ca
 3. User can add input to specify if product  is relevant (yes, not this time, never) 
 4. based on thoses input, the machine learning will dynamically create clusters of profiles that we can consult
 5. we can create a mobile version (based on our current sketch code) that will create an automatic order that can be confirmed by tapping one button (not relevant product can also be nottified here)
+
+  Required knowledge: machine learning, deep learning, nodejs, gulp, npm, mongodb
+  Difficulty level: intermediate
+  Potential mentors: tbd
+
 
 ## ROADMAP
 
