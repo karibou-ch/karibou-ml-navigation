@@ -9,7 +9,7 @@ This page lists __karibou.ch learning machine__ project ideas for [Google Summer
 
 
 
-## Objectives of this project
+## Objectives
 Get a better user experience based on stored activities data. We would like to build a «intelligent» system that will drastically reduce the friction to place a new order of products that will fit user needs. 
 
 ## Problem to solve
