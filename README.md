@@ -15,7 +15,7 @@ Get a better user experience based on stored activities data. We would like to b
 ## Problem to solve
 Currently a user that want to place a new order have to navigate on different categories and select manually each products. This process could be long and some products may be missed. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
 
-## Main solution idea
+## Idea description
 
 1. Using machine learning to create an list of products that will fit the needs of one user
 2. The machine learning will also create a weight of the categories to display first.
