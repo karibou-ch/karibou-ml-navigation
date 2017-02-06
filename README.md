@@ -28,7 +28,6 @@ Currently a user that want to place a new order have to navigate on different ca
   Potential mentors: tbd
 
 
-
 ## Advice for Students
 
 If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline).
@@ -40,18 +39,16 @@ Potential candidates should to take a look at [GitHub Issues](issues). It can he
 
 Experience and familiarity with most/all of these:
 
-- nodejs, npm, mongodb
-- Git, GitHub and PR
-- [Deeplearning](https://classroom.udacity.com/courses/ud730/lessons/6370362152/concepts/63703142310923) or Machine learning skills
+- nodejs, npm, mongodb,
+- Git, GitHub and submit pull request process,
+- [Deeplearning](https://classroom.udacity.com/courses/ud730/lessons/6370362152/concepts/63703142310923) or Machine learning skills,
 - Bash
-
-If you have other programming experience then it's not too late to start learning these now. The best way is to create a GitHub account and submit some pull requests to AppImage and other open source projects using these languages/tools.
 
 #### Helpful extras
 
 General understanding of any of these:
 
-- TravisCI & continues integration
+- TravisCI & continuous integration
 - NPM packaging systems
 
 
