@@ -17,11 +17,11 @@ Currently a user that want to place a new order have to navigate on different ca
 
 ## Idea description
 
-1. Using machine learning to create an list of products that will fit the needs of one user
+1. Creating a process that generate by learning a list of products (item) that fit user needs.
 2. The machine learning will also create a weight of the categories to display first.
-3. User can add input to specify if product  is relevant (yes, not this time, never) 
-4. based on thoses input, the machine learning will dynamically create clusters of profiles that we can consult
-5. we can create a mobile version (based on our current sketch code) that will create an automatic order that can be confirmed by tapping one button (not relevant product can also be nottified here)
+3. Use user input to specify if a product item is relevant or not (yes, not this time, never).
+4. Based on thoses input, the machine learning will dynamically guess clusters of profiles that share the same needs.
+5. Create a mobile version [based on our current sketch code](../karibou-ionic) with a single button that place an automatic order with a quick feedback button to specify if a product item is relevant or not.
 
   Required knowledge: machine learning, deep learning, nodejs, gulp, npm, mongodb
   Difficulty level: intermediate
@@ -31,17 +31,10 @@ Currently a user that want to place a new order have to navigate on different ca
 ## ROADMAP
 This repository contains all materials needed to implement this idea. 
 
+
 ## Advice for Students
 
 If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline).
-
-## Documents
-| DOCUMENT | LINK | STATUS |
-|------------|---------|---------|
-| **La charte**| [Fr](the-chart-fr.md),[En](the-chart-en.md)|en cours |
-| **Comment ça marche**| [Fr](how-does-it-work-fr.md),[En](how-does-it-work-en.md)|en cours |
-| **La philosophie**| [Fr](our-philosophy-fr.md),[En](our-philosophy-en.md)|en cours |
-| **Qui sommes nous?**| [Fr](who-are-we-fr.md),[En](who-are-we-fr.md)|en cours |
 
 
  
