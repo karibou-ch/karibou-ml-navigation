@@ -39,10 +39,20 @@ We have the hypothese that learning machine can help to resolve this problem. Th
 
 If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline). 
 
+* I found a great project! How can I contact my mentor?
+ * How to contact us. we are active on [gitter](https://gitter.im/karibou-ch/). Just drop by and leave us a message!
+* I have an own project idea! 
+ * Superb! We recommend you submit your idea as a [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues).
+
 ## Guidelines & requirements
-Potential candidates should to take a look at [GitHub Issues](issues). It can help you get some idea how things would work during the GSoC.
+Potential candidates should to take a look at [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues). It can help you get some idea how things would work during the GSoC.
 
 #### Basic requirements
+
+- Be pationate, reactive and technically brilliant :-)
+- Participate in regular meetings with your mentor.
+- Deliver code before the deadline
+- Get in contact with your mentors or the admins if any even remotely potential problems arise.
 
 Experience and familiarity with most/all of these:
 
