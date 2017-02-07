@@ -22,11 +22,13 @@ We have the hypothese that learning machine can help to resolve this problem. Th
 * What are the minimal set of input that models needs to get an accurate prediction?
 * What do we need to make this prediction more accurate?
 * What is the most appropriate model that fit our data?
-* Based on the prediction is it pssible to create cluster of user profile?
+* Based on the prediction is it possible to create clusters of customers?
 
-  Required knowledge: machine learning, deep learning, computer science, nodejs, gulp/brunch/other, npm, mongodb
-  Difficulty level: intermediate
-  Potential mentors: tbd
+``` javascript
+Required knowledge: machine learning, deep learning, computer science, nodejs, npm, mongodb
+Difficulty level: intermediate
+Potential mentors: tbd
+```
 
 ## Expected results
 * From an initial set of possible models and hypotheses, which is the most appropriate model to fit our data
