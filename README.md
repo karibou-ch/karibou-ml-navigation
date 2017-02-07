@@ -2,22 +2,22 @@
 
 ## Introduction
 
-This page explain __karibou.ch learning machine__ project idea for [Google Summer of Code 2017](https://developers.google.com/open-source/gsoc/). GSoC is a program run every year by Google where students are paid to work on open source projects during their summer break. If you are a student and interested in taking part then please read the [Advice for Students](#advice-for-students) section below. Everybody (not just students) is free to edit this page and add project ideas.
+This page explains __karibou.ch learning machine__ project idea for [Google Summer of Code 2017](https://developers.google.com/open-source/gsoc/). GSoC is a program run every year by Google where students are paid to work on open source projects during their summer break. If you are a student and interested in taking part then please read the [Advice for Students](#advice-for-students) section below. Everybody (not just students) is free to edit this page and add project ideas.
 
 [<img src="http://karibou.ch/img/k-brand.png" alt="karibouCore Logo" height="100%" />](http://karibou.ch/)
-> Karibou.ch is an opensource community project and a online marketplace whose goal is to help a quality and healthy food to be distribued. Our plateform mainly focus on primary food distribution (eg. organic vegetables from farms, artisanal bread, artisanal cheese, meat from farms) 
+> Karibou.ch is an opensource community project and a online marketplace whose goal is to help a quality and healthy food to be distribued. Our plateform mainly focuses on primary food distribution (eg. organic vegetables from farms, artisanal bread, artisanal cheese, meat from farms). 
 
 
 ## Objective
-Get a better user experience based on data activities stored in the db. We would like to build a «intelligent» system that will drastically help to reduce the friction for the user to place a new order that fit his needs. 
+Get a better user experience based on data activities stored in the db. We would like to build an «intelligent» system that will drastically help to reduce the friction for the user to place a new order that fit his needs. 
 
 ## Problem to solve
 > The main challenges that startups in this segment have met include the cost of acquiring and retaining customers and drivers, competition from big delivery incumbents like AmazonFresh, unscalable logistic solutions across locations, and raising enough funding to build the business over several years.
 
-Currently a user that want to place a new order have to navigate on different categories and select manually each products. This process could be long and some products may be missed. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
+Currently a user that wants to place a new order has to navigate on different categories and select manually each product. This process can be long and some available products may not be seen. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
 
 ## Task Idea
-We have the hypothese that learning machine can help to resolve this problem. This project will investigate on how to use a learning machine in the scope of a food marketplace with our small set of data. How the learning machine can boost the user experience and help the foodmarket to acquire and retain customers.
+We have the hypothesis that learning machine can help to resolve this problem. This project will investigate on how to use a learning machine in the scope of a food marketplace with our small set of datas. How the learning machine can boost the user experience and help the foodmarket to acquire and retain customers.
 * Is it possible to predict a list of products that will fit the customer needs for a week of food?
 * What are the minimal set of input that models needs to get an accurate prediction?
 * What do we need to make this prediction more accurate?
@@ -31,10 +31,10 @@ Potential mentors: tbd
 ```
 
 ## Expected results
-* From an initial set of possible models and hypotheses, which is the most appropriate model to fit our data
+* From an initial set of possible models and hypothesis, what is the most appropriate model to fit our data
 * Based on our data, generate a subset of training data, postive prediction and negative prediction
 * Implement a learing process that could be embeded in the karibou.ch project. For exemple, user place an order and the machine will learn what is relvant or not based on the prediction for the user.
-* Create a a simple prototype that display a prediction product list for a user. 
+* Create a a simple prototype that displays a prediction product list for a user. 
 * Based on training data, it will be awesome to get clusters of customers (based on the distance between each)
 
 # Advice for Students
@@ -51,7 +51,8 @@ Potential candidates should to take a look at [GitHub Issues](https://github.com
 
 #### Basic requirements
 
-- Be pationate, reactive and technically brilliant :-)
+- Be passionate, reactive and technically brilliant :-)
+- Interested in food as a major paradigm to improve health, protect our environment and all the species with whom we share this planet
 - Participate in regular meetings with your mentor.
 - Deliver code before the deadline
 - Get in contact with your mentors or the admins if any even remotely potential problems arise.
