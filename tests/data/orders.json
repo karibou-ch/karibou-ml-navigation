@@ -1,0 +1,222 @@
+[
+  {
+    "oid": 2000002,
+    "shipping": {
+      "postalCode": "1205",
+      "when": "2014-12-12T15:00:00.000Z"
+    },
+    "customer": {
+      "id": 2180215629900685,
+      "pseudo": "f**i",
+      "created": "2014-12-09T23:28:45.138Z"
+    },
+    "vendors": [
+      {
+        "slug": "les-fromages-de-gaetan"
+      },
+      {
+        "slug": "la-ferme-a-roulettes"
+      },
+      {
+        "slug": "boulangerie-leonhard-bretzel"
+      },
+      {
+        "slug": "casa-mozzarella"
+      },
+      {
+        "slug": "messapia-tesori-del-salento"
+      }
+    ],
+    "items": [
+      {
+        "title": "Jambon à l'os coupé au couteau",
+        "sku": 1000008,
+        "vendor": "boucherie-jacky-bula",
+        "image": "",
+        "price": 4.8,
+        "qty": 2,
+        "category": "Boucherie et charcuterie"
+      },
+      {
+        "title": "Pesto d'ail des ours",
+        "sku": 1000110,
+        "vendor": "les-potagers-de-gaia",
+        "image": "",
+        "price": 9,
+        "qty": 1,
+        "category": "Huiles, épices, sauces"
+      },
+      {
+        "title": "Limoncello",
+        "sku": 1000131,
+        "vendor": "messapia-tesori-del-salento",
+        "image": "",
+        "price": 29,
+        "qty": 1,
+        "category": "Autres alcools"
+      },
+      {
+        "title": "Mendoan",
+        "sku": 1000199,
+        "vendor": "vemma-creations-graines",
+        "image": "",
+        "price": 10,
+        "qty": 1,
+        "category": "Traiteur"
+      },
+      {
+        "title": "Yogourt allégé (2,5%)",
+        "sku": 1000326,
+        "vendor": "yourgurteria",
+        "image": "",
+        "price": 5.5,
+        "qty": 1,
+        "category": "Produits laitiers"
+      },
+      {
+        "title": "Vacherin de Fribourg",
+        "sku": 1000408,
+        "vendor": "les-fromages-de-gaetan",
+        "image": "",
+        "price": 5.6,
+        "qty": 1,
+        "category": "Produits laitiers"
+      },
+      {
+        "title": "Tapenade olive agrumes",
+        "sku": 1000424,
+        "vendor": "casa-mozzarella",
+        "image": "",
+        "price": 7,
+        "qty": 1,
+        "category": "Épicerie fine"
+      },
+      {
+        "title": "Mesclun",
+        "sku": 1000559,
+        "vendor": "agro-idee",
+        "image": "",
+        "price": 3.55,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      },
+      {
+        "title": "Persil",
+        "sku": 1000561,
+        "vendor": "agro-idee",
+        "image": "",
+        "price": 2,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      },
+      {
+        "title": "Tartines craquantes Bio Quinoa (PAIN DES FLEURS)",
+        "sku": 1000600,
+        "vendor": "une-bonne-sante-bio-fred",
+        "image": "",
+        "price": 5.5,
+        "qty": 2,
+        "category": "Boulangerie et biscottes"
+      },
+      {
+        "title": "Navet",
+        "sku": 1000619,
+        "vendor": "agro-idee",
+        "image": "",
+        "price": 2.55,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      },
+      {
+        "title": "Brochette de veau thym/citron",
+        "sku": 1000672,
+        "vendor": "boucherie-jacky-bula",
+        "image": "",
+        "price": 9.9,
+        "qty": 2,
+        "category": "Boucherie et charcuterie"
+      },
+      {
+        "title": "l'Audacieuse",
+        "sku": 1000684,
+        "vendor": "biere-lapaisee",
+        "image": "",
+        "price": 4,
+        "qty": 3,
+        "category": "Autres alcools"
+      },
+      {
+        "title": "Caviar d'Aubergines grillées, Bio, Grèce - μελιτζανοσαλάτα",
+        "sku": 1000774,
+        "vendor": "gamadiame",
+        "image": "",
+        "price": 10.5,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      },
+      {
+        "title": "Passata di pomodoro rustica",
+        "sku": 1000782,
+        "vendor": "casa-mozzarella",
+        "image": "",
+        "price": 5.9,
+        "qty": 2,
+        "category": "Huiles, épices, sauces"
+      },
+      {
+        "title": "Pomme de terre Agria",
+        "sku": 1000805,
+        "vendor": "agro-idee",
+        "image": "",
+        "price": 3.8,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      },
+      {
+        "title": "Mélisse",
+        "sku": 1000841,
+        "vendor": "1001herbes-camille-boschung",
+        "image": "",
+        "price": 4.9,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      },
+      {
+        "title": "Galettes riz chocolat noir - Grillon d'or",
+        "sku": 1000901,
+        "vendor": "une-bonne-sante-bio-fred",
+        "image": "",
+        "price": 4.5,
+        "qty": 2,
+        "category": "Douceurs & chocolats"
+      },
+      {
+        "title": "l'Insolente",
+        "sku": 1000940,
+        "vendor": "biere-lapaisee",
+        "image": "",
+        "price": 4,
+        "qty": 2,
+        "category": "Autres alcools"
+      },
+      {
+        "title": "Pain Bulgare",
+        "sku": 1000959,
+        "vendor": "boulangerie-leonhard-bretzel",
+        "image": "",
+        "price": 4.8,
+        "qty": 1,
+        "category": "Boulangerie et biscottes"
+      },
+      {
+        "title": "Tisane fraîcheur d'Automne",
+        "sku": 1000982,
+        "vendor": "1001herbes-camille-boschung",
+        "image": "",
+        "price": 7.9,
+        "qty": 1,
+        "category": "Fruits & légumes"
+      }
+    ]
+  }
+]
