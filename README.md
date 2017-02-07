@@ -41,10 +41,8 @@ Potential mentors: tbd
 
 If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline). 
 
-* I found a great project! How can I contact my mentor?
- * How to contact us. we are active on [gitter](https://gitter.im/karibou-ch/). Just drop by and leave us a message!
-* I have an own project idea! 
- * Superb! We recommend you submit your idea as a [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues).
+* I found a great project! Contact us, we are active on [gitter](https://gitter.im/karibou-ch/). Just drop by and leave us a message!
+* I have an own project idea!  Superb! We recommend you submit your idea as a [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues).
 
 ## Guidelines & requirements
 Potential candidates should to take a look at [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues). It can help you get some idea how things would work during the GSoC.
