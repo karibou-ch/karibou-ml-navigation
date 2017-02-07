@@ -9,28 +9,42 @@ This page explain __karibou.ch learning machine__ project idea for [Google Summe
 
 
 ## Objective
-Get a better user experience based on stored activities data. We would like to build a «intelligent» system that will drastically reduce the friction to place a new order of products that will fit user needs. 
+Get a better user experience based on data activities stored in the db. We would like to build a «intelligent» system that will drastically help to reduce the friction for the user to place a new order that fit his needs. 
 
 ## Problem to solve
+> The main challenges that startups in this segment have met include the cost of acquiring and retaining customers and drivers, competition from big delivery incumbents like AmazonFresh, unscalable logistic solutions across locations, and raising enough funding to build the business over several years.
+
 Currently a user that want to place a new order have to navigate on different categories and select manually each products. This process could be long and some products may be missed. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
 
 ## Task Idea
+We have the hypothese that learning machine can help to resolve this problem. This project will investigate on how to use a learning machine in the scope of a food marketplace with our small set of data. How the learning machine can boost the user experience and help the foodmarket to acquire and retain customers.
+* Is it possible to predict a list of products that will fit the customer needs for a week of food?
+* What are the minimal set of input that models needs to get an accurate prediction?
+* What do we need to make this prediction more accurate?
+* What is the most appropriate model that fit our data?
+* Based on the prediction is it pssible to create cluster of user profile?
 
-1. Creating a process that generate by learning a list of products (item) that fit user needs.
+Stick to simple models
+More precisely: stick to a limited set of hypotheses. One way to look at predictive modeling is as a search problem. From an initial set of possible models, which is the most appropriate model to fit our data? In a way, each data point we use for fitting down-votes all models that make it unlikely, or up-vote models that agree with it
+
+1. Creating an environment that generate data based on the karibou.ch db for training and testing.
+2. Selecting different strategy of what input should be used.
+3. 
 2. The machine learning will also create a weight of the categories to display first.
 3. Use user input to specify if a product item is relevant or not (yes, not this time, never).
 4. Based on thoses input, the machine learning will dynamically guess clusters of profiles that share the same needs.
 5. Create a mobile version [based on our current sketch code](../karibou-ionic) with a single button that place an automatic order with a quick feedback button to specify if a product item is relevant or not.
 
-  Required knowledge: machine learning, deep learning, nodejs, gulp, npm, mongodb
+  Required knowledge: machine learning, deep learning, nodejs, gulp/brunch/other, npm, mongodb
   Difficulty level: intermediate
   Potential mentors: tbd
 
 ## Expected results
-* based on the [test/data](test/) generate with script a subset of training data,
-* based on the [test/data](test/) generate with script a subset of positive prediction for __all user__
-* based on the [test/data](test/) generate with script a subset of positive prediction for __one user__
-* TODO
+* From an initial set of possible models and hypotheses, which is the most appropriate model to fit our data
+* Based on our data, generate a subset of training data, postive prediction and negative prediction
+* Implement a learing process that could be embeded in the karibou.ch project. For exemple, user place an order and the machine will learn what is relvant or not based on the prediction for the user.
+* Create a a simple prototype that display a prediction product list for a user. 
+* Based on training data, it will be awesome to get clusters of customers (based on the distance between each)
 
 # Advice for Students
 
