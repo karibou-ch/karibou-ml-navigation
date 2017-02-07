@@ -24,17 +24,6 @@ We have the hypothese that learning machine can help to resolve this problem. Th
 * What is the most appropriate model that fit our data?
 * Based on the prediction is it pssible to create cluster of user profile?
 
-Stick to simple models
-More precisely: stick to a limited set of hypotheses. One way to look at predictive modeling is as a search problem. From an initial set of possible models, which is the most appropriate model to fit our data? In a way, each data point we use for fitting down-votes all models that make it unlikely, or up-vote models that agree with it
-
-1. Creating an environment that generate data based on the karibou.ch db for training and testing.
-2. Selecting different strategy of what input should be used.
-3. 
-2. The machine learning will also create a weight of the categories to display first.
-3. Use user input to specify if a product item is relevant or not (yes, not this time, never).
-4. Based on thoses input, the machine learning will dynamically guess clusters of profiles that share the same needs.
-5. Create a mobile version [based on our current sketch code](../karibou-ionic) with a single button that place an automatic order with a quick feedback button to specify if a product item is relevant or not.
-
   Required knowledge: machine learning, deep learning, nodejs, gulp/brunch/other, npm, mongodb
   Difficulty level: intermediate
   Potential mentors: tbd
