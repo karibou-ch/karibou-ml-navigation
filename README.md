@@ -24,7 +24,7 @@ We have the hypothese that learning machine can help to resolve this problem. Th
 * What is the most appropriate model that fit our data?
 * Based on the prediction is it pssible to create cluster of user profile?
 
-  Required knowledge: machine learning, deep learning, nodejs, gulp/brunch/other, npm, mongodb
+  Required knowledge: machine learning, deep learning, computer science, nodejs, gulp/brunch/other, npm, mongodb
   Difficulty level: intermediate
   Potential mentors: tbd
 
@@ -37,7 +37,7 @@ We have the hypothese that learning machine can help to resolve this problem. Th
 
 # Advice for Students
 
-If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline).
+If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline). 
 
 ## Guidelines & requirements
 Potential candidates should to take a look at [GitHub Issues](issues). It can help you get some idea how things would work during the GSoC.
