@@ -37,6 +37,35 @@ Potential mentors: tbd
 * Create a a simple prototype that displays a prediction product list for a user. 
 * Based on training data, it will be awesome to get clusters of customers (based on the distance between each)
 
+## About the data
+Orders contains all information about user, products, time, etc. Here a small description:
+``` javascript
+{
+    "oid": 2000002,
+    "shipping": {
+      "postalCode": "1205",
+      "when": "2014-12-12T15:00:00.000Z",
+      "bags": 2  /** Number of shipped bags for this order */
+    },
+    "customer": {
+      "id": 2180215629900685,
+      "pseudo": "f**i",
+      "created": "2014-12-09T23:28:45.138Z"
+    },
+    "vendors": [{"slug": "les-fromages-de-gaetan"},...],
+    "items": [
+      {
+        "title": "Mini chevrot",
+        "sku": 1000020,
+        "vendor": "les-fromages-de-gaetan",
+        "image": "//uploadcare.com/uuid",
+        "price": 4.9,
+        "qty": 1,
+        "category": "Produits laitiers"
+      },
+      ...
+``` 
+
 # Advice for Students
 
 If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline). 
