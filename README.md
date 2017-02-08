@@ -38,7 +38,7 @@ Potential mentors: tbd
 * Based on the training data, it would be awesome to get clusters of customers (based on the distance between each)
 
 ## About the data
-Orders contains all information about user, products, time, etc. Here a small description:
+Orders contains all information about anonymized user, items, issue , time, etc. Here a short description:
 ``` javascript
 {
     "oid": 2000002,
@@ -62,9 +62,14 @@ Orders contains all information about user, products, time, etc. Here a small de
         "price": 4.9,
         "qty": 1,
         "category": "Produits laitiers"
+        "issue": "issue_missing_product",
+        "status": "failure"
       },
       ...
 ``` 
+* `items.status` is one of `"failure", "fulfilled"`
+* `items.issue` is one of `"issue_missing_client_id", "issue_missing_product", "issue_missing_validation", "issue_missing_customer_support", "issue_wrong_packing", "issue_wrong_product", "issue_wrong_client_id", "issue_wrong_product_quality", "issue_late_delivry"`
+
 
 # Advice for Students
 
