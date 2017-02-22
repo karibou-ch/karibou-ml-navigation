@@ -19,7 +19,7 @@ Currently a user that wants to place a new order has to navigate on different ca
 ## Task Idea
 We have the hypothesis that machine learning (ML) can help to resolve this problem. This project will investigate on how to use machine learning in the scope of a food marketplace with our set of data. How the ML model can boost the user experience and help the foodmarket to acquire and retain customers.
 * Is it possible to predict a list of products that will fit the customer needs for a week of food?
-* What are the minimal set of input that models needs to get an accurate prediction?
+* What are the minimal set of input that models needs to get an accurate prediction ([toread](https://medium.com/rants-on-machine-learning/what-to-do-with-small-data-d253254d1a89#.nnpm07rer))?
 * What do we need to make this prediction more accurate?
 * What is the most appropriate model that fit our data?
 * Based on the prediction is it possible to create clusters of customers?
