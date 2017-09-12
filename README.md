@@ -55,20 +55,31 @@ Orders contains all information about anonymized user, items, issue , time, etc.
     "vendors": [{"slug": "les-fromages-de-gaetan"},...],
     "items": [
       {
-        "title": "Mini chevrot",
-        "sku": 1000020,
-        "vendor": "les-fromages-de-gaetan",
-        "image": "//uploadcare.com/uuid",
-        "price": 4.9,
+        "title": "Hommos",
+        "sku": 1000013,
+        "vendor": "crocorient",
+        "image": "",
+        "estimatedprice": 5,
+        "finalprice": 5,
         "qty": 1,
-        "category": "Produits laitiers"
-        "issue": "issue_missing_product",
-        "status": "failure"
-      },
+        "category": "Traiteur",
+        "status": "failure",
+        "issue": {
+          "name": "issue_missing_product",
+          "missing_product": 1,
+          "quality_collect": 0,
+          "quality_feedback": 0
+        }
       ...
 ``` 
-* `items.status` is one of `"failure", "fulfilled"`
-* `items.issue` is one of `"issue_missing_client_id", "issue_missing_product", "issue_missing_validation", "issue_missing_customer_support", "issue_wrong_packing", "issue_wrong_product", "issue_wrong_client_id", "issue_wrong_product_quality", "issue_late_delivry"`
+* customer likes products (click action) `order.cutomer.likes`
+* item status for one order `items.status` must be `"failure" or "fulfilled"`
+* the case of an issue is different when status is failure or fulfilled, in order `items.issue.name`:
+  * when undefined **== defcon 0** , 
+  * `"issue_missing_product"` **== defcon 1**, 
+  * `"issue_wrong_product_quality"` et `"items.status===failure"` **== defcon 2**,
+  * `"issue_wrong_product_quality"` et `"items.status===fulfilled"` **== defcon 5**,
+* `discount` is the amount offer by the seller to the customer (that makes shipping fees lower)
 
 
 # Advice for Students
