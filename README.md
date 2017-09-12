@@ -81,6 +81,57 @@ Orders contains all information about anonymized user, items, issue , time, etc.
   * `"issue_wrong_product_quality"` et `"items.status===fulfilled"` **== defcon 5**,
 * `discount` is the amount offer by the seller to the customer (that makes shipping fees lower)
 
+description of the `products.json`
+```js
+  {
+    "attributes": {...    },
+    "backend": {},
+    "categories": "Boucherie et charcuterie",
+    "created": "2014-11-23T20:21:56.839Z",
+    "details": {
+      "origin": "boeuf suisse, sel, poivre, épices",
+      "description": "...",
+      "keywords": "Boucherie et charcuterie ",
+      "internal": "",
+      "biodegradable": false,
+      "bioconvertion": false,
+      "biodynamics": false,
+      "grta": false,
+      "bio": false,
+      "local": true,
+      "natural": true,
+      "homemade": true,
+      ...
+    },
+    "faq": [],
+    "photo": {
+      "url": "//ucarecdn.com/2c04d271-2030-4a43-9f18-30dc3f1fc84a/"
+    },
+    "pricing": {
+      "stock": 8,
+      "part": "~100gr",
+      "price": 8.6
+    },
+    "sku": 1000030,
+    "title": "Viande séchée de Genève",
+    "vendor": "les-fromages-de-gaetan",
+    "updated": "2017-07-04T12:22:24.446Z",
+    "quantity": {
+      "comment": "Convient pour 1-2 personnes",
+      "display": true
+    },
+    "shelflife": {
+      "comment": "Se conserve 3 jours au frais",
+      "display": false
+    },
+    "variants": [],
+    "slug": "viande-sechee-de-geneve",
+    "stats": {
+      "orders": 195,
+      "issues": 0,
+      "issues_names": []
+    }
+```
 
 # Advice for Students
 
