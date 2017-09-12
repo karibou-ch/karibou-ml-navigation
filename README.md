@@ -161,10 +161,11 @@ Experience and familiarity with most/all of these:
 
 #### Helpful extras
 
-General understanding of any of these:
-
-- TravisCI & continuous integration
-- NPM packaging systems
+- General understanding of TravisCI & continuous integration
+- General understanding of NPM packaging systems
+- reading of [Food recognition & classification](https://infoscience.epfl.ch/record/221610/files/madima2016_food_recognition.pdf)
+- http://caffe.berkeleyvision.org/
+- [food recognition developer.clarifai.com](https://developer.clarifai.com/models/food-image-recognition-model/bd367be194cf45149e75f01d59f77ba7)
 
 
  
