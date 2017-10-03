@@ -3823,7 +3823,7 @@
   },
   {
     "title": "Médaillon de veau",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000302,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-04-24T07:35:58.981Z",
@@ -4222,7 +4222,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-20T14:44:03.035Z",
     "details": {
       "description": "Seul le véritable Saucisson Vaudois IGP arbore le sceau vert des charcuteries vaudoises. L’IGP garantit la fabrication de produits traditionnels élaborés dans un bassin géographique bien délimité. Ce saucisson est fabriqué selon une recette ancestrale des bouchers charcutiers vaudois.",
@@ -5033,7 +5033,7 @@
   },
   {
     "title": "Filet de veau mariné",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000304,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-04-24T07:36:40.621Z",
@@ -6438,7 +6438,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-20T14:24:18.871Z",
     "details": {
       "origin": "viande maigre gélatineuse de porc (Suisse), gorgeron (gras du cou entremêlé de chair), couenne sélectionnée, sel, épices, fenouil noir du pays",
@@ -6710,7 +6710,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-20T13:44:31.207Z",
     "details": {
       "origin": "Boeuf Simmental (BE, Suisse)",
@@ -9721,7 +9721,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-20T14:18:32.226Z",
     "details": {
       "origin": "Viande de porc d'élevage suisse (VD, Suisse)",
@@ -10849,7 +10849,7 @@
   },
   {
     "title": "Saucisse au piment d'Espelette (3pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000224,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-06-21T08:18:22.331Z",
@@ -11836,7 +11836,7 @@
   },
   {
     "title": "Saucisse aux herbes (3pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000228,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-06-16T06:42:10.283Z",
@@ -13652,7 +13652,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-19T19:38:13.046Z",
     "details": {
       "origin": "Boeuf Simmental (BE, Suisse)",
@@ -13766,7 +13766,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-20T14:32:00.995Z",
     "details": {
       "origin": "Sang",
@@ -15108,7 +15108,7 @@
       "home": false
     },
     "backend": {},
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "created": "2014-11-20T14:25:13.413Z",
     "details": {
       "origin": "Porc (Bière maison Ledermann, Suisse)",
@@ -15266,7 +15266,7 @@
   },
   {
     "title": "Brochette Tzigane (1pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000242,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-04-24T07:37:56.255Z",
@@ -16883,7 +16883,7 @@
   },
   {
     "title": "Saucisse tomate basilic (3pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000225,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-07-05T13:21:25.260Z",
@@ -16940,7 +16940,7 @@
   },
   {
     "title": "Brochette mixed (1pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000241,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-04-24T07:37:23.984Z",
@@ -18672,7 +18672,7 @@
   },
   {
     "title": "Filet de veau",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000299,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-04-24T07:37:57.201Z",
@@ -19580,7 +19580,7 @@
   },
   {
     "title": "Brochette pur agneau (1pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000243,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-05-16T07:33:23.730Z",
@@ -21613,7 +21613,7 @@
   },
   {
     "title": "Viande séchée",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000147,
     "vendor": "domaine-de-labbaye",
     "updated": "2016-07-08T14:23:55.338Z",
@@ -21666,7 +21666,7 @@
   },
   {
     "title": "Saucisse chorizo (3pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000230,
     "vendor": "boucherie-jacky-bula",
     "updated": "2015-09-18T10:07:22.892Z",
@@ -22093,7 +22093,7 @@
   },
   {
     "title": "Brochette filet mignon de porc (1pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000244,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-05-03T12:17:18.864Z",
@@ -24302,7 +24302,7 @@
   },
   {
     "title": "T-bone steak",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000250,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-04-24T07:37:53.574Z",
@@ -24462,7 +24462,7 @@
   },
   {
     "title": "Filet mignon de porc, jambon cru, et farce",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000321,
     "vendor": "boucherie-jacky-bula",
     "updated": "2015-10-25T20:12:58.614Z",
@@ -29620,7 +29620,7 @@
   },
   {
     "title": "Saucisse au curry (3pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000229,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-07-05T13:19:36.476Z",
@@ -32323,7 +32323,7 @@
   },
   {
     "title": "Saucisse vigneronne (3pce)",
-    "categories": "Boucherie",
+    "categories": "Boucherie et charcuterie",
     "sku": 1000234,
     "vendor": "boucherie-jacky-bula",
     "updated": "2017-06-16T06:42:12.490Z",

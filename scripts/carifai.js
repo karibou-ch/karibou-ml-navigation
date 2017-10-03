@@ -3,6 +3,9 @@ var products = require('../test/data/products');
 var Clarifai = require('clarifai');
 var Promise  = require('bluebird');
 
+// output classification
+var output=[],today=new Date();
+
 function saveFile(output){
   var fs = require('fs');
   var content = JSON.stringify(output,0,2);
@@ -30,12 +33,19 @@ Promise.mapSeries(products,function(product,i){
   });
 }).then(function(predicts){
   predicts.forEach(function(concepts,i){
-    if(!concepts.length)return
     products[i].tags=concepts.filter(function(concept) {return (concept.value>0.95);}).map(function(e){return e.name});
+    output.push({
+      sku:products[i].sku,
+      title:products[i].title,
+      tags:products[i].tags,
+      image:products[i].photo.url,
+      categories:products[i].categories,
+      updated:today
+    });
   });
 
   //
   //
-  saveFile(products);
+  saveFile(output);
 })
 
