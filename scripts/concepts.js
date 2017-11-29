@@ -1,43 +1,11 @@
 var products = require('../test/data/products-clarifai.json');
-
-var Clarifai = require('clarifai');
-var Promise  = require('bluebird');
-
-var classification={};
-
-function saveFile(output){
-  var fs = require('fs');
-  var content = JSON.stringify(output,0,2);
-  fs.writeFile("data/concepts.json", content, 'utf8', function (err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("The file was saved!");
-  }); 
-}
+var Concepts = require('../lib/concepts')
 
 
-products.forEach(function(concept) {
-  if(!classification[concept.categories]){
-    classification[concept.categories]={};
-  }
-  concept.tags.forEach(function(name){
-    if(!classification[concept.categories][name]){
-      classification[concept.categories][name]=0;
-    }
-    classification[concept.categories][name]++;
-  });
-});
+new Concepts().buildIndex(products).forEach(p=>{
+  console.log('-- ',p.title)
+  p.tags.forEach(tag=> {
+    console.log('  #',tag.name,tag.score.toFixed(2));
 
-
-Object.keys(classification).forEach(function(category){
-  console.log('--',category);
-  Object.keys(classification[category]).sort(function(a,b){
-    return classification[category][b]-classification[category][a];
-  }).forEach(function(name){
-    if(classification[category][name]>1)
-    console.log('  ',name,classification[category][name]);
   })
 });
-
-saveFile(classification)

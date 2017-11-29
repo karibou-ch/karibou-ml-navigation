@@ -1,741 +1,2326 @@
-{
-  "Boucherie et charcuterie": {
-    "beef": 23,
-    "meat": 29,
-    "ham": 17,
-    "pork": 22,
-    "bacon": 11,
-    "sausage": 14,
-    "barbecue": 3,
-    "bratwurst": 2,
-    "steak": 9,
-    "lamb": 1,
-    "pepper": 2,
-    "vegetable": 10,
-    "parsley": 2,
-    "sweet": 2,
-    "lettuce": 2,
-    "tomato": 2,
-    "salad": 1,
-    "fillet": 4,
-    "rosemary": 1,
-    "chicken": 2,
-    "salami": 4,
-    "sirloin": 1,
-    "quinoa": 1,
-    "candy": 1,
-    "beer": 1,
-    "alcohol": 1,
-    "liquor": 1,
-    "wine": 1,
-    "salmon": 1,
-    "fish": 1
+[
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "beef"
   },
-  "Boulangerie": {
-    "wheat": 10,
-    "flour": 10,
-    "cereal": 8,
-    "bread": 15,
-    "rye": 4,
-    "crust": 8,
-    "dough": 12,
-    "pastry": 13,
-    "sweet": 7,
-    "croissant": 5,
-    "bun": 7,
-    "butter": 2,
-    "cake": 2,
-    "baguette": 2,
-    "cinnamon": 1
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "meat"
   },
-  "Produits laitiers": {
-    "egg": 3,
-    "egg yolk": 2,
-    "chicken": 2,
-    "grass": 1,
-    "milk": 32,
-    "dairy": 19,
-    "butter": 1,
-    "dairy product": 27,
-    "cheese": 19,
-    "cheddar": 7,
-    "mozzarella": 3,
-    "yogurt": 7,
-    "cream": 13,
-    "curd": 1,
-    "sour cream": 2,
-    "sweet": 11,
-    "tea": 2,
-    "cake": 1,
-    "coffee": 3,
-    "blue cheese": 1,
-    "roquefort": 1,
-    "goats cheese": 1,
-    "swiss cheese": 1,
-    "garlic": 3,
-    "edam cheese": 1,
-    "gouda cheese": 1,
-    "gouda": 1,
-    "berry": 1,
-    "currant": 1,
-    "vegetable": 3,
-    "tomato": 1,
-    "basil": 2,
-    "lettuce": 1,
-    "pudding": 1,
-    "bread": 1,
-    "brie": 1,
-    "camembert": 1,
-    "panna cotta": 2,
-    "rice": 1,
-    "cereal": 1,
-    "cappuccino": 1,
-    "chocolate": 1,
-    "espresso": 1
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "ham"
   },
-  "Fruits & légumes": {
-    "banana": 2,
-    "sweet": 26,
-    "avocado": 1,
-    "vegetable": 331,
-    "guacamole": 1,
-    "pasture": 252,
-    "garlic": 20,
-    "onion": 13,
-    "shallot": 9,
-    "carrot": 10,
-    "citrus": 10,
-    "lemon": 8,
-    "juice": 34,
-    "lime": 4,
-    "mushroom": 3,
-    "jicama": 2,
-    "potato": 16,
-    "tuber": 23,
-    "cereal": 6,
-    "apple": 27,
-    "pear": 11,
-    "lettuce": 44,
-    "spinach": 28,
-    "salad": 39,
-    "legume": 13,
-    "pea": 7,
-    "radish": 11,
-    "asparagus": 4,
-    "tangerine": 6,
-    "grapefruit": 6,
-    "peach": 5,
-    "nectarine": 5,
-    "chicory": 1,
-    "endive": 3,
-    "cabbage": 42,
-    "citron": 2,
-    "melon": 4,
-    "cantaloupe": 1,
-    "watermelon": 4,
-    "honeydew melon": 1,
-    "courgette": 12,
-    "eggplant": 6,
-    "aubergine": 5,
-    "herb": 70,
-    "leek": 5,
-    "grass": 19,
-    "fennel": 8,
-    "florence fennel": 6,
-    "tomato": 16,
-    "water": 1,
-    "pumpkin": 23,
-    "squash": 24,
-    "gourd": 15,
-    "parsnip": 5,
-    "ginger": 2,
-    "galangal": 1,
-    "plum": 5,
-    "cucumber": 9,
-    "condiment": 1,
-    "radicchio": 3,
-    "pepper": 9,
-    "chili": 7,
-    "green pepper": 4,
-    "soy": 2,
-    "basil": 13,
-    "relish": 8,
-    "beet": 8,
-    "beet root": 3,
-    "dill": 5,
-    "sorrel": 1,
-    "brussels sprout": 1,
-    "sprouts": 3,
-    "summer squash": 4,
-    "yellow summer squash": 2,
-    "marrow": 5,
-    "zucchini": 2,
-    "spring onion": 2,
-    "scallion": 1,
-    "swede": 2,
-    "rutabaga": 4,
-    "turnip": 4,
-    "quince": 1,
-    "lemonade": 1,
-    "lemon peel": 1,
-    "broccoli": 11,
-    "kale": 20,
-    "cherry": 12,
-    "cherry tomato": 8,
-    "parsley": 12,
-    "cilantro": 8,
-    "celery": 4,
-    "red cabbage": 2,
-    "chives": 3,
-    "garlic chives": 2,
-    "welsh onion": 1,
-    "vinegar": 1,
-    "celeriac": 2,
-    "berry": 11,
-    "sweet cherry": 2,
-    "spaghetti": 1,
-    "cauliflower": 8,
-    "coriander": 5,
-    "carbohydrate": 3,
-    "spuds": 2,
-    "truffle": 2,
-    "strawberry": 1,
-    "chinese artichoke": 1,
-    "jerusalem artichoke": 1,
-    "cress": 3,
-    "mandarin orange": 1,
-    "clementine": 1,
-    "satsuma": 1,
-    "collards": 5,
-    "corn": 3,
-    "gherkin": 1,
-    "bread": 1,
-    "hamburg parsley": 1,
-    "dough": 1,
-    "brinjal": 3,
-    "blackberry": 1,
-    "mulberry": 1,
-    "boysenberry": 1,
-    "marionberry": 1,
-    "grape": 2,
-    "kohlrabi": 3,
-    "french beans": 1,
-    "bay leaf": 3,
-    "pattypan squash": 1,
-    "artichoke": 3,
-    "chard": 3,
-    "swiss chard": 3,
-    "orange squash": 1,
-    "bamboo shoots": 1,
-    "oregano": 4,
-    "damson": 2,
-    "sage": 3,
-    "thyme": 3,
-    "currant": 2,
-    "redcurrant": 2,
-    "tea": 12,
-    "sauerkraut": 1,
-    "cream": 1,
-    "coffee": 1,
-    "milk": 1,
-    "chocolate": 1,
-    "straw": 1,
-    "hazelnut": 1,
-    "watercress": 2,
-    "miner's lettuce": 1,
-    "snow pea": 2,
-    "taro": 2,
-    "egg": 1,
-    "rosemary": 1,
-    "tarragon": 2,
-    "rhubarb": 1,
-    "iceberg lettuce": 1,
-    "napa cabbage": 2,
-    "sweet pepper": 2,
-    "wine": 2,
-    "beer": 2,
-    "alcohol": 1,
-    "liquor": 1,
-    "lychee": 1,
-    "romaine": 2,
-    "cayenne": 4,
-    "daikon": 2,
-    "aonori": 1,
-    "prussian asparagus": 1,
-    "summer purslane": 1,
-    "salsify": 1,
-    "scorzonera": 1,
-    "cassava": 1,
-    "burdock": 1,
-    "arugula": 1,
-    "pasta": 2,
-    "broad beans": 1,
-    "pak choy": 1,
-    "bok choy": 1,
-    "red pepper": 1,
-    "alfalfa sprouts": 1,
-    "jalapeno": 1,
-    "green tea": 1
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "pork"
   },
-  "Traiteur": {
-    "egg": 2,
-    "cream": 5,
-    "vegetable": 11,
-    "bread": 5,
-    "pastry": 7,
-    "sweet": 7,
-    "cake": 3,
-    "pork pie": 1,
-    "pie": 3,
-    "pizza": 5,
-    "sauce": 4,
-    "hummus": 1,
-    "quiche": 1,
-    "crust": 2,
-    "cheese": 4,
-    "meat": 7,
-    "chicken": 2,
-    "tomato": 4,
-    "banana": 1,
-    "ham": 1,
-    "pork": 2,
-    "bacon": 1,
-    "sausage": 1,
-    "dough": 3,
-    "stir-fry": 1,
-    "pepper": 1,
-    "chocolate": 2,
-    "rice": 2,
-    "popovers": 1,
-    "muffin": 1,
-    "mozzarella": 2,
-    "egg yolk": 1,
-    "fish": 1,
-    "pasta": 3,
-    "salad": 1,
-    "parsley": 1,
-    "cereal": 2,
-    "corn": 3,
-    "coffee": 3,
-    "condiment": 1,
-    "herb": 2,
-    "salt": 1,
-    "relish": 1,
-    "jam": 1,
-    "marmalade": 1,
-    "gelatin": 1,
-    "spread": 1,
-    "chutney": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "wheat"
   },
-  "Douceurs & chocolats": {
-    "chocolate": 19,
-    "sweet": 22,
-    "cream": 7,
-    "cake": 12,
-    "candy": 6,
-    "pastry": 7,
-    "goody": 1,
-    "brownie": 1,
-    "pie": 3,
-    "tea": 6,
-    "vegetable": 1,
-    "peanut butter": 1,
-    "coffee": 7,
-    "condiment": 2,
-    "spring rolls": 1,
-    "milk": 2,
-    "cookie": 3,
-    "macaroon": 4,
-    "bread": 5,
-    "jam": 6,
-    "pumpkin": 3,
-    "honey": 2,
-    "marmalade": 3,
-    "gelatin": 2,
-    "macaron": 2,
-    "raspberry": 1,
-    "pistachio": 1,
-    "cereal": 1,
-    "wheat": 1,
-    "ice": 2,
-    "dairy product": 1,
-    "caramel": 1,
-    "mint": 2,
-    "beer": 1,
-    "wine": 3,
-    "buttercream": 1,
-    "strawberry": 1,
-    "sponge cake": 1,
-    "juice": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "flour"
   },
-  "Huiles & céréales": {
-    "sweet": 5,
-    "chocolate": 1,
-    "candy": 1,
-    "vegetable": 2,
-    "coffee": 4,
-    "beer": 4,
-    "cheese": 1,
-    "wine": 2,
-    "juice": 1,
-    "alcohol": 2,
-    "tea": 2,
-    "cereal": 3,
-    "corn": 1,
-    "wheat": 1,
-    "oatmeal cereal": 1,
-    "liquor": 1,
-    "red wine": 1,
-    "grape": 1,
-    "spaghetti": 1,
-    "pasta": 1,
-    "milk": 4,
-    "dairy product": 1,
-    "herb": 1,
-    "relish": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "cereal"
   },
-  "Boulangerie et biscottes": {
-    "bread": 10,
-    "pita bread": 2,
-    "wheat": 7,
-    "flatbread": 1,
-    "flour": 5,
-    "pastry": 3,
-    "sweet": 2,
-    "cereal": 5,
-    "rye": 3,
-    "cake": 1,
-    "corn bread": 1,
-    "pumpernickel": 1,
-    "milk": 1,
-    "salsa": 1,
-    "unleavened": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "bread"
   },
-  "Céréales, fruits secs, noix": {
-    "nut": 4,
-    "meat": 2,
-    "coffee": 7,
-    "cashew": 1,
-    "cereal": 11,
-    "corn": 8,
-    "buckwheat": 3,
-    "wheat": 6,
-    "granola": 1,
-    "sweet": 3,
-    "chips": 1,
-    "pasture": 1,
-    "vegetable": 2,
-    "condiment": 1,
-    "chocolate": 1,
-    "beer": 3,
-    "tea": 1,
-    "chili": 1,
-    "goji berry": 1,
-    "pepper": 1,
-    "almond": 1,
-    "porridge": 1,
-    "oatmeal": 2,
-    "muesli": 1,
-    "cake": 1,
-    "walnut": 1,
-    "oat": 1,
-    "milk": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "rye"
   },
-  "Huiles, épices, sauces": {
-    "herb": 5,
-    "pesto": 2,
-    "vegetable": 4,
-    "jam": 5,
-    "marmalade": 4,
-    "gelatin": 3,
-    "spread": 2,
-    "oil": 3,
-    "olive oil": 2,
-    "liquor": 6,
-    "chocolate": 2,
-    "sweet": 2,
-    "honey": 2,
-    "pickle": 1,
-    "tea": 6,
-    "juice": 1,
-    "coffee": 3,
-    "beer": 5,
-    "condiment": 2,
-    "salt": 2,
-    "relish": 2,
-    "alcohol": 4,
-    "soy sauce": 1,
-    "steak sauce": 1,
-    "wine": 5,
-    "grape": 1,
-    "red wine": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "crust"
   },
-  "Vins rouges": {
-    "wine": 23,
-    "beer": 19,
-    "coffee": 6,
-    "stout": 3,
-    "grape": 1,
-    "alcohol": 12,
-    "liquor": 5,
-    "soy sauce": 1,
-    "red wine": 9,
-    "champagne": 1,
-    "tea": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "dough"
   },
-  "Épicerie fine": {
-    "bread": 4,
-    "sweet": 4,
-    "dairy product": 1,
-    "cake": 1,
-    "honey": 1,
-    "popcorn": 1,
-    "chocolate": 2,
-    "jam": 5,
-    "wheat": 1,
-    "chili": 1,
-    "oil": 5,
-    "vegetable": 4,
-    "olive oil": 1,
-    "olive": 3,
-    "coffee": 4,
-    "condiment": 4,
-    "spread": 3,
-    "beer": 8,
-    "wine": 3,
-    "alcohol": 3,
-    "liquor": 2,
-    "tea": 11,
-    "herb": 8,
-    "milk": 1,
-    "pepper": 1,
-    "pasture": 1,
-    "chicken": 1,
-    "sauce": 1,
-    "marmalade": 1,
-    "gelatin": 1,
-    "pickle": 1,
-    "vinegar": 1
+  {
+    "node": "Boulangerie",
+    "vertex": "pastry"
   },
-  "Autres alcools": {
-    "beer": 19,
-    "alcohol": 17,
-    "liquor": 17,
-    "lager": 3,
-    "ale": 2,
-    "wine": 16,
-    "cake": 1,
-    "chocolate": 1,
-    "apple": 2,
-    "juice": 5,
-    "cider": 1,
-    "sweet": 1,
-    "grape": 3,
-    "champagne": 8,
-    "ice": 1,
-    "cocktail": 1,
-    "tea": 1,
-    "red wine": 1,
-    "whisky": 2,
-    "pasture": 1,
-    "pear": 1,
-    "vodka": 1
+  {
+    "node": "Produits laitiers",
+    "vertex": "egg"
   },
-  "Vins & alcools": {
-    "wine": 32,
-    "red wine": 21,
-    "alcohol": 29,
-    "liquor": 25,
-    "grape": 11,
-    "beer": 9,
-    "stout": 1,
-    "whisky": 2,
-    "champagne": 1
+  {
+    "node": "Produits laitiers",
+    "vertex": "egg yolk"
   },
-  "Vins blancs & rosés": {
-    "wine": 20,
-    "alcohol": 12,
-    "liquor": 9,
-    "red wine": 4,
-    "beer": 16,
-    "grape": 6,
-    "tea": 5,
-    "coffee": 1,
-    "whisky": 1,
-    "champagne": 1
+  {
+    "node": "Produits laitiers",
+    "vertex": "chicken"
   },
-  "Pâtes, riz, grains": {
-    "sweet": 2,
-    "juice": 1,
-    "spaghetti": 1,
-    "pasta": 3,
-    "milk": 1,
-    "bamboo shoots": 1,
-    "coffee": 1,
-    "cereal": 3,
-    "wheat": 1,
-    "corn": 1
+  {
+    "node": "Produits laitiers",
+    "vertex": "grass"
   },
-  "Bien-être": {
-    "cream": 7,
-    "milk": 10,
-    "yogurt": 1,
-    "mayonnaise": 1,
-    "sweet": 5,
-    "coffee": 7,
-    "chocolate": 3,
-    "tea": 6,
-    "cake": 1,
-    "candy": 3,
-    "goody": 1,
-    "pastry": 1,
-    "dairy": 3,
-    "cheese": 2,
-    "beer": 4,
-    "wine": 4,
-    "herb": 2,
-    "margarine": 1,
-    "condiment": 3,
-    "alcohol": 2,
-    "liquor": 1,
-    "dairy product": 4,
-    "juice": 1,
-    "salt": 1,
-    "pepper": 1,
-    "oil": 1,
-    "lavender": 1
+  {
+    "node": "Fruits & légumes",
+    "vertex": "banana"
   },
-  "Café, Thé et Boissons": {
-    "beer": 2,
-    "wine": 1,
-    "alcohol": 1,
-    "liquor": 1,
-    "tea": 5,
-    "herb": 1,
-    "coffee": 1,
-    "cereal": 1,
-    "chili": 1
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sweet"
   },
-  "undefined": {
-    "pasture": 21,
-    "vegetable": 27,
-    "pumpkin": 2,
-    "squash": 1,
-    "gourd": 1,
-    "wine": 54,
-    "alcohol": 38,
-    "liquor": 25,
-    "beer": 53,
-    "ale": 2,
-    "rose": 1,
-    "sweet": 27,
-    "chocolate": 18,
-    "candy": 9,
-    "cereal": 7,
-    "corn": 3,
-    "milk": 21,
-    "coffee": 19,
-    "tea": 30,
-    "yogurt": 4,
-    "dairy": 3,
-    "cream": 22,
-    "dairy product": 2,
-    "mayonnaise": 1,
-    "macaron": 12,
-    "macaroon": 10,
-    "pistachio": 2,
-    "cake": 15,
-    "raspberry": 5,
-    "cookie": 7,
-    "meringue": 4,
-    "whisky": 2,
-    "strawberry": 14,
-    "meat": 3,
-    "sausage": 1,
-    "beef": 1,
-    "pork": 4,
-    "oil": 4,
-    "condiment": 5,
-    "vinegar": 3,
-    "juice": 8,
-    "pastry": 3,
-    "ginger": 1,
-    "champagne": 10,
-    "red wine": 7,
-    "grape": 4,
-    "ice": 1,
-    "jam": 23,
-    "marmalade": 20,
-    "gelatin": 17,
-    "spread": 2,
-    "herb": 25,
-    "hazelnut": 2,
-    "nut": 2,
-    "chestnut": 2,
-    "lavender": 2,
-    "apple": 5,
-    "pear": 2,
-    "berry": 13,
-    "spinach": 1,
-    "watercress": 1,
-    "cider": 1,
-    "parsley": 1,
-    "sage": 2,
-    "thyme": 1,
-    "salt": 1,
-    "pepper": 2,
-    "watermelon": 1,
-    "melon": 1,
-    "tuber": 5,
-    "water": 1,
-    "beet": 1,
-    "beet root": 1,
-    "onion": 2,
-    "shallot": 2,
-    "garlic": 2,
-    "buckwheat": 1,
-    "pudding": 1,
-    "butter": 3,
-    "cheese": 1,
-    "margarine": 1,
-    "stout": 6,
-    "swede": 1,
-    "turnip": 2,
-    "rutabaga": 1,
-    "bread": 2,
-    "pasta": 2,
-    "honey": 3,
-    "pickle": 2,
-    "grape jelly": 1,
-    "jelly": 1,
-    "popcorn": 1,
-    "cabbage": 3,
-    "kale": 1,
-    "salad": 1,
-    "lettuce": 1,
-    "brussels sprout": 1,
-    "sprouts": 1,
-    "sauerkraut": 1,
-    "spaghetti": 1,
-    "saffron": 3,
-    "chili": 2,
-    "asparagus": 1,
-    "prussian asparagus": 1,
-    "lager": 2,
-    "ham": 1,
-    "rosemary": 3,
-    "bacon": 2,
-    "prosciutto": 1,
-    "fish": 1,
-    "salmon": 1,
-    "fillet": 1,
-    "green pepper": 1,
-    "sweet pepper": 1,
-    "cinnamon": 1,
-    "buttercream": 2,
-    "chutney": 1,
-    "bay leaf": 1,
-    "grass": 1,
-    "carrot": 1
+  {
+    "node": "Produits laitiers",
+    "vertex": "milk"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "dairy"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "butter"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "dairy product"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "cheese"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "bacon"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "sausage"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "egg"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "cream"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "bread"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "cheddar"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "avocado"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "guacamole"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pasture"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "garlic"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "onion"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "shallot"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "carrot"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "mozzarella"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "citrus"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "lemon"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "juice"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "lime"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "yogurt"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "cream"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "curd"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "sour cream"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "barbecue"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "bratwurst"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "croissant"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "bun"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "mushroom"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "jicama"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "potato"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "tuber"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "tea"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "cake"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "apple"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "butter"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pear"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "lettuce"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "spinach"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "salad"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "legume"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pea"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pastry"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "cake"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pork pie"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pie"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "radish"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "asparagus"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "blue cheese"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "roquefort"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "tangerine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "grapefruit"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "goats cheese"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "cake"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "swiss cheese"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "steak"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "lamb"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "pepper"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "peach"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "nectarine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "chicory"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "endive"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cabbage"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "garlic"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "parsley"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "edam cheese"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "gouda cheese"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "gouda"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "citron"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "melon"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cantaloupe"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "watermelon"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "honeydew melon"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pizza"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "sauce"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "courgette"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "eggplant"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "aubergine"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "hummus"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "herb"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "leek"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "grass"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "fennel"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "florence fennel"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "tomato"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "berry"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "currant"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "baguette"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "quiche"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "crust"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "cheese"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "water"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "meat"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "chicken"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "cream"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "cake"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "candy"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "pastry"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "goody"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "brownie"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "lettuce"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "tomato"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "salad"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "tomato"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pumpkin"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "squash"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "gourd"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "fillet"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "parsnip"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "ginger"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "galangal"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "banana"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "plum"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cucumber"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "bread"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "pita bread"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "wheat"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "flatbread"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "flour"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "radicchio"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pepper"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "chili"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "green pepper"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "pie"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "soy"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "nut"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "meat"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "rosemary"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "herb"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "pesto"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "basil"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "relish"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "chicken"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "beet"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "beet root"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "ham"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pork"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "bacon"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "sausage"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "dill"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sorrel"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "dough"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "brussels sprout"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sprouts"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "summer squash"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "yellow summer squash"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "wine"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "beer"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "stout"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "stir-fry"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pepper"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "tea"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "marrow"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "zucchini"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "spring onion"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "scallion"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "swede"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "rutabaga"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "turnip"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "bread"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "dairy product"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "cake"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "quince"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "lemonade"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "lemon peel"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "broccoli"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "kale"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cherry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cherry tomato"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "parsley"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cilantro"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "celery"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "red cabbage"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "chives"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "garlic chives"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "welsh onion"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "salami"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "rice"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "pastry"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "vinegar"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "popovers"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "muffin"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "celeriac"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "cashew"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "tomato"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "basil"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "lettuce"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "pudding"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "candy"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "sirloin"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "honey"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "berry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sweet cherry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "spaghetti"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "beer"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "lager"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "ale"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "rye"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cauliflower"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "coriander"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "wine"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "red wine"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "wine"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "mozzarella"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "quinoa"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "jam"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "marmalade"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "gelatin"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "spread"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "carbohydrate"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "spuds"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "cake"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "corn bread"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "corn"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "buckwheat"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "wheat"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "granola"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "grape"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "truffle"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "strawberry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "chinese artichoke"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "jerusalem artichoke"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "pumpernickel"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cress"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "candy"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "beer"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "cheese"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "cake"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "chips"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "grape"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "mandarin orange"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "clementine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "satsuma"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "egg yolk"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "wine"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "juice"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "popcorn"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "bread"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "milk"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "collards"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "corn"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "beer"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "tea"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "gherkin"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "bread"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "brie"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "camembert"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "pasture"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "peanut butter"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "hamburg parsley"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "dough"
+  },
+  {
+    "node": "Boulangerie",
+    "vertex": "cinnamon"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "brinjal"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "blackberry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "mulberry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "boysenberry"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "marionberry"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "panna cotta"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "wine"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "red wine"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "beer"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "grape"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "fish"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "grape"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "kohlrabi"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "corn"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "wheat"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "oatmeal cereal"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "french beans"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "soy sauce"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "jam"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "pasta"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "wheat"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "bay leaf"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pattypan squash"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "artichoke"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "spring rolls"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "chili"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "chard"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "swiss chard"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "milk"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "salad"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "parsley"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "rice"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "orange squash"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "juice"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "oil"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "vegetable"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "olive oil"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "olive"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "bamboo shoots"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "oregano"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "damson"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "stout"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sage"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "oil"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "olive oil"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "thyme"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "cookie"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "macaroon"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "spread"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "currant"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "redcurrant"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "corn"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "bread"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "beer"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "beer"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "tea"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "spaghetti"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "pasta"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "red wine"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "grape"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "chili"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "goji berry"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "pepper"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "tea"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sauerkraut"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cream"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "milk"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "almond"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "straw"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "hazelnut"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "watercress"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "miner's lettuce"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "snow pea"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "jam"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "taro"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "red wine"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "pumpkin"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "milk"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "bamboo shoots"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "egg"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "honey"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "rosemary"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "tarragon"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "rhubarb"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "iceberg lettuce"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "porridge"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "marmalade"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "gelatin"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "cream"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "milk"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "yogurt"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "mayonnaise"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "wine"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "tea"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "herb"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "apple"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "juice"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "cider"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "sweet"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "tea"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "oatmeal"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "muesli"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "whisky"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "honey"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "pickle"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "napa cabbage"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "tea"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "juice"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "sweet pepper"
+  },
+  {
+    "node": "Vins & alcools",
+    "vertex": "champagne"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "spaghetti"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "pasta"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "grape"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "champagne"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "milk"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "dairy product"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "beer"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "wine"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "wheat"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "macaron"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "raspberry"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "pistachio"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "wine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "beer"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "cake"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "salsa"
+  },
+  {
+    "node": "Boulangerie et biscottes",
+    "vertex": "unleavened"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "lychee"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "beer"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "ice"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "cocktail"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "herb"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "salt"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "relish"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "salt"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "relish"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "milk"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "tea"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "romaine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cayenne"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "soy sauce"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "steak sauce"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "wine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "daikon"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "aonori"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "prussian asparagus"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "wheat"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "summer purslane"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "ice"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "dairy product"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "caramel"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "red wine"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "tea"
+  },
+  {
+    "node": "Pâtes, riz, grains",
+    "vertex": "corn"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "tea"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "herb"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "salsify"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "scorzonera"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "cassava"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "burdock"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "mint"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "beer"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "wine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "arugula"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "grape"
+  },
+  {
+    "node": "Huiles, épices, sauces",
+    "vertex": "red wine"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "cake"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "candy"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "goody"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "pastry"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "dairy"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "cheese"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pasta"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "beer"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "wine"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "broad beans"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "whisky"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "buttercream"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "pak choy"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "bok choy"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "walnut"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "red pepper"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "beer"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "wine"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "herb"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "strawberry"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "pepper"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "coffee"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "margarine"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "pasture"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "pear"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "condiment"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "alcohol"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "liquor"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "champagne"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "oat"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "dairy product"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "alfalfa sprouts"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "pasture"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "chicken"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "sauce"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "salmon"
+  },
+  {
+    "node": "Boucherie et charcuterie",
+    "vertex": "fish"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "herb"
+  },
+  {
+    "node": "Huiles & céréales",
+    "vertex": "relish"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "whisky"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "juice"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "salt"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "pepper"
+  },
+  {
+    "node": "Autres alcools",
+    "vertex": "vodka"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "jam"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "marmalade"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "gelatin"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "spread"
+  },
+  {
+    "node": "Traiteur",
+    "vertex": "chutney"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "cereal"
+  },
+  {
+    "node": "Café, Thé et Boissons",
+    "vertex": "chili"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "marmalade"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "gelatin"
+  },
+  {
+    "node": "Vins blancs & rosés",
+    "vertex": "champagne"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "oil"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "jalapeno"
+  },
+  {
+    "node": "Bien-être",
+    "vertex": "lavender"
+  },
+  {
+    "node": "Fruits & légumes",
+    "vertex": "green tea"
+  },
+  {
+    "node": "Vins rouges",
+    "vertex": "tea"
+  },
+  {
+    "node": "Céréales, fruits secs, noix",
+    "vertex": "milk"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "pickle"
+  },
+  {
+    "node": "Épicerie fine",
+    "vertex": "vinegar"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "sponge cake"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "cappuccino"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "chocolate"
+  },
+  {
+    "node": "Produits laitiers",
+    "vertex": "espresso"
+  },
+  {
+    "node": "Douceurs & chocolats",
+    "vertex": "juice"
   }
-}
+]
