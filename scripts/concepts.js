@@ -1,11 +1,21 @@
 var products = require('../test/data/products-clarifai.json');
 var Concepts = require('../lib/concepts')
 
-
-new Concepts().buildIndex(products).forEach(p=>{
-  console.log('-- ',p.title)
-  p.tags.forEach(tag=> {
-    console.log('  #',tag.name,tag.score.toFixed(2));
-
-  })
+var output=[];
+var concepts=new Concepts();
+concepts.buildIndex(products).forEach(p=>{
+  output.push({
+    sku:p.sku,
+    title:p.title,
+    image:p.image,
+    categories:p.categories,
+    tags:p.tags,
+    updated:p.updated,
+    linked:concepts.similar(p)
+  });
 });
+
+
+//
+// save for app
+concepts.save('../app/products-concepts-group/app/assets/products.json',output);
