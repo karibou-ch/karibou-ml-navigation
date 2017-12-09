@@ -36,12 +36,12 @@ npm install
 npm install -g mocha
 mocha  
 ```
-1. mocha `test/concept`
-  * a) example that apply `Clarifai` product image detection
-  * b) compute a score concepts for each product 
-  * c) display similar product based on concept
-1. mocha `test/customer`
-  * compute customer order frequency and issue
+### 1. mocha `test/concept`
+1. example that apply `Clarifai` product image detection
+1. compute a score concepts for each product 
+1. display similar product based on concept
+### 2. mocha `test/customer`
+1. example that compute customer order frequency and issue related to the past orders
 
 
 
