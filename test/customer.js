@@ -21,6 +21,7 @@ describe('customer info issue#7', function() {
 
 
   it('orders frequency + issues', function(done) {
+    console.log('#\n#,pseudo, frequency 12m/6m/3m/1m, issue by shop\n#');
     customers.getAll().forEach((customer,i)=>{
       if(i>20)return;
       var cid=customers.get(customer);

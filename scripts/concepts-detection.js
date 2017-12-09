@@ -5,7 +5,7 @@ concepts.detection(products).then(function(output){
 
   //
   // save for app
-  concepts.save('../test/data/products-clarifai2.json',output);
+  concepts.save('../test/data/products-clarifai.json',output);
 
 },function(error){
   console.log('----------------',error);

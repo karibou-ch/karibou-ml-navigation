@@ -1,5 +1,3 @@
-![](https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-logo-horizontal-800.png)
-
 ## Introduction
 
 This page explains __karibou.ch machine learning__ project idea for [Google Summer of Code 2017](https://developers.google.com/open-source/gsoc/). GSoC is a program run every year by Google where students are paid to work on open source projects during their summer break. If you are a student and interested in taking part then please read the [Advice for Students](#advice-for-students) section below. Everybody (not just students) is free to edit this page and add project ideas.
@@ -30,12 +28,15 @@ Difficulty level: intermediate
 Potential mentors: tbd
 ```
 
-## Expected results
-* From an initial set of possible models and hypothesis, what is the most appropriate model to fit our data
-* Based on our data, generate a subset of training data, postive prediction and negative prediction
-* Implement a learning process that could be embeded in the karibou.ch project. For example, the user places an order and the machine will learn what is relevant or not based on the prediction for the user.
-* Create a simple prototype that displays a recommended product list for a user. 
-* Based on the training data, it would be awesome to get clusters of customers (based on the distance between each)
+## Starting
+```bash
+git clone https://github.com/karibou-ch/karibou-ml-userx.git
+cd karibou-ml-userx
+npm install
+npm install -g mocha
+mocha  
+```
+
 
 ## About the data
 Orders contains all information about anonymized user, items, issue , time, etc. Here a short description:
