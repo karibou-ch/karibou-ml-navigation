@@ -1,0 +1,41 @@
+{
+  "name": "karibou-ml",
+  "version": "0.20.0",
+  "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "npm run build:esm && npm run build:umd",
+    "build:watch": "gulp build:esm:watch",
+    "tslint": "tslint"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karibou-ch/karibou-ml-userx.git"
+  },
+  "keywords": [
+    "machine-learning",
+    "Library",
+    "karibou.ch"
+  ],
+  "author": "olivier@karibou.ch",
+  "maintainers": [
+  ],
+  "homepage": "https://github.com/karibou-ch/karibou-ml-userx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karibou-ch/karibou-ml-userx/issues"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+  },
+  "devDependencies": {
+    "gh-pages": "^1.0.0",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2"
+  }
+}
