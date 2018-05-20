@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title ng-bind-template="{{title}}"></title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="fragment" content="!" />
+        <link rel="stylesheet" href="css/app.css">
+        <base href="/" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                
+        <!--<base href="/products-concepts-group/" />-->
+
+    </head>
+    <body>
+        <div class="container main">
+            <div class="blog-header">
+                <h1 class="blog-title">Testing relation between products and concepts (inferred tags)</h1>
+            </div>
+
+            <kmlux-products></kmlux-products>
+
+            <div class="row article">
+                <div class="col-sm-8 blog-main">
+                    
+                    <nav class="hide">
+                        <ul class="pager">
+                        <li><a href="#">Previous</a></li>
+                        <li><a href="#">Next</a></li>
+                        </ul>
+                    </nav>
+
+                </div><!-- /.blog-main -->
+
+                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                </div><!-- /.blog-sidebar -->
+            </div><!-- /.row -->
+
+        </div>
+        <br/>
+        <footer class="blog-footer">
+            <div class="container">
+                <div><kmlux-version></kmlux-version></div>
+            </div>
+        </footer>
+        <script src="js/vendor.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
