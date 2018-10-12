@@ -4092,7 +4092,7 @@
     "photo": "//ucarecdn.com/0ff214fd-e996-4e26-b834-bf2337ba6202/",
     "created": "2015-10-25T20:05:38.359Z",
     "updated": "2018-09-28T13:02:29.493Z",
-    "discount": false,
+    "discount": true,
     "categories": "produits-laitiers",
     "natural": true,
     "local": true
@@ -11353,7 +11353,7 @@
     "photo": "//ucarecdn.com/cea554e1-b00f-4b12-9b1b-86b5431bff8d/",
     "created": "2017-03-27T16:17:48.121Z",
     "updated": "2018-09-11T10:36:20.174Z",
-    "discount": false,
+    "discount": true,
     "categories": "fruits-legumes",
     "natural": true,
     "local": true
@@ -11701,7 +11701,7 @@
     "photo": "//ucarecdn.com/7332afd1-9990-4cbe-b098-3f1f1bac9a41/",
     "created": "2014-12-02T13:35:33.177Z",
     "updated": "2017-12-06T19:42:18.839Z",
-    "discount": false,
+    "discount": true,
     "categories": "produits-laitiers",
     "natural": true,
     "local": true
