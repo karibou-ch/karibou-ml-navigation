@@ -1,7 +1,7 @@
 const Machine = require('../lib/machine');
 const machine = new Machine({
   domain:'test',
-  testid:'739049451726747'
+  likely:true
 });
 
 const findOrders=(customer)=>{
@@ -10,7 +10,9 @@ const findOrders=(customer)=>{
 const orders = require('../test/data/orders.json');
 const products = require('../test/data/products.json').filter(product=>{
   // fruits-legumes produits-laitiers
-  return product.categories=='fruits-legumes';
+  // return product.categories=='fruits-legumes';
+  return product.categories=='produits-laitiers';
+  //return true;
 });
 
 	
@@ -19,11 +21,15 @@ const products = require('../test/data/products.json').filter(product=>{
 const customers = orders.map(order=>order.customer.id).filter((elem, pos, arr) => {
   return arr.indexOf(elem) == pos;
 });
+
+// customer.push('anonymous');
+
+//
+// array of orders indexed by user id
 const customer_orders=customers.map(user=>orders.filter(order=>order.customer.id==user));
 
-
 // fake user
-customers.push('anonymous');
+// customers.push('anonymous');
 
 // "updated": "2018-06-19T09:46:11.166Z",
 // "discount": false,
@@ -35,11 +41,12 @@ const findProduct=(sku)=>{
 }
 
 //products = products.slice(0, 50)
-// E**O//2360346371241611  C**D//739049451726747 M**R//1099354922508877
-machine.setModel(customers,products.map(product=>product.sku),customer_orders);
+// E**O//2360346371241611  C**D//739049451726747 M**R//1099354922508877  K**L 1847885976581568
+machine.setModel(customers,products,customer_orders);
 
 orders.forEach(order => {
 	order.items.forEach(item => {
+
     let product=products.find(product=>product.sku==item.sku);
     if(!product||!product.sku){
       return;
@@ -52,11 +59,11 @@ orders.forEach(order => {
     //boosters // user.likes
     boost=(order.customer.likes.indexOf(item.sku)>-1)&&(boost+item.quantity*2)||boost;
 
-    machine.learn(order.customer.id,product.sku,boost);
+    machine.learn(order.customer.id,product.sku,item.quantity);
 
     //
     // anonymous user
-    machine.learn('anonymous',product.sku,boost);
+    // machine.learn('anonymous',product.sku,boost);
 
 	})
 });
