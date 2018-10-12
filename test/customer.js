@@ -5,6 +5,9 @@ var moment = require('moment');
 var Customers = require('../lib/customers');
 
 describe('customer info issue#7', function() {
+
+  this.timeout(5000)
+  
   var indexCustomer=709;//Math.random()*(orders.length-1)|0;
   var customer=orders[indexCustomer].customer;
   //console.log('-------------',Customers) 

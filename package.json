@@ -1,6 +1,6 @@
 {
   "name": "karibou-ml",
-  "version": "0.20.0",
+  "version": "0.30.0",
   "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
   "main": "./lib/index.js",
   "scripts": {
@@ -30,9 +30,15 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "clarifai": "^2.5.0",
+    "jonfon": "git+https://github.com/iceonepiece/jonfon.git",
+    "json2csv": "^4.1.2",
+    "likely": "^0.2.0",
     "lodash": "^4.17.4",
+    "matrix-js": "^1.4.0",
     "moment": "^2.19.3",
-    "should": "^13.1.3"
+    "node-serialize": "0.0.4",
+    "should": "^13.1.3",
+    "sylvester": "0.0.21"
   },
   "peerDependencies": {},
   "devDependencies": {
