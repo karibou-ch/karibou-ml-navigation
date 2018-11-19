@@ -1,6 +1,6 @@
 {
   "name": "karibou-mlx",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
   "main": "./lib/index.js",
   "scripts": {
@@ -41,6 +41,7 @@
     "moment": "^2.22.2",
     "node-serialize": "0.0.4",
     "should": "^13.2.3",
+    "stopwords-fr": "^0.2.0",
     "sylvester": "0.0.21"
   },
   "peerDependencies": {},
