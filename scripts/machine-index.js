@@ -1,7 +1,7 @@
 const Machine = require('../lib/machine');
 const machine = new Machine({
-  domain:'test',
-  likely:true
+  domain:'jonfon',
+  _likely:true
 });
 
 const findOrders=(customer)=>{
@@ -11,8 +11,8 @@ const orders = require('../test/data/orders.json');
 const products = require('../test/data/products.json').filter(product=>{
   // fruits-legumes produits-laitiers
   // return product.categories=='fruits-legumes';
-  return product.categories=='produits-laitiers';
-  //return true;
+  // return product.categories=='produits-laitiers';
+  return true;
 });
 
 	
@@ -59,6 +59,8 @@ orders.forEach(order => {
     //boosters // user.likes
     boost=(order.customer.likes.indexOf(item.sku)>-1)&&(boost+item.quantity*2)||boost;
 
+    boost=product.boost&&(boost*10);
+
     machine.learn(order.customer.id,product.sku,item.quantity);
 
     //
@@ -69,8 +71,15 @@ orders.forEach(order => {
 });
 
 console.log('- taining (products,orders)',products.length,orders.length);
-machine.train().save(__dirname).then((model)=>{
+machine.train().save(__dirname).then((index)=>{
   console.log('- taining done');
+
+  // console.log('----C**D','739049451726747');
+  // index.ratings('anonymous',500).forEach(elem=>{
+  //   console.log('----',elem.item,elem.score,elem.sum);
+  // })
+  
+  
 });
 
 

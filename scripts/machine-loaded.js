@@ -15,7 +15,7 @@ let time=Date.now();
 
 // E**O//2360346371241611  C**D//739049451726747   dummy
 // machine.load(__dirname).then((model)=>{
-let model=MachineIndex.load(__dirname,'test');
+let model=MachineIndex.load(__dirname,'jonfon');
 
 
 // model.neighbors('739049451726747',10).forEach(neighbor=>{
@@ -29,7 +29,8 @@ let model=MachineIndex.load(__dirname,'test');
 // });
 
 // category
-let category='produits-laitiers'
+let category;//='produits-laitiers'
+let vendor="les-potagers-de-gaia";
 // let category='fruits-legumes';
 console.log('---- category',category,'DISCOUT',products.filter(p=>p.discount).length)
 
@@ -39,26 +40,31 @@ console.log('---- category',category,'DISCOUT',products.filter(p=>p.discount).le
 // })
 
 
-model.recommendations('739049451726747',30,category).forEach(recommend=>{
-  console.log('- recommendations Delf',recommend.item, products.find(p=>p.sku==recommend.item).title,recommend.score);
-});
+// model.recommendations('739049451726747',10,{category:category}).forEach(recommend=>{
+//   console.log('- recommendations Delf',recommend.item, products.find(p=>p.sku==recommend.item).title,recommend.score);
+// });
 
 
 console.log('----', (Date.now()-time),'ms');time=Date.now();
 
-model.ratings('739049451726747',20,category).forEach(rating=>{
+model.ratings('739049451726747',30,{category:category}).forEach((rating,i)=>{
   let prod=products.find(p=>p.sku==rating.item);
-  console.log('- rating Delf',rating.item,prod.title,prod.discount?'DISCOUNT':'',rating.score.toFixed(4));
+  console.log('- rating Delf',i,rating.item,prod.title,prod.discount?'DISCOUNT':'',rating.score.toFixed(4));
 });
 
 console.log('----', (Date.now()-time),'ms');time=Date.now();
 
-model.ratings('anonymous',20,category).forEach(rating=>{
+model.ratings('anonymous',20,{category:category}).forEach(rating=>{
   let prod=products.find(p=>p.sku==rating.item);
-  console.log('- rating anonymous',rating.item,prod.title,prod.discount?'DISCOUNT':'',rating.score.toFixed(4));
+  console.log('- rating anonymous:'+category||'',rating.item,prod.title,prod.discount?'DISCOUNT':'',rating.score.toFixed(4));
 });
 console.log('----', (Date.now()-time),'ms');time=Date.now();
 
+model.ratings('anonymous',20,{vendor:vendor}).forEach(rating=>{
+  let prod=products.find(p=>p.sku==rating.item);
+  console.log('- rating anonymous:'+vendor,rating.item,prod.title,prod.discount?'DISCOUNT':'',rating.score.toFixed(4));
+});
+console.log('----', (Date.now()-time),'ms');time=Date.now();
 
 // machine.recommendedProducts(false,30).forEach(recommend=>{
 //   console.log('- bests Delf',recommend.item, products.find(p=>p.sku==recommend.item).title,recommend.score);
