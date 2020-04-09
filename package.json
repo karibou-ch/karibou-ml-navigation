@@ -1,16 +1,16 @@
 {
   "name": "karibou-mlx",
-  "version": "0.31.0",
+  "version": "0.72.2",
   "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
-  "main": "./lib/index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "npm run build:esm && npm run build:umd",
-    "build:watch": "gulp build:esm:watch",
+    "build": "tsc",
+    "build:watch": "tsc -watch",
     "tslint": "tslint"
   },
   "files": [
-    "lib",
-    "index.js",
+    "dist",
+    "dist/index.js",
     "LICENSE",
     "README.md"
   ],
@@ -31,9 +31,9 @@
     "url": "https://github.com/karibou-ch/karibou-ml-userx/issues"
   },
   "dependencies": {
+    "@types/node": "^10.12.9",
     "bluebird": "^3.5.2",
     "clarifai": "^2.8.1",
-    "jonfon": "git+https://github.com/iceonepiece/jonfon.git",
     "json2csv": "^4.2.1",
     "likely": "^0.2.0",
     "lodash": "^4.17.11",
