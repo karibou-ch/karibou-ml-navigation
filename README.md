@@ -5,11 +5,8 @@
 3. un produit acheté en petite quantité mais régulièrement est **très** valorisé
 4. un produit acheté en grande quantité une dans très peu de commandes est **moyennement** valorisé 
 
-## proposition de produits en complément
-* une habitude d'achat `H` individuelle est déterminée par le nombre de produits proposés pour une catégorie donnée
-* on utilise une proposition Anonymous lorsque `H` est plus petite que le seuil Anonymous
 
-## L’algorithme utilisé s'inspire du TF-IDF de la recherche de texte
+## L’algorithme utilisé s'inspire du TF-IDF dédié à la recherche de termes
 _La fréquence inverse de document (inverse document frequency) est une mesure de l'importance du terme dans l'ensemble des documents indexés. Dans le schéma TF-IDF, elle vise à donner <u>un poids plus important aux termes les moins fréquents, considérés comme plus discriminants</u>_. Pour cette raison on valorise l'inverse.
 
 
@@ -19,19 +16,34 @@ _La fréquence inverse de document (inverse document frequency) est une mesure d
 * <img src="https://render.githubusercontent.com/render/math?math=|\{d_{j} : t_{i} \in d_{j}\}|"/> : nombre de documents où le terme `t_{i}`  apparaît (c'est-à-dire <img src="https://render.githubusercontent.com/render/math?math=n_{i,j} \neq 0" />)
 
 ## Soit dans notre cas
-On souhaite mesurer l'importance d'un produit dans l'ensemble des commandes de l'utilisateur. On donne un poids plus importants aux produits fréquents dans plus de commandes.
+On souhaite mesurer l'importance d'un produit dans l'ensemble des commandes de l'utilisateur. On donne un poids plus importants aux produits fréquemment acheté.
 
 * Liste des produits **i** de 1 à N
 * Liste des commandes **j** de 1 à N
 * <img src="https://render.githubusercontent.com/render/math?math=|CU|"/> : nombre total de commandes pour un utilisateur ;
 * <img src="https://render.githubusercontent.com/render/math?math=|\{CU_{j} : p_{i} \in CU_{j}\}|"/> : nombre de commandes de l'utilisateur où le produit `p_{i}`  apparaît
-* `Pf(p_i)`; = La fréquence d'achat d'un produit p_i dans toute les commandes *(exemple, 3x + 2x + 1x = 6x pour 3 commandes = 6/3)* 
-* `Pf(p_i)`; =  La fréquence d'achat d'un produit p_i dans la commande  / Nombre total de produits dans la commande *(exemple, 3/5 + 2/10 + 1/10 = 9 /10 )*
+* Deux options pour `Pf(p_i)`
+  * `Pf(p_i)`; = La fréquence d'achat d'un produit p_i dans toute les commandes *(exemple, 3x + 2x + 1x = 6x pour 3 commandes = 6/3)* 
+  * `Pf(p_i)`; =  La fréquence d'achat d'un produit p_i dans la commande  / Nombre total de produits dans la commande *(exemple, 3/5 + 2/10 + 1/10 = 9 /10 )*
 
 > déterminer la meilleure manière de calculter PF
 
 <img src="https://render.githubusercontent.com/render/math?math=PfiCUf_{i,j} = (pf_{i,j}) \cdot \log \frac{|\{cu_{j}: p_{i} \in cu_{j}\}|}{|CU|}"/>
 
+## Création d'un index pour l'utilisateur Anonymous
+On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score des produits de l'utilisateur Anonymous est produit par l'activité des commandes de l'ensemble des utilisateurs. Le score obtenu pour chaque produits, est considéré comme une référence normalisée de l'appréciation du produit.
+
+## Propositions complémentaires
+Il existe quelques cas de figures ou il n'est pas possible de faire des proposition de produits:
+1. lorsque l'utilisateur n'a pas encore passé de commande
+2. lorsque qu'il y a un nouveau produit
+
+Pour ces cas, il faut quand même faire une proposition. 
+
+
+
+* une habitude d'achat `H` individuelle est déterminée par le nombre de produits proposés pour une catégorie donnée
+* on utilise une proposition Anonymous lorsque `H` est plus petite que le seuil Anonymous
 
 # booster
 On peut appliquer un booster devant notre score pour associer le score à une fonction du temps
@@ -64,123 +76,3 @@ On peut appliquer un booster devant notre score pour associer le score à une fo
 * https://fr.wikipedia.org/wiki/TF-IDF 
 * https://fr.wikipedia.org/wiki/Similarit%C3%A9_cosinus
 * LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits
-
-
-``` javascript
-Required knowledge: machine learning, deep learning, computer science, nodejs, npm, mongodb
-Difficulty level: intermediate
-Potential mentors: tbd
-```
-
-## Starting
-```bash
-git clone https://github.com/karibou-ch/karibou-ml-userx.git
-cd karibou-ml-userx
-npm install
-npm install -g mocha
-mocha  
-```
-### 1. mocha `test/concept`
-1. example that apply `Clarifai` product image detection
-1. compute a score concepts for each product 
-1. display similar product based on concept
-### 2. mocha `test/customer`
-1. example that compute customer order frequency and issue related to the past orders
-
-
-
-## About the data
-Orders contains all information about anonymized user, items, issue , time, etc. Here a short description:
-``` javascript
-{
-    "oid": 2000002,
-    "shipping": {
-      "postalCode": "1205",
-      "when": "2014-12-12T15:00:00.000Z",
-      "bags": 2  /** Number of shipped bags for this order */
-    },
-    "customer": {
-      "id": 2180215629900685,
-      "pseudo": "f**i",
-      "created": "2014-12-09T23:28:45.138Z"
-    },
-    "vendors": [{"slug": "les-fromages-de-gaetan"},...],
-    "items": [
-      {
-        "title": "Hommos",
-        "sku": 1000013,
-        "vendor": "crocorient",
-        "image": "",
-        "estimatedprice": 5,
-        "finalprice": 5,
-        "qty": 1,
-        "category": "Traiteur",
-        "status": "failure",
-        "issue": {
-          "name": "issue_missing_product",
-          "missing_product": 1,
-          "quality_collect": 0,
-          "quality_feedback": 0
-        }
-      ...
-``` 
-* customer likes products (click action) `order.cutomer.likes`
-* item status for one order `items.status` must be `"failure" or "fulfilled"`
-* the case of an issue is different when status is failure or fulfilled, in order `items.issue.name`:
-  * when undefined **== defcon 0** , 
-  * `"issue_missing_product"` **== defcon 1**, 
-  * `"issue_wrong_product_quality"` et `"items.status===failure"` **== defcon 2**,
-  * `"issue_wrong_product_quality"` et `"items.status===fulfilled"` **== defcon 5**,
-* `discount` is the amount offer by the seller to the customer (that makes shipping fees lower)
-
-description of the `products.json`
-```js
-  {
-    "attributes": {...    },
-    "backend": {},
-    "categories": "Boucherie et charcuterie",
-    "created": "2014-11-23T20:21:56.839Z",
-    "details": {
-      "origin": "boeuf suisse, sel, poivre, épices",
-      "description": "...",
-      "keywords": "Boucherie et charcuterie ",
-      "internal": "",
-      "biodegradable": false,
-      "bioconvertion": false,
-      "biodynamics": false,
-      "grta": false,
-      "bio": false,
-      "local": true,
-      "natural": true,
-      "homemade": true,
-      ...
-    },
-    "faq": [],
-    "photo": {
-      "url": "//ucarecdn.com/2c04d271-2030-4a43-9f18-30dc3f1fc84a/"
-    },
-    "pricing": {
-      "stock": 8,
-      "part": "~100gr",
-      "price": 8.6
-    },
-    "sku": 1000030,
-    "title": "Viande séchée de Genève",
-    "vendor": "les-fromages-de-gaetan",
-    "updated": "2017-07-04T12:22:24.446Z",
-    "quantity": {
-      "comment": "Convient pour 1-2 personnes",
-      "display": true
-    },
-    "shelflife": {
-      "comment": "Se conserve 3 jours au frais",
-      "display": false
-    },
-    "variants": [],
-    "slug": "viande-sechee-de-geneve",
-    "stats": {
-      "orders": 195,
-      "issues": 0,
-      "issues_names": []
-    }
-```
