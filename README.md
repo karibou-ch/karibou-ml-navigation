@@ -1,26 +1,70 @@
-## Introduction
+# Calcul du score d'un produit (Attention, le produit est disponible sur plusieurs HUBs)
+## sélection des meilleurs produits
+1. un produit souvent acheté dans le présent est **très** valorisé
+2. un produit souvent acheté dans le passé est **moins** valorisé
+3. un produit acheté en petite quantité mais régulièrement est **très** valorisé
+4. un produit acheté en grande quantité une dans très peu de commandes est **moyennement** valorisé 
 
-This page explains __karibou.ch machine learning__ project idea for [Google Summer of Code 2017](https://developers.google.com/open-source/gsoc/). GSoC is a program run every year by Google where students are paid to work on open source projects during their summer break. If you are a student and interested in taking part then please read the [Advice for Students](#advice-for-students) section below. Everybody (not just students) is free to edit this page and add project ideas.
+## proposition de produits en complément
+* une habitude d'achat `H` individuelle est déterminée par le nombre de produits proposés pour une catégorie donnée
+* on utilise une proposition Anonymous lorsque `H` est plus petite que le seuil Anonymous
 
-[<img src="http://karibou.ch/img/k-brand.png" alt="karibouCore Logo" height="100%" />](http://karibou.ch/)
-> Karibou.ch is an opensource community project and a online marketplace whose goal is to help a quality and healthy food to be distribued. Our plateform mainly focuses on primary food distribution (eg. organic vegetables from farms, artisanal bread, artisanal cheese, meat from farms). 
+## L’algorithme utilisé s'inspire du TF-IDF de la recherche de texte
+_La fréquence inverse de document (inverse document frequency) est une mesure de l'importance du terme dans l'ensemble des documents indexés. Dans le schéma TF-IDF, elle vise à donner <u>un poids plus important aux termes les moins fréquents, considérés comme plus discriminants</u>_. Pour cette raison on valorise l'inverse.
 
 
-## Objective
-Build a better user experience based on data activities stored in the database. We would like to build an «intelligent» system that will drastically help to reduce the friction for the user to place a new order that fit his needs.
+<img src="https://render.githubusercontent.com/render/math?math=\mathrm{tfidf_i,j} =   (tf_{i,j}) \cdot \log \frac{|D|}{|\{d_{j}: t_{i} \in d_{j}\}|}" />
 
-## Problem to solve
-> The main challenges that startups in this segment have met include the cost of acquiring and retaining customers and drivers, competition from big delivery incumbents like AmazonFresh, unscalable logistic solutions across locations, and raising enough funding to build the business over several years.
+* <img src="https://render.githubusercontent.com/render/math?math=|D|"/> : nombre total de documents dans le corpus ;
+* <img src="https://render.githubusercontent.com/render/math?math=|\{d_{j} : t_{i} \in d_{j}\}|"/> : nombre de documents où le terme `t_{i}`  apparaît (c'est-à-dire <img src="https://render.githubusercontent.com/render/math?math=n_{i,j} \neq 0" />)
 
-Currently a user that wants to place a new order has to navigate on different categories and select manually each product. This process can be long and some available products may not be seen. Navigation through categories is often annoying. Moreover, when there are many products the organization of the lists is often of poor quality. 
+## Soit dans notre cas
+On souhaite mesurer l'importance d'un produit dans l'ensemble des commandes de l'utilisateur. On donne un poids plus importants aux produits fréquents dans plus de commandes.
 
-## Task Idea
-We have the hypothesis that machine learning (ML) can help to resolve this problem. This project will investigate on how to use machine learning in the scope of a food marketplace with our set of data. How the ML model can boost the user experience and help the foodmarket to acquire and retain customers.
-* Is it possible to predict a list of products that will fit the customer needs for a week of food?
-* What are the minimal set of input that models needs to get an accurate prediction ([what to do with “small” data?](https://medium.com/rants-on-machine-learning/what-to-do-with-small-data-d253254d1a89#.nnpm07rer), [classifying e-commerce products based on images and text](https://blog.insightdatascience.com/classifying-e-commerce-products-based-on-images-and-text-14b3f98f899e))?
-* What do we need to make this prediction more accurate?
-* What is the most appropriate model that fit our data?
-* Based on the prediction is it possible to create clusters of customers?
+* Liste des produits **i** de 1 à N
+* Liste des commandes **j** de 1 à N
+* <img src="https://render.githubusercontent.com/render/math?math=|CU|"/> : nombre total de commandes pour un utilisateur ;
+* <img src="https://render.githubusercontent.com/render/math?math=|\{CU_{j} : p_{i} \in CU_{j}\}|"/> : nombre de commandes de l'utilisateur où le produit `p_{i}`  apparaît
+* `Pf(p_i)`; = La fréquence d'achat d'un produit p_i dans toute les commandes *(exemple, 3x + 2x + 1x = 6x pour 3 commandes = 6/3)* 
+* `Pf(p_i)`; =  La fréquence d'achat d'un produit p_i dans la commande  / Nombre total de produits dans la commande *(exemple, 3/5 + 2/10 + 1/10 = 9 /10 )*
+
+> déterminer la meilleure manière de calculter PF
+
+<img src="https://render.githubusercontent.com/render/math?math=PfiCUf_{i,j} = (pf_{i,j}) \cdot \log \frac{|\{cu_{j}: p_{i} \in cu_{j}\}|}{|CU|}"/>
+
+
+# booster
+On peut appliquer un booster devant notre score pour associer le score à une fonction du temps
+
+* un produit acheté les ~3 derniers mois est boosté **(x2 -> x1)**
+* ensuite il perd de la valeur dans le temps jusqu'à ~ 24 mois => (x1 -> x 1/2)
+```
+ booster = 1/ ( timeInMonth + 2)^0.7 x 1 / 0.3 
+```
+![image](https://user-images.githubusercontent.com/1422935/49075769-c494a880-f237-11e8-881e-ee6e230c54a5.png)
+*  **variante:** un produit acheté les ~6 derniers mois est boosté **(x3 -> x1)**
+```
+ booster = 1/ ( timeInMonth + 2)^0.8 x 1 / 0.18 - 0.2 
+```
+![image](https://user-images.githubusercontent.com/1422935/49078252-cd887880-f23d-11e8-8701-ec859b41c436.png)
+
+# booster de [HN](http://news.ycombinator.com/) 
+```
+ booster = 1/ ( timeInHours + 2)^1.8 x penalties
+```
+![image](https://user-images.githubusercontent.com/1422935/49076285-ed696d80-f238-11e8-9a6d-22ab63ccf969.png)
+
+* avec une légère atténuation est ajouté sur la quantité de votes
+```
+ booster = booster * (votes - 1 )^.8
+```
+
+
+# Refs
+* https://fr.wikipedia.org/wiki/TF-IDF 
+* https://fr.wikipedia.org/wiki/Similarit%C3%A9_cosinus
+* LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits
+
 
 ``` javascript
 Required knowledge: machine learning, deep learning, computer science, nodejs, npm, mongodb
@@ -140,40 +184,3 @@ description of the `products.json`
       "issues_names": []
     }
 ```
-
-# Advice for Students
-
-If you are a student and interested in working on karibou.ch project as part of GSoC then please read the information below, as well as the GSoC program information provided by Google, including the [student manual](https://developers.google.com/open-source/gsoc/resources/manual) and [timeline](https://developers.google.com/open-source/gsoc/timeline). 
-
-* If you found that this is a great project, please contact us, we are active on [gitter](https://gitter.im/karibou-ch/). Just drop by and leave us a message!
-* If you have your own project idea, that's great, submit your idea as a [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues).
-
-## Guidelines & requirements
-Potential candidates should take a look at [GitHub Issues](https://github.com/karibou-ch/karibou-ml-userx/issues). It can help them get some idea how things would work during the GSoC.
-
-#### Basic requirements
-
-- Be passionate about technology (we love nodejs)
-- Interested in food as a major paradigm to improve health, protect our environment and all the species with whom we share this planet
-- Participate in regular meetings with the mentor
-- Deliver code according to the sprints that have been defined
-- Get in contact with the mentors or admins if any even remotely potential problems arise.
-
-Experience and familiarity with most/all of these:
-
-- nodejs, npm, mongodb,
-- mocha for unit testing,
-- Git, GitHub and submit pull request process,
-- [Deeplearning](https://classroom.udacity.com/courses/ud730/lessons/6370362152/concepts/63703142310923) or Machine learning skills,
-- Bash
-
-#### Helpful extras
-
-- General understanding of TravisCI & continuous integration
-- General understanding of NPM packaging systems
-- reading of [Food recognition & classification](https://infoscience.epfl.ch/record/221610/files/madima2016_food_recognition.pdf)
-- http://caffe.berkeleyvision.org/
-- [food recognition developer.clarifai.com](https://developer.clarifai.com/models/food-image-recognition-model/bd367be194cf45149e75f01d59f77ba7)
-
-
- 
