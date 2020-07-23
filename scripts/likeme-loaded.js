@@ -14,7 +14,7 @@ console.log("Recommending ...")
 let time=Date.now();
 
 // E**O//2360346371241611  C**D//739049451726747  dummy
-var recommendations = model.rankAllItems("739049451726747");
+var recommendations = model.recommendations("739049451726747");
 console.log("Recommendation DONE", (Date.now()-time)/1000)
 
 
