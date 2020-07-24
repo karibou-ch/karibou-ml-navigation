@@ -205,7 +205,7 @@ export class Machine{
       if(prodFreq && orders.length){
         score=(dimmedSum/(orders.length)*(prodFreq));  
       }
-      console.log('-- created',sku,prodFreq, score, dimmedSum);
+      // console.log('-- created',sku,prodFreq, score, dimmedSum);
 
       return {
         item:sku,

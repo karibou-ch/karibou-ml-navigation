@@ -47,7 +47,7 @@ export class MachineIndex{
       this.model.estimated=sylvester.Matrix.create(options.model.estimated);
     }
     console.log('--- DATE',this.timestamp);
-    console.log('--- CF likely',(!!this.likely));
+    // console.log('--- CF likely',(!!this.likely));
     // console.log('--- CF jonfon',(!!this.model));
     console.log('--- model      size',this.humanSz(JSON.stringify(this.model||'').length));
     console.log('--- rating     size',this.humanSz(JSON.stringify(this.rating).length));
@@ -60,6 +60,21 @@ export class MachineIndex{
 
   }
 
+  addInMemory(product) {
+    //
+    // already in memory
+    if(this.rating['anonymous'].some(sku => product.sku === sku)) {
+      return;
+    }
+    Object.keys(this.rating).forEach(user => {
+      this.rating[user].push({
+        item:product.sku, score:0.1, sum: 1
+      });
+    });
+
+    //
+    // save ??
+  }
 
   humanSz(bytes) {
     var thresh = 1024;
@@ -111,7 +126,7 @@ export class MachineIndex{
 
   getVendorSku(vendor){
 
-    if(!this.vendors[vendor].length){
+    if(!this.vendors[vendor] || !this.vendors[vendor].length){
       this.vendors[vendor]=this.products.filter(product=>product.vendor==vendor).map(product=>product.sku);
     }
     return this.vendors[vendor];
@@ -170,34 +185,49 @@ export class MachineIndex{
     }
   }
   ratings(user,n,params){
-    user=user||'anonymous';
-    params=params||{};
-    n=n||20;
-    let result=[];
+    //
+    // default values
+    n = n || 20;
+    user=user || 'anonymous';
+    params = params || {};
+
+    //
+    // initial values
     this.rating[user]=this.rating[user]||[];
+    let result= this.rating[user].filter(reco=>reco);
+
     //
     // popular by category
     if(params.category){
       this.getCategorySku(params.category);
-      result=this.rating[user].filter(reco=>reco).filter(reco=>this.categories[params.category].indexOf(reco.item)>-1).sort(this.sortByScore).slice(0,n);
+      result=result.filter(reco=>this.categories[params.category].indexOf(reco.item)>-1);
     }
+
     //
     // popular by vendor
-    else if(params.vendor){
+    if(params.vendor){
       this.getVendorSku(params.vendor);
-      result=this.rating[user].filter(reco=>reco).filter(reco=>this.vendors[params.vendor].indexOf(reco.item)>-1).sort(this.sortByScore).slice(0,n);
+      result=result.filter(reco=>this.vendors[params.vendor].indexOf(reco.item)>-1);
     }
+
     //
-    // all popular 
-    else{
-      result=this.rating[user].filter(reco=>reco).slice(0,n);
+    // constrains by HUBs of vendors
+    if(params.vendors && params.vendors.length){      
+      result=result.filter(elem=>{
+        return params.vendors.some(vendor => this.getVendorSku(vendor).indexOf(elem.item)>-1);        
+      });
     }
+
+    //
+    // window of sorted results
+    result = result.sort(this.sortByScore).slice(0,n);
+
     //
     // pad cell with anonymous ratings
     if(
-      params.pad&&
-      result.length<n&&
-      user!='anonymous'
+      params.pad &&
+      result.length < n &&
+      user !== 'anonymous'
     ){
       n=(n-result.length);
       //

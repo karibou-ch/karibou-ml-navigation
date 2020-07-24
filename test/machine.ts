@@ -195,7 +195,7 @@ describe('machine index', function() {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log(ratings)
+    console.log('user 5 rating: ',ratings)
   });
 
   it('use index for user 15', async function() {
@@ -204,6 +204,28 @@ describe('machine index', function() {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
+    console.log('user 15 rating: ', ratings)
+
+  });
+
+  it('use index for anonymous', async function() {
+    const user = 'anonymous';
+    const options = {
+      pad:true
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    console.log('user anonymous rating: ', ratings)
+
+  });
+
+  it('use index for user 15 and one HUB (set of vendors)', async function() {
+    const user = 5;
+    const options = {
+      vendors:['d','b','c'],
+      pad:true
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    console.log('user 5 in HUB rating: ',ratings)
 
   });
 
