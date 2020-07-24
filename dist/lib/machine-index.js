@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MachineIndex = void 0;
 var assert = require('assert');
 var _ = require('lodash');
 var fs = require('fs');
@@ -10,7 +12,7 @@ var sylvester = require('sylvester');
 // machine learning
 // var jonfon = require('jonfon');
 // var Model = jonfon.Model;
-export class MachineIndex {
+class MachineIndex {
     constructor(options) {
         // model
         this.timestamp = options.timestamp;
@@ -29,7 +31,7 @@ export class MachineIndex {
             this.model.estimated = sylvester.Matrix.create(options.model.estimated);
         }
         console.log('--- DATE', this.timestamp);
-        console.log('--- CF likely', (!!this.likely));
+        // console.log('--- CF likely',(!!this.likely));
         // console.log('--- CF jonfon',(!!this.model));
         console.log('--- model      size', this.humanSz(JSON.stringify(this.model || '').length));
         console.log('--- rating     size', this.humanSz(JSON.stringify(this.rating).length));
@@ -38,6 +40,13 @@ export class MachineIndex {
         assert(options.products);
         this.getCategories();
         this.getVendors();
+    }
+    addInMemory(product) {
+        Object.keys(this.rating).forEach(user => {
+            this.rating[user].push({
+                item: product.sku, score: 0.1, sum: 1
+            });
+        });
     }
     humanSz(bytes) {
         var thresh = 1024;
@@ -81,7 +90,7 @@ export class MachineIndex {
         return Object.keys(this.vendors).sort();
     }
     getVendorSku(vendor) {
-        if (!this.vendors[vendor].length) {
+        if (!this.vendors[vendor] || !this.vendors[vendor].length) {
             this.vendors[vendor] = this.products.filter(product => product.vendor == vendor).map(product => product.sku);
         }
         return this.vendors[vendor];
@@ -135,35 +144,47 @@ export class MachineIndex {
         }
     }
     ratings(user, n, params) {
+        //
+        // default values
+        n = n || 20;
         user = user || 'anonymous';
         params = params || {};
-        n = n || 20;
-        let result = [];
+        //
+        // initial values
         this.rating[user] = this.rating[user] || [];
+        let result = this.rating[user].filter(reco => reco);
         //
         // popular by category
         if (params.category) {
             this.getCategorySku(params.category);
-            result = this.rating[user].filter(reco => reco).filter(reco => this.categories[params.category].indexOf(reco.item) > -1).sort(this.sortByScore).slice(0, n);
+            result = result.filter(reco => this.categories[params.category].indexOf(reco.item) > -1);
         }
         //
         // popular by vendor
-        else if (params.vendor) {
+        if (params.vendor) {
             this.getVendorSku(params.vendor);
-            result = this.rating[user].filter(reco => reco).filter(reco => this.vendors[params.vendor].indexOf(reco.item) > -1).sort(this.sortByScore).slice(0, n);
+            result = result.filter(reco => this.vendors[params.vendor].indexOf(reco.item) > -1);
         }
         //
-        // all popular 
-        else {
-            result = this.rating[user].filter(reco => reco).slice(0, n);
+        // constrains by HUBs of vendors
+        if (params.vendors && params.vendors.length) {
+            result = result.filter(elem => {
+                return params.vendors.some(vendor => this.getVendorSku(vendor).indexOf(elem.item) > -1);
+            });
         }
+        //
+        // window of sorted results
+        result = result.sort(this.sortByScore).slice(0, n);
         //
         // pad cell with anonymous ratings
         if (params.pad &&
             result.length < n &&
-            user != 'anonymous') {
+            user !== 'anonymous') {
             n = (n - result.length);
+            //
+            // merge anonymous data for missing score
             result = result.concat(this.ratings('anonymous', n, params));
+            result = result.filter((elem, index, array) => array.findIndex(sub => sub.item == elem.item) === index);
         }
         return result;
     }
@@ -190,3 +211,4 @@ export class MachineIndex {
         });
     }
 }
+exports.MachineIndex = MachineIndex;

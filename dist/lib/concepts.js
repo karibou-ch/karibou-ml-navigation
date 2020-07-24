@@ -8,6 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Concepts = void 0;
 const moment = require('moment');
 const _ = require('lodash');
 const stopwords = require('stopwords-fr'); // array of stopwords
@@ -21,7 +23,7 @@ const mapSaves = (iterable, action) => __awaiter(void 0, void 0, void 0, functio
     }
     return results;
 });
-export class Concepts {
+class Concepts {
     constructor(options) {
         this.options = options || {};
         // output classifications
@@ -211,4 +213,5 @@ export class Concepts {
         return this.classifications;
     }
 }
+exports.Concepts = Concepts;
 module.exports = Concepts;

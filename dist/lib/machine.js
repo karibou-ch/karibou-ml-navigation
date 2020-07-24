@@ -1,5 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Machine = void 0;
 var assert = require('assert');
-import { MachineIndex } from './machine-index';
+const machine_index_1 = require("./machine-index");
 //
 // vector, matrix and geometry library
 // http://sylvester.jcoglan.com/
@@ -8,7 +11,7 @@ import { MachineIndex } from './machine-index';
 // var jonfon = require('jonfon');
 // var Engine = jonfon.Engine;
 // var Strategy = jonfon.Strategy;
-export class Machine {
+class Machine {
     constructor(options) {
         this.options = options || {};
         if (options.likely) {
@@ -79,7 +82,7 @@ export class Machine {
         this.matrix = [];
         for (var i = 0; i < this.users.length; i++) {
             // FIXME remove fill(0) when using jonfon !!
-            this.matrix[i] = new Array(this.products.length); //.fill(0);
+            this.matrix[i] = new Array(this.products.length).fill(0);
         }
         // make a Matrix Object
         //this.matrix=matrix(matrix);
@@ -90,8 +93,9 @@ export class Machine {
         let today = Date.now();
         let onemonth = 86400000 * 30;
         let score = orders.reduce((sum, order) => {
+            const when = order.shipping.when.$date ? new Date(order.shipping.when.$date) : new Date(order.shipping.when);
             let countBuy = order.items.filter(item => item.sku == sku).length + 1;
-            let timeInMonth = Math.round((today - (new Date(order.shipping.when.$date).getTime())) / onemonth);
+            let timeInMonth = Math.round((today - when.getTime()) / onemonth);
             let boost = 1 / (Math.pow(timeInMonth + 2, 0.8) * 0.18) - 0.2;
             return countBuy * boost + sum;
         }, 0);
@@ -112,6 +116,11 @@ export class Machine {
         let today = Date.now();
         let orders = this.orders.filter(o => o.customer.id == uid);
         let row = this.users.findIndex(id => id == uid);
+        const betweeThan = (date, weeks) => {
+            let now = new Date();
+            date = new Date(date);
+            return date.plusDays(weeks * 7) > now;
+        };
         //
         // simple check
         orders.forEach(order => {
@@ -123,24 +132,33 @@ export class Machine {
         //   console.log('-- products',this.matrix[row].length,this.products.length,this.matrix[row].filter(elem=>elem).length)
         // }
         this.ratings[uid] = this.matrix[row].map((prodFreq, i) => {
-            prodFreq = prodFreq || 0;
+            prodFreq = prodFreq || 0.01;
             //
             // get product SKU
-            let sku = this.products[i].sku;
-            let boost_discount = (this.products[i].discount) ? 50 : 1;
-            // let boost_discount=(this.products.find(p=>p.sku==sku).discount)?50:1;
+            const sku = this.products[i].sku;
+            if (betweeThan(this.products[i].created, 8)) {
+                prodFreq = (prodFreq * 10);
+            }
+            else if (betweeThan(this.products[i].updated, 3)) {
+                prodFreq = (prodFreq * 2);
+            }
             // get attenuation(sum)
             let dimmedSum = this.dimmer(orders, sku);
             //  
             // compute the score
-            let score = 0;
-            // |O|    => count orders for one user
-            // p € O  => count orders for one product
-            // fP     => freqency product for all orders (freq is >= of p€O)
-            // log(Fp+1)*|p€O|/|O|
+            let score = 0.0;
+            //
+            // case of new products, or updated product
+            //
+            // https://github.com/karibou-ch/karibou-ml-userx/
+            // ∑O    => count orders for one user
+            // ∑(p ⊂ O)  => count orders for one product
+            // fP     => freqency product for all orders (freq is >= of p⊂O)
+            // log(Fp+1)*|p⊂O|/|O|
             if (prodFreq && orders.length) {
-                score = (dimmedSum * boost_discount / (orders.length) * (prodFreq));
+                score = (dimmedSum / (orders.length) * (prodFreq));
             }
+            // console.log('-- created',sku,prodFreq, score, dimmedSum);
             return {
                 item: sku,
                 score: score,
@@ -153,18 +171,20 @@ export class Machine {
             this.ratings['anonymous'] = this.products.map(product => {
                 return {
                     item: product.sku,
-                    score: 0,
+                    score: 0.01,
                     sum: 0
                 };
             });
         }
+        //
+        // anonymous score
         this.ratings[uid].forEach((elem, i) => {
             let row = this.ratings['anonymous'].findIndex($elem => $elem.item == elem.item);
-            this.ratings['anonymous'][row].score += elem.score;
-            this.ratings['anonymous'][row].sum += elem.sum;
+            this.ratings['anonymous'][row].score = (this.ratings['anonymous'][row].score + elem.score) / 2;
+            this.ratings['anonymous'][row].sum = (this.ratings['anonymous'][row].sum + elem.sum) / 2;
         });
         //
-        // padding and sort user
+        // sort user
         this.ratings[uid] = this.ratings[uid].sort((a, b) => {
             return b.score - a.score;
         });
@@ -193,7 +213,7 @@ export class Machine {
         }
         this.users.forEach(this.index.bind(this));
         this.indexAnonymous();
-        return new MachineIndex({
+        return new machine_index_1.MachineIndex({
             products: this.products,
             rating: this.ratings,
             model: this.model,
@@ -202,3 +222,4 @@ export class Machine {
         });
     }
 }
+exports.Machine = Machine;
