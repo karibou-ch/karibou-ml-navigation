@@ -29,18 +29,18 @@ On souhaite mesurer l'importance d'un produit dans l'ensemble des commandes de l
 ## Création d'un index pour l'utilisateur Anonymous
 On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score des produits de l'utilisateur Anonymous est produit par l'activité des commandes de l'ensemble des utilisateurs. Le score obtenu pour chaque produits, est considéré comme une référence normalisée de l'appréciation du produit.
 
-## Propositions initiales
+## Valeur du score initiale
 Il existe quelques cas de figures ou il n'est pas possible de calculer un score :
 1. lorsque l'utilisateur n'a pas encore passé de commande
-2. lorsque qu'il y a un nouveau produit
-
-Pour ces cas, il faut quand même prévoire un score initiale. 
-
-# Penalties
-On peut dire que l'appréciation d'un produit est corrélée avec son score. Cependant il est possible que soudainement (par exemple en fin de saison) le produit génère de l'insatisfaction. Dans ce cas, nous proposons d'introduire une pénalité relative au nombre d'insatisfaction qui atténu le précédent boost. Cette atténuation est également une fonction qui s'estompe avec le temps.
+2. lorsque l'utilisateur n'est pas identifié
+3. lorsque qu'il y a un nouveau produit et qu'il n'a pas pu être commandé
 
 # booster
-On peut appliquer un booster à notre score pour différente situations.
+On peut appliquer un booster (un facteur d'amplification) au score d'un produit pour différente situations. 
+* Lorsqu'un produit est apprécié, nous considérons que son score plus élevé. 
+* Lorsque l'intérêt d'un produit diminue, son score doit également être atténué.
+* Lorsqu'un vendeur créé un nouveau produit, son score est artificiellement élevé  d'un facteur N
+* Lorsqu'un produit est en promotion, son score est artificiellement élevé d'un facteur M
 
 ## l'intérêt d'un produit s'estompe à une fonction du temps
 * un produit acheté les ~3 derniers mois est boosté **(x2 -> x1)**
@@ -55,21 +55,10 @@ On peut appliquer un booster à notre score pour différente situations.
 ```
 ![image](https://user-images.githubusercontent.com/1422935/49078252-cd887880-f23d-11e8-8701-ec859b41c436.png)
 
-## Lorsqu'un produit est en promotion, il gagne un facteur N
-* toto
-
-
-# booster de [HN](http://news.ycombinator.com/) 
-```
- booster = 1/ ( timeInHours + 2)^1.8 x penalties
-```
-![image](https://user-images.githubusercontent.com/1422935/49076285-ed696d80-f238-11e8-9a6d-22ab63ccf969.png)
-
-* avec une légère atténuation est ajouté sur la quantité de votes
-```
- booster = booster * (votes - 1 )^.8
-```
-
+# Penalties
+La valeur subjective d'un produit est corrélée avec celle de son score. Cependant il est possible que soudainement un produit apprecié génère de l'insatisfaction (par exemple en fin de saison le produit perd un peu de sa qualité). Dans ce cas, nous proposons d'introduire une pénalité relative au nombre d'insatisfaction qui atténu la valeur du score. Cette atténuation s'estompe également avec le temps. Exemple de problème qui atténu la valeur d'un score:
+* plusieurs clients on manifestés un problème avec un même produit (ex. avocat pas assez mûr)
+* des clients n'ont pas ressus des produits commandés (mauvaise gestion des stocks)
 
 # Refs
 * https://fr.wikipedia.org/wiki/TF-IDF 
