@@ -10,6 +10,7 @@
 _La fréquence inverse de document (inverse document frequency) est une mesure de l'importance du terme dans l'ensemble des documents indexés. Dans le schéma TF-IDF, elle vise à donner <u>un poids plus important aux termes les moins fréquents, considérés comme plus discriminants</u>_. Pour cette raison on valorise l'inverse.
 
 * https://fr.wikipedia.org/wiki/TF-IDF
+* https://fr.wikipedia.org/wiki/Similarit%C3%A9_cosinus
 
 ## Il m'a semblé intérressant de s'inspirer de cette formule pour notre besoin
 On souhaite mesurer l'importance d'un produit dans l'ensemble des commandes de l'utilisateur. On donne un poids plus importants aux produits fréquemment acheté.
