@@ -4,6 +4,7 @@
 2. un produit souvent acheté dans le passé est **moins** valorisé
 3. un produit acheté en petite quantité mais régulièrement est **très** valorisé
 4. un produit acheté en grande quantité une dans très peu de commandes est **moyennement** valorisé 
+5. un produit commandé qui génère une erreur du vendeur (stock ou qualité) est **dévalorisé**
 
 
 ## L’algorithme utilisé s'inspire du TF-IDF dédié à la recherche de termes dans l'ensemble d'un corpus
