@@ -42,11 +42,18 @@ class MachineIndex {
         this.getVendors();
     }
     addInMemory(product) {
+        //
+        // already in memory
+        if (this.rating['anonymous'].some(sku => product.sku === sku)) {
+            return;
+        }
         Object.keys(this.rating).forEach(user => {
             this.rating[user].push({
                 item: product.sku, score: 0.1, sum: 1
             });
         });
+        //
+        // save ??
     }
     humanSz(bytes) {
         var thresh = 1024;

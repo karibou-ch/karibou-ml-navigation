@@ -6,7 +6,7 @@ const orders = require('./data/orders.json');
 describe('Clarifai API', function() {
   // api key (scope=all)
   var key='d45ec8c49d63443aa2375e5eb2a18a51';
-  xit('predict product concepts from image ', function(done) {
+  it('predict product concepts from image ', function(done) {
     this.timeout(500000);
     products.should.be.an.Array();    
     var concepts = new (require('../lib/concepts'))({api:key});
@@ -20,7 +20,7 @@ describe('Clarifai API', function() {
     
   });
   
-  xit('score on concepts, specific vs generic ', function(done) {
+  it('score on concepts, specific vs generic ', function(done) {
     var products = require('./data/products-clarifai.json');
     var Concepts = require('../lib/concepts')
     var concepts = new Concepts();
@@ -42,7 +42,7 @@ describe('Clarifai API', function() {
     done();
   });
 
-  xit('get similar products based on concepts ', function(done) {
+  it('get similar products based on concepts ', function(done) {
     var products = require('./data/products-clarifai.json');
     var Concepts = require('../lib/concepts');
     var concepts = new Concepts();

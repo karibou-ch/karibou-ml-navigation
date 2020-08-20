@@ -122,22 +122,38 @@ export class Machine{
 
   //
   // compute attenuation by time
-  dimmer(orders,sku){
+  dimmerSum(orders,sku){
     let today=Date.now();
     let onemonth=86400000*30;
 
-    let score=orders.reduce((sum,order)=>{
+    //
+    // for each orders
+    let score=orders.filter(order => order.items.some(item=>item.sku==sku)).reduce((sum,order)=>{
+      //
+      // get order date
       const when = order.shipping.when.$date? new Date(order.shipping.when.$date): new Date(order.shipping.when);
-      let countBuy=order.items.filter(item=>item.sku==sku).length+1;
-      let timeInMonth=Math.round((today-when.getTime())/onemonth);
-      let boost=1/(Math.pow(timeInMonth+2,0.8)*0.18)-0.2;
+
+      //
+      // count sku (item freq) vs items count
+      let countBuy=order.items.filter(item=>item.sku==sku).length;
+
+      //
+      // time lapse in months
+      let timeInMonth=((today-when.getTime())/onemonth);
+
+      //
+      // compute attenuation
+      let boost=1/(Math.pow(timeInMonth+1.0,4)*0.15)+0.02;
+
+    // if(sku==1001884){
+    //   console.log('- attenuation',timeInMonth.toFixed(2), boost.toFixed(2), countBuy); //countBuy,countBuy*boost+sum,
+    // }
+
       return countBuy*boost+sum;
     },0);
-    // if(sku==1001267){
-    //   console.log('- boost',score.toFixed(2),orders.length)
-    // }
     return score;
   }
+
 
 
   //
@@ -153,11 +169,6 @@ export class Machine{
     let orders=this.orders.filter(o=>o.customer.id==uid);
     let row=this.users.findIndex(id=>id==uid);
 
-    const betweeThan=(date,weeks)=>{
-      let now=new Date();
-      date = new Date(date);
-      return date.plusDays(weeks*7)>now;
-    }    
     //
     // simple check
     orders.forEach(order=>{
@@ -178,17 +189,10 @@ export class Machine{
       // get product SKU
       const sku=this.products[i].sku;
 
-      if(betweeThan(this.products[i].created,8)){
-        prodFreq=(prodFreq*10);
-      } else
-      if(betweeThan(this.products[i].updated,3)){
-        prodFreq=(prodFreq*2);
-      }
-
 
       // get attenuation(sum)
-      let dimmedSum=this.dimmer(orders,sku);
-
+      let dimmedSum=this.dimmerSum(orders,sku);
+      // let orderItemCount = orders.filter(order=> order.items.some(item=>item.sku==sku));
       //  
       // compute the score
       let score=0.0;
@@ -198,14 +202,17 @@ export class Machine{
 
       //
       // https://github.com/karibou-ch/karibou-ml-userx/
+      // CU : nombre total de commandes pour un utilisateur
+      // CUp: nombre de commandes de l'utilisateur où le produit p_{i} apparaît      
+
       // ∑O    => count orders for one user
       // ∑(p ⊂ O)  => count orders for one product
       // fP     => freqency product for all orders (freq is >= of p⊂O)
-      // log(Fp+1)*|p⊂O|/|O|
+      // log(CUp x Fa)/ CU x Fp
       if(prodFreq && orders.length){
-        score=(dimmedSum/(orders.length)*(prodFreq));  
+        score=(dimmedSum*(prodFreq));  
       }
-      // console.log('-- created',sku,prodFreq, score, dimmedSum);
+      // console.log('-- created',sku,dimmedSum,prodFreq, score);
 
       return {
         item:sku,

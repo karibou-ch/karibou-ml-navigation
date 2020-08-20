@@ -229,4 +229,64 @@ describe('machine index', function() {
 
   });
 
+
+  xit('print order csv', async function() {
+    const orders = require('./data/orders.json');
+    const csv = [];
+    //
+    //Traversing orders to find the distinct list of customers and products
+    orders.forEach(order=> 
+      order.items.forEach(item => {
+        csv.push({
+          oid: order.oid,
+          user: order.customer.id,
+          when: order.shipping.when.$date,
+          sku: item.sku,
+          vendor: item.vendor,
+          quantity: (item.quantity || item.qty),
+          category: item.category          
+        });
+      })
+    );
+    csv.forEach(line => console.log(line.oid + ',' + line.user + ',' + line.when + ',' + line.sku + ',' + line.vendor + ',' + line.quantity + ',' + line.category));
+  });
+
+
+
+  it('oe live products score', async function() {
+    const products = require('./data/oe.json');
+    const csv = [];
+    //
+    //Traversing orders to find the distinct list of customers and products
+    products.forEach(product=> 
+        csv.push({
+          sku: product.sku,
+          title: product.title,
+          sales: product.stats.sales,
+          issues: product.stats.issues,
+          score: product.stats.score,
+          category: product.categories.slug          
+        })
+    );
+    csv.forEach(line => console.log(line.sku + ',' + line.title + ',' + line.sales + ',' + (line.issues || 0) + ',' + line.score + ',' + line.category));
+  });
+
+  xit('oe live products vegetables score', async function() {
+    const products = require('./data/oe-vegetables.json');
+    const csv = [];
+    //
+    //Traversing orders to find the distinct list of customers and products
+    products.forEach(product=> 
+        csv.push({
+          sku: product.sku,
+          title: product.title,
+          sales: product.stats.sales,
+          issues: product.stats.issues,
+          score: product.stats.score,
+          category: product.categories.slug          
+        })
+    );
+    csv.forEach(line => console.log(line.sku + ',' + line.title + ',' + line.sales + ',' + (line.issues || 0) + ',' + line.score + ',' + line.category));
+  });
+
 });
