@@ -33,7 +33,7 @@ export class MachineIndex{
     // model
     this.timestamp=options.timestamp;
     this.domain=options.domain||'karibou.ch';
-    this.file="-model.json";
+    this.file=".model.json";
     this.model=options.model;
     this.likely=options.likely;
     this.rating=options.rating||{};
@@ -49,7 +49,7 @@ export class MachineIndex{
     console.log('--- DATE',this.timestamp);
     // console.log('--- CF likely',(!!this.likely));
     // console.log('--- CF jonfon',(!!this.model));
-    console.log('--- model      size',this.humanSz(JSON.stringify(this.model||'').length));
+    // console.log('--- model      size',this.humanSz(JSON.stringify(this.model||'').length));
     console.log('--- rating     size',this.humanSz(JSON.stringify(this.rating).length));
     console.log('--- product    size',this.humanSz(JSON.stringify(this.products).length),this.products.length);
     assert(this.domain);
@@ -60,7 +60,9 @@ export class MachineIndex{
 
   }
 
-  addInMemory(product) {
+  //
+  // product created and not yet indexed
+  addTempInMemory(product) {
     //
     // already in memory
     if(this.rating['anonymous'].some(sku => product.sku === sku)) {
@@ -68,7 +70,7 @@ export class MachineIndex{
     }
     Object.keys(this.rating).forEach(user => {
       this.rating[user].push({
-        item:product.sku, score:0.1, sum: 1
+        item:product.sku, score:0.555, sum: 1
       });
     });
 
@@ -135,8 +137,12 @@ export class MachineIndex{
   static load(path,domain){
     var content;
     try{
-      content=fs.readFileSync(path+'/'+domain+"-model.json",{ encoding: 'utf8' });
+      content=fs.readFileSync(path+'/'+domain+".model.json",{ encoding: 'utf8' });
+      if(!content.length) {
+        throw new Error('Error missing content for file:'+path+'/'+domain+".model.json")
+      }
     }catch(e){
+      console.log('-- ','Error reading file:'+path+'/'+domain+".model.json")
       // throw new Error('Error reading file:'+path+'/'+domain+"-model.json");
       // Create an empty Index
       return new MachineIndex({
@@ -245,7 +251,7 @@ export class MachineIndex{
   save(path){
     var $this=this;
     var content = {
-      timestamp:new Date(),
+      timestamp:Date.now(),
       likely:this.likely,
       products:this.products,
       domain:this.domain,
@@ -253,7 +259,7 @@ export class MachineIndex{
       rating:this.rating
     };
     return new Promise((resolve,reject)=>{
-      fs.writeFile(path+'/'+this.domain+this.file, JSON.stringify(content,null,2), 'utf8', function (err) {
+      fs.writeFile(path+'/'+this.domain+this.file, JSON.stringify(content,null,0), 'utf8', function (err) {
         if (err) {
             return reject(err);
         }
