@@ -40,7 +40,8 @@ describe('machine index real data for user 739049451726747', function() {
     {sku:1001861, label: '/** tomatte coeur */'},
     {sku:1002395, label: '/** pêche blanche */'},
     {sku:1002412, label: '/** pain levain*/'},
-    {sku:1001884, label: '/** poire conférence*/'}
+    {sku:1001884, label: '/** poire conférence*/'},
+    {sku:1002028, label: '/** fruit passion */'}
   ];
 
 
@@ -103,14 +104,14 @@ describe('machine index real data for user 739049451726747', function() {
         //
         // boosters NEW product.created < 8WEEK
         if(betweeThan(product.created,12)){
-          console.log('created before 8weeks',product.sku);
+          // console.log('created before 8weeks',product.sku);
           boost=((boost)*10);
         } else
         //
         //boosters  product.updated < 2WEEK
         if(betweeThan(product.updated,3)){
           // console.log('updated before 3weeks',product.sku);
-          boost=(boost*3);
+          boost=(boost*2);
         }
 
 
@@ -141,6 +142,7 @@ describe('machine index real data for user 739049451726747', function() {
     // 1002395, /** pêche blanche */
     // 1002412, /** pain levain */
     // 1001884, /** poire conf */
+    // 1002028, /** passion */
 
     const ratings = machineIndex.ratings(user,400,options).filter(rating => {
       return producFilter.some(elem => elem.sku === rating.item);
