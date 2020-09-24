@@ -31,6 +31,9 @@ class Machine {
         this.model;
         this.ratings = {};
         this.ratings['anonymous'] = [];
+        this.maxScore = {};
+        this.minScore = 100;
+        this.initialBoost = {};
         //
         // remove jonfon
         // this.engine = new Engine();
@@ -49,6 +52,19 @@ class Machine {
         });
     }
     //
+    // useful for new products that arent yet been purchased
+    boost(product) {
+        const sku = product.sku || product;
+        let col = this.products.findIndex(product => product.sku == sku);
+        if (col < 0) {
+            return console.log('-- ERROR missing product', sku);
+        }
+        this.initialBoost[sku] = true;
+        for (let row = 0; row < this.matrix.length; row++) {
+            this.matrix[row][col] = 1;
+        }
+    }
+    //
     // matrixCell('category','movie-name', 'user', 'score');
     // return matrix
     learn(user, product, score) {
@@ -60,15 +76,16 @@ class Machine {
         let pid = product.sku || product;
         let row = this.users.findIndex(id => id == uid);
         let col = this.products.findIndex(product => product.sku == pid);
-        if (row < 0 || col < 0) {
-            return console.log('-- ERROR', uid, pid);
+        if (col < 0) {
+            return console.log('-- ERROR missing product', pid);
+        }
+        if (row < 0) {
+            return console.log('-- ERROR missing user', uid);
         }
         if (!this.matrix[row][col]) {
             this.matrix[row][col] = 0;
         }
         this.matrix[row][col] += score;
-        // let val=this.matrix(row,col);
-        // this.matrix.set(row,col).to(val+score);    
     }
     //
     // 
@@ -106,9 +123,9 @@ class Machine {
             let timeInMonth = ((today - when.getTime()) / onemonth);
             //
             // compute attenuation
-            let boost = 1 / (Math.pow(timeInMonth + 1.0, 4) * 0.15) + 0.02;
-            // if(sku==1001884){
-            //   console.log('- attenuation',timeInMonth.toFixed(2), boost.toFixed(2), countBuy); //countBuy,countBuy*boost+sum,
+            let boost = 1 / (Math.pow(timeInMonth + 1.0, 4) * 0.15) + 0.01;
+            // if(sku==1002028){
+            //   console.log('- attenuation',timeInMonth.toFixed(2), boost.toFixed(2), countBuy,sum); //countBuy,countBuy*boost+sum,
             // }
             return countBuy * boost + sum;
         }, 0);
@@ -141,14 +158,19 @@ class Machine {
             //
             // get product SKU
             const sku = this.products[i].sku;
+            const category = this.products.find(product => product.sku == sku).categories;
+            if (!this.maxScore[category]) {
+                this.maxScore[category] = 2;
+            }
             // get attenuation(sum)
             let dimmedSum = this.dimmerSum(orders, sku);
-            // let orderItemCount = orders.filter(order=> order.items.some(item=>item.sku==sku));
+            let orderItemCount = orders.filter(order => order.items.some(item => item.sku == sku)).length + 1;
             //  
             // compute the score
             let score = 0.0;
             //
             // case of new products, or updated product
+            //
             //
             // https://github.com/karibou-ch/karibou-ml-userx/
             // CU : nombre total de commandes pour un utilisateur
@@ -158,9 +180,30 @@ class Machine {
             // fP     => freqency product for all orders (freq is >= of p⊂O)
             // log(CUp x Fa)/ CU x Fp
             if (prodFreq && orders.length) {
-                score = (dimmedSum * (prodFreq));
+                score = (dimmedSum * (prodFreq / orderItemCount));
             }
-            // console.log('-- created',sku,dimmedSum,prodFreq, score);
+            // FIXME initial boost score should be smarter
+            if (this.initialBoost[+sku]) {
+                score = this.maxScore[category] * 0.1 + score;
+            }
+            // 1000018, /** beurre */
+            // 1001829, /** lait */
+            // 1000053, /** baguette */
+            // 1001861, /** tomatte coeur */
+            // 1002395, /** pêche blanche */
+            // 1002412, /** pain levain */
+            // 1001884, /** poire conf */
+            // 1002028, /** passion */
+            // if([1002028,1001861].indexOf(sku)>-1){
+            //   console.log('---        sku, dimmedSum, COp Fp score')
+            //   console.log('-- created',sku,dimmedSum.toFixed(2),(prodFreq/orderItemCount).toFixed(2), score.toFixed(2));
+            // }
+            if (score > this.maxScore[category]) {
+                this.maxScore[category] = score;
+            }
+            if (score < this.minScore[category]) {
+                this.minScore[category] = score;
+            }
             return {
                 item: sku,
                 score: score,
@@ -192,8 +235,9 @@ class Machine {
         });
     }
     indexAnonymous() {
+        // make sure anonymous doesn't outperform any uid
         this.ratings['anonymous'] = this.ratings['anonymous'].map(elem => {
-            elem.score = elem.score / this.users.length;
+            elem.score = elem.score / 3000;
             return elem;
         }).sort((a, b) => {
             return b.score - a.score;
@@ -208,7 +252,7 @@ class Machine {
             this.model = this.likely.buildModel(this.matrix, this.users, this.products.map(product => product.sku));
         }
         else {
-            console.log('--- build jonfon');
+            // console.log('--- build jonfon')
             // this.engine.addModel(this.domain, this.matrix, this.users, this.products.map(product=>product.sku));
             // this.engine.process(this.approach, this.domain,{similarity: 'pearson',threshold:.1});
             // this.model=this.engine.getModel(this.domain);  
@@ -220,7 +264,8 @@ class Machine {
             rating: this.ratings,
             model: this.model,
             domain: this.domain,
-            likely: this.likely
+            likely: this.likely,
+            timestamp: Date.now()
         });
     }
 }
