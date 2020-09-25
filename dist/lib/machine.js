@@ -237,7 +237,7 @@ class Machine {
     indexAnonymous() {
         // make sure anonymous doesn't outperform any uid
         this.ratings['anonymous'] = this.ratings['anonymous'].map(elem => {
-            elem.score = elem.score / 3000;
+            elem.score = elem.score / this.users.length;
             return elem;
         }).sort((a, b) => {
             return b.score - a.score;
