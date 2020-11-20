@@ -88,9 +88,10 @@ export class Machine{
       return console.log('-- ERROR missing product',sku);
     }
 
-    this.initialBoost[sku] = true;
-    for(let row=0; row < this.matrix.length; row++){
-      this.matrix[row][col] = 1;
+    this.initialBoost[+sku] = true;
+    const initialCount = (product.boost)? 4 : (product.discount)? 2 : 1;
+    for (let row = 0; row < this.matrix.length; row++) {
+        this.matrix[row][col] = initialCount;
     }
   }
 
@@ -245,7 +246,7 @@ export class Machine{
 
       // FIXME initial boost score should be smarter
       if(this.initialBoost[+sku]) {
-        score = this.maxScore[category] * 0.1 + score;
+        score = this.maxScore[category] * 0.1 * prodFreq;
      }
 
       // 1000018, /** beurre */
@@ -256,8 +257,9 @@ export class Machine{
       // 1002412, /** pain levain */
       // 1001884, /** poire conf */
       // 1002028, /** passion */
+      // 1002584, /** tresse */
 
-      // if([1002028,1001861].indexOf(sku)>-1){
+      // if([1002028,1001861,1002584].indexOf(sku)>-1){
       //   console.log('---        sku, dimmedSum, COp Fp score')
       //   console.log('-- created',sku,dimmedSum.toFixed(2),(prodFreq/orderItemCount).toFixed(2), score.toFixed(2));
       // }
