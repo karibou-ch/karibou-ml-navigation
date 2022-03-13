@@ -147,6 +147,7 @@ export class Machine{
 
   //
   // compute attenuation by time
+  // -https://www.desmos.com/calculator/3yogioggkp?lang=fr
   dimmerSum(orders,sku){
     let today=Date.now();
     let onemonth=86400000*30;
@@ -191,14 +192,18 @@ export class Machine{
     // one month => 24h * 30
     let onemonth=86400000*30;
     let today=Date.now();
-    let orders=this.orders.filter(o=>o.customer.id==uid);
+    let grouped = Object.keys(this.options.groups ||{}).find(key => {
+      return this.options.groups[key].indexOf(uid) >-1;
+    });
+    let grouped_uid = grouped ?  this.options.groups[grouped]: [uid];
+    let orders=this.orders.filter(o=> grouped_uid.indexOf(o.customer.id));
     let row=this.users.findIndex(id=>id==uid);
 
     //
     // simple check
-    orders.forEach(order=>{
-      assert(order.customer.id==uid);
-    })
+    // orders.forEach(order=>{
+    //   assert(order.customer.id==uid);
+    // })
 
     // console.log('-- train',this.matrix[row].length,this.matrix[row].filter(o=>o).length)
     // total order by products

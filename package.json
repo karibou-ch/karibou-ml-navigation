@@ -1,6 +1,6 @@
 {
   "name": "karibou-mlx",
-  "version": "0.100.6",
+  "version": "0.100.7",
   "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
   "main": "./dist/index.js",
   "scripts": {
