@@ -4,7 +4,9 @@ L'objectif de l'index est de produire des listes d'identifiants de produits (SKU
 * Produire la liste des produits préférés d'un utilisateur (ou anonymous).
 * Produire la liste des produits de saison.
 * Reconnaitre un produit alimentaire et produire la liste des produits (SKU) similaires
+* Borner la liste de produits à une liste de commercants ou une catégorie alimentaire
 
+> L'index pourra être calculé une fois toutes les 24h, par contre, si un produit n'est plus disponible ou a été créé il faudrait en tenir compte dans l'index actuel.
 
 # Modèle vectoriel des produits 
 Il serait intéressant de travailler sur la caractérisation du produit selon la base de données [openfoodfacts](https://raw.githubusercontent.com/openfoodfacts/openfoodfacts-nodejs/develop/test/mockdata/categories.json) ([2](https://world.openfoodfacts.org/categories)) à la place de l'identifiant. En effet deux produits de deux commerçants différents peuvent concerner le même aliment. 
