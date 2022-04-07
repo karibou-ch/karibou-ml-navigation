@@ -6,9 +6,9 @@ var concepts = new (require('../lib/concepts'))();
 
 
 const words=concepts.lexical(products);
-words.sort().forEach((word,i)=>{
-  console.log(word)
-})
+// words.sort().forEach((word,i)=>{
+//   console.log(word)
+// })
 
 // lexico={};
 // foods.forEach(food=>{
@@ -25,15 +25,20 @@ words.sort().forEach((word,i)=>{
 //     console.log('  ',sub.name)
 //   })
 // });
+const vegetables = products
+                    .filter(product => product.categories == "fruits-legumes")
+                    .filter(product => product.photo&&product.photo.length);
+console.log('----',vegetables.length)
+concepts.detection(vegetables.slice(0)).then(function(output){
 
-concepts.detection(products).then(function(output){
-
+  output = concepts.buildIndex(output,.5);
   //
   // save for app
-  concepts.save('../test/data/products-clarifai.json',output);
+  concepts.save('./products-clarifai.json',{dictionary:words, products:output});
 
 },function(error){
-  console.log('----------------',concepts.predicts.length, error.message||error.txt||error);
+  console.log('----------------',concepts.predicts.length, error.message||error.txt);
+  console.log('----------------',error);
   if(concepts.predicts.length>100){
     concepts.save('../test/data/products-clarifai.json',concepts.predicts);
   }
