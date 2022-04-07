@@ -30,20 +30,19 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 
 
 ## L’algorithme doit prédire une liste de produits en fonction des commandes passées
-_La fréquence d'achat du produit est une mesure de l'importance du produit dans l'ensemble des commandes d'un client. Elle vise à donner <u>un poids plus important aux produits les plus fréquents, considérés comme plus discriminants</u>_. 
-
+_La fréquence d'achat du produit est une mesure de l'importance du produit dans l'ensemble des commandes d'un client. Elle vise à donner <u>un poids plus important aux produits les plus fréquents, considérés comme plus discriminants</u>_. Les éléments retenus: 
 
 * Liste des produits **i** de 1 à N
 * Liste des commandes **j** de 1 à N
-* La liste de commande **O**  pour un utilisateur 
-* Le nombre de commandes d'un utilisateur où le produit `p{i}`  apparaît
+* Le nombre de commande **O**  pour un utilisateur 
+* Le nombre de commandes **O** d'un utilisateur où le produit `p{i}`  apparaît
 * La fréquence d'achat d'un produit `p{i}` pour toute les commandes *(exemple, 0 + 3 + 2 + 1 = 6 pour 3 commandes = 6/4)*
+* Il faut extraire les scores min/max ainsi que la médiane pour une catégorie 
 
 ```
  score = attenuation x prodFreq/UserOrders * boost
 ```
 
-* Il faut connaître le min/max et la médiane d'un score dans une catégorie 
 
 
 ## Création d'un index pour l'utilisateur Anonymous
