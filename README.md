@@ -64,7 +64,7 @@ On peut appliquer un booster (un facteur d'amplification) au score d'un produit 
 ## l'intérêt d'un produit s'estompe à une fonction du temps
 * un produit de saison acheté récemment ~3 doit être valorisé
 * un produit perd de son intéret dans le temps jusqu'à ~ 24 mois => 
-* On doit pouvoir représenté la courbe réelle  :fire:
+* On doit pouvoir représenter la courbe idéale pour effectuer des tests et déterminer les bons paramêtes :fire:
 ```
  attenuation = 1 / ( timeInMonth + 1)^4 x 0.9 + 0.01 
 ```
