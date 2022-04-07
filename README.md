@@ -21,9 +21,9 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 ## Nous souhaitons créer une liste des meilleurs produits selon les critères suivants
 1. un produit souvent acheté dans le présent est **très** valorisé
 1. un produit acheté en petite quantité mais régulièrement est **très** valorisé
-1. un produit souvent acheté dans le passé est valorisé
-1. un produit acheté en grande quantité une dans très peu de commandes est valorisé 
-1. un produit commandé qui génère une erreur du vendeur (stock ou qualité) est **pénalisé**
+2. un nouveau produit ou un produit de saison activé  est **très** valorisé
+3. un produit souvent acheté dans le passé est **moyennement** valorisé
+4. un produit acheté en grande quantité une sur une commandes est **moyennement** valorisé 
 
 > Note: Il faut prendre en compte le contexte lors de la génération d'une liste. Il faut pouvoir filtrer cette liste avec les commercants actifs du ou des marchés sélectionnés. 
 
@@ -47,7 +47,7 @@ _La fréquence d'achat du produit est une mesure de l'importance du produit dans
 
 
 ## Création d'un index pour l'utilisateur Anonymous
-On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score des produits de l'utilisateur Anonymous est produit par l'activité des commandes de l'ensemble des utilisateurs. Le score obtenu pour chaque produits, est considéré comme une référence normalisée de l'appréciation du produit.
+On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score des produits de l'utilisateur Anonymous est le score moyen et pondéré de l'ensemble des utilisateurs. Le score obtenu pour chaque produits, est considéré comme une référence normalisée. La liste des produits associé a l'utilisateur anonymous est utilisée pour compléter une proposition pour un utilisateur qui n'a pas encore passé de commande.
 
 ## Valeur du score initiale
 Il existe quelques cas de figures ou il n'est pas possible de calculer un score :
