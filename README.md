@@ -68,7 +68,6 @@ On peut appliquer un booster (un facteur d'amplification) au score d'un produit 
 ```
  attenuation = 1 / ( timeInMonth + 1)^4 x 0.9 + 0.01 
 ```
-      =1/(Math.pow(timeInMonth+1.0,4)*0.9)+0.01;
 
 ![image](https://user-images.githubusercontent.com/1422935/162250655-47499e41-6bab-4140-bdd2-4102643e4609.png)
 
