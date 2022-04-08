@@ -85,6 +85,7 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 * https://en.wikipedia.org/wiki/Cosine_similarity
 * https://world.openfoodfacts.org/categories
 * https://world.openfoodfacts.org/categories.json
+* https://ch-fr.openfoodfacts.org/categories.json **(ch-fr)**
 * https://openfoodfacts.github.io/api-documentation/
 
 
