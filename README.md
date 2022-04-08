@@ -83,10 +83,12 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 
 * https://en.wikipedia.org/wiki/Vector_space_model
 * https://en.wikipedia.org/wiki/Cosine_similarity
-
-
-# Liens
 * https://world.openfoodfacts.org/categories
+* https://world.openfoodfacts.org/categories.json
+* https://openfoodfacts.github.io/api-documentation/
+
+
+# Liens* 
 * https://www.npmjs.com/package/stopword
 * https://fr.wikipedia.org/wiki/TF-IDF (très intéressant)
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
