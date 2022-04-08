@@ -30,32 +30,27 @@ Nous souhaitons créer une liste des meilleurs produits selon les critères suiv
 ### L’algorithme doit produire une liste de produits en fonction des commandes passées.
 _La fréquence d'achat du produit est une mesure de l'importance du produit dans l'ensemble des commandes d'un client. Elle vise à donner <u>un poids plus important aux produits les plus fréquents, considérés comme plus discriminants</u>_. Les éléments retenus: 
 
-* Liste des produits **i** de 1 à N
-* Liste des commandes **j** de 1 à N
-* Le nombre de commande **O**  pour un utilisateur 
-* Le nombre de commandes **O** d'un utilisateur où le produit `p{i}`  apparaît
-* La fréquence d'achat d'un produit `p{i}` pour toute les commandes *(exemple, 0 + 3 + 2 + 1 = 6 pour 3 commandes = 6/4)*
-* Il faut extraire les scores min/max ainsi que la médiane pour une catégorie 
+* Liste des produits **`p{i}`** de 1 à N
+* Liste des commandes **`o{i}`** de 1 à N
+* Le nombre de commande **`O{N}`**  pour un utilisateur 
+* Le nombre de commandes **`p{i}O{N}`** où le produit **`p{i}`** apparaît
+* La fréquence d'achat d'un produit **`fp{i}`** c'est **`p{i}`** pour **`O{N}`** 
+* Il faut extraire les scores min/max ainsi que la médiane par catégories 
 
 ```
- score = attenuation x prodFreq/UserOrders * boost
+ score = attenuation x prodFreq/UserOrders * boost/penalties
 ```
 
 ### Création d'un index pour l'utilisateur Anonymous
-On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score des produits de l'utilisateur Anonymous est le score moyen et pondéré de l'ensemble des utilisateurs. Le score obtenu pour chaque produits, est considéré comme une référence normalisée. La liste des produits associé a l'utilisateur anonymous est utilisée pour compléter une proposition pour un utilisateur qui n'a pas encore passé de commande.
+On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score normalisé des produits de l'utilisateur Anonymous est le score pondéré par l'ensemble des utilisateurs. La liste des produits associée a l'utilisateur anonymous est aussi utilisée pour compléter une proposition pour un utilisateur qui n'a pas passé sufisament de commandes.
 
-### Valeur du score initiale
-Il existe quelques cas de figures ou il n'est pas possible de calculer un score :
+### boost
+On peut appliquer un boost (un facteur d'amplification) au score d'un produit pour différente situations. 
 1. lorsque l'utilisateur n'a pas encore passé de commande
-2. lorsque l'utilisateur n'est pas identifié
-3. lorsque qu'il y a un nouveau produit et qu'il n'a pas pu être commandé
+3. lorsque qu'il y a un nouveau produit qui n'a pas été commandé
+4. Lorsqu'un produit est en promotion.
 
-### booster
-On peut appliquer un booster (un facteur d'amplification) au score d'un produit pour différente situations. 
-* Lorsqu'un produit est apprécié, nous considérons que son score plus élevé. 
-* Lorsque l'intérêt d'un produit diminue, son score doit également être atténué.
-* Lorsqu'un vendeur créé un nouveau produit, son score est artificiellement élevé  d'un facteur N
-* Lorsqu'un produit est en promotion, son score est artificiellement élevé d'un facteur M
+> Note: les constantes sont à determiner et à valider
 
 ### l'intérêt d'un produit s'estompe en fonction du temps
 * un produit de saison acheté récemment ~3 doit être valorisé
@@ -64,6 +59,7 @@ On peut appliquer un booster (un facteur d'amplification) au score d'un produit 
 ```
  attenuation = 1 / ( timeInMonth + 1)^4 x 0.9 + 0.01 
 ```
+> Note: les constantes sont à determiner et à valider
 
 ![image](https://user-images.githubusercontent.com/1422935/162250655-47499e41-6bab-4140-bdd2-4102643e4609.png)
 
