@@ -7,7 +7,6 @@ L'objectif de l'index est de produire des listes d'identifiants de produits (SKU
 * Produire la liste des produits en fonction d'un tag.
 * Produire la liste des produits de commerçants, de marchés ou/et de catégories.
 
-> L'index pourra être calculé une fois toutes les N heures mais il doit aussi tenir compte des modifications du statut d'un produit, d'un commerçant ou d'un marché.
 
 # Motivation
 Produire des listes de produits de manière efficace et rapide est un élément important de karibou.ch. Nous souhaitons isoler completement ce rôle de l'application principale. 
@@ -42,7 +41,7 @@ _La fréquence d'achat du produit est une mesure de l'importance du produit dans
  score = attenuation x prodFreq/UserOrders * boost
 ```
 
-### Création d'un index pour l'utilisateur Anonymous**
+### Création d'un index pour l'utilisateur Anonymous
 On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score des produits de l'utilisateur Anonymous est le score moyen et pondéré de l'ensemble des utilisateurs. Le score obtenu pour chaque produits, est considéré comme une référence normalisée. La liste des produits associé a l'utilisateur anonymous est utilisée pour compléter une proposition pour un utilisateur qui n'a pas encore passé de commande.
 
 ### Valeur du score initiale
@@ -58,7 +57,7 @@ On peut appliquer un booster (un facteur d'amplification) au score d'un produit 
 * Lorsqu'un vendeur créé un nouveau produit, son score est artificiellement élevé  d'un facteur N
 * Lorsqu'un produit est en promotion, son score est artificiellement élevé d'un facteur M
 
-### l'intérêt d'un produit s'estompe à une fonction du temps
+### l'intérêt d'un produit s'estompe en fonction du temps
 * un produit de saison acheté récemment ~3 doit être valorisé
 * un produit perd de son intéret dans le temps jusqu'à ~ 24 mois => 
 * On doit pouvoir représenter la courbe idéale pour effectuer des tests et déterminer les bons paramêtes :fire:
@@ -67,6 +66,10 @@ On peut appliquer un booster (un facteur d'amplification) au score d'un produit 
 ```
 
 ![image](https://user-images.githubusercontent.com/1422935/162250655-47499e41-6bab-4140-bdd2-4102643e4609.png)
+
+### Normalisation des scores entres les différents marchés
+Lorsque l'on créé un nouveau marché composé de nouvelles boutiques et de boutiques d'un autre marché, les scores des produits doivent rester cohérents. 
+> TODO
 
 
 ### Penalties
