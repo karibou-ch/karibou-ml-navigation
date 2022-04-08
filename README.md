@@ -87,6 +87,7 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 
 # Liens
 * https://world.openfoodfacts.org/categories
+* https://www.npmjs.com/package/stopword
 * https://fr.wikipedia.org/wiki/TF-IDF (très intéressant)
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
 * LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits
