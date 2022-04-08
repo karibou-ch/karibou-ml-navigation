@@ -77,7 +77,7 @@ La valeur subjective d'un produit est corrélée avec celle de son score. Cepend
 * plusieurs clients on manifestés un problème avec un même produit (ex. avocat pas assez mûr)
 * des clients n'ont pas ressus des produits commandés (mauvaise gestion des stocks)
 
-## 2. Caractérisation des produits pour produire les produits similaires.
+## 2. Caractérisation des produits pour connaître les produits similaires.
 Il serait intéressant de travailler sur la caractérisation du produit selon la base de données [openfoodfacts](https://raw.githubusercontent.com/openfoodfacts/openfoodfacts-nodejs/develop/test/mockdata/categories.json) ([2](https://world.openfoodfacts.org/categories)) à la place de l'identifiant. En effet deux produits de deux commerçants différents peuvent concerner le même aliment. 
 Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaitons également représenter le corpus des produits dans un espace vectoriel (x,y). Il faudra définir la meilleure option sur la base du produit, de la commande, de l'utilisateur et de la fréquence d'achat. 
 
