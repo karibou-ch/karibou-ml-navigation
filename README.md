@@ -87,6 +87,7 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 
 
 # Liens* 
+* [collaborative filtering / recommendation engine](https://www.npmjs.com/search?q=recommendation+engine)
 * https://www.npmjs.com/package/stopword
 * https://fr.wikipedia.org/wiki/TF-IDF (très intéressant)
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
