@@ -82,6 +82,7 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 * https://world.openfoodfacts.org/categories
 * https://world.openfoodfacts.org/categories.json
 * https://ch-fr.openfoodfacts.org/categories.json **(ch-fr)**
+* https://ch-fr.openfoodfacts.org/ingredients.json **(ch-fr)**
 * https://openfoodfacts.github.io/api-documentation/
 
 
