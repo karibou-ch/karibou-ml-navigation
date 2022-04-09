@@ -77,13 +77,13 @@ La valeur subjective d'un produit est corrélée avec celle de son score. Cepend
 Il serait intéressant de travailler sur la caractérisation du produit selon la base de données [openfoodfacts](https://raw.githubusercontent.com/openfoodfacts/openfoodfacts-nodejs/develop/test/mockdata/categories.json) ([2](https://world.openfoodfacts.org/categories)) à la place de l'identifiant. En effet deux produits de deux commerçants différents peuvent concerner le même aliment. 
 Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaitons également représenter le corpus des produits dans un espace vectoriel (x,y). Il faudra définir la meilleure option sur la base du produit, de la commande, de l'utilisateur et de la fréquence d'achat. 
 
-* https://en.wikipedia.org/wiki/Vector_space_model
-* https://en.wikipedia.org/wiki/Cosine_similarity
-* https://world.openfoodfacts.org/categories
+* https://api.karibou.ch/v1/products
 * https://world.openfoodfacts.org/categories.json
 * https://ch-fr.openfoodfacts.org/categories.json **(ch-fr)**
 * https://ch-fr.openfoodfacts.org/ingredients.json **(ch-fr)**
 * https://openfoodfacts.github.io/api-documentation/
+* https://en.wikipedia.org/wiki/Vector_space_model
+* https://en.wikipedia.org/wiki/Cosine_similarity
 
 
 # Liens* 
