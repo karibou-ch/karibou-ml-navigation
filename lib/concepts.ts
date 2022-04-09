@@ -1,9 +1,10 @@
 "use strict";
 const moment = require('moment');
-const _  = require('lodash');
-const stopwords = require('stopwords-fr'); // array of stopwords
 const Clarifai = require('clarifai');
 
+const { removeStopwords, fra } = require('stopword')
+
+const uniq = (v, i, a) => a.indexOf(v) === i;
 
 const mapSaves = async (iterable, action) => {
   let i=0;
@@ -38,11 +39,11 @@ export class Concepts{
   }
 
   save(filename, elems){
-    var fs = require('fs');
-    var content = JSON.stringify(elems||this.products,null,2);
+    const fs = require('fs');
+    const content = JSON.stringify(elems||this.products,null,2);
     fs.writeFile(filename, content, 'utf8', function (err) {
       if (err) {
-          return console.log(err);
+          return console.log("--DBG",err);
       }
     }); 
   }
@@ -64,10 +65,8 @@ export class Concepts{
   lexical(products){
     let tags=[];
     products.forEach(product=>{
-      let words=this.stringToWorlds(product.title)
-      tags=tags
-          .concat(words.filter(word=>stopwords.indexOf(word)==-1))
-          .filter((v, i, a) => a.indexOf(v) === i).sort();
+      let words=this.stringToWorlds(product.title || product.categories)
+      tags=tags.concat(removeStopwords(words,fra)).filter(uniq).sort();
     });
 
     return tags;
@@ -77,11 +76,50 @@ export class Concepts{
   stringToWorlds(text){
     return text
       .toLowerCase()
-      .replace(/[/|&;$%@"'!<>()+-.–│,“«»]/g, " ")
+      .replace(/[/|&;$%@"'!<>()+-.–│,“«»  ]/g, " ")
       .replace(/(l'|d'|l’|d’)/g, "")
       .split(' ').filter(word=>word.length>2);
   }
 
+  async logmealDetection(img) {
+    const axios = require('axios');
+    // Single/Several Dishes Detection
+    const url = 'https://api.logmeal.es/v2/recognition/complete';
+
+    // Headers
+    const headers = {
+      'Authorization': 'Bearer ' + 'api_user_token'
+    };
+
+
+    //
+    // image data
+    headers['Content-Type'] = 'multipart/form-data';
+    const buffer = new ArrayBuffer(8);
+    const data = new FormData();
+    const blob = new Blob([buffer],{type : headers['Content-Type']});
+    data.append('image', blob);    
+
+    // Parameters
+    const options = {
+      url: url,
+      method: 'POST',
+      headers: headers,
+      data
+    };    
+    
+    //
+    // image detection
+    const detection = await axios.post(options);
+    const imageId = detection.imageId;
+    
+    // Ingredients information
+    const api = 'https://api.logmeal.es/v2/recipe/ingredients';
+    headers['Content-Type'] = 'application/json';
+    const content = await axios.post(url,{imageId},headers);
+    
+    console.log('--- DBG',content);
+  }
 
 
   //
@@ -100,16 +138,20 @@ export class Concepts{
     //
     // 
     return mapSaves(products,(product,i) => {
-      return app.models.predict(Clarifai.FOOD_MODEL, 'https:'+product.photo,{language: 'en'}).then((res) => {
-        console.log('-- detect',i,product.sku,product.title)
-        return res.outputs[0].data.concepts;
+      const model = Clarifai.FOOD_MODEL;
+      const photo = (product.photo[product.photo.length-1]==='/') ? (product.photo+'-/resize/600x/'):product.photo;
+      //console.log('----model',model,'photo',photo);
+      return app.models.predict(model, 'https:'+photo,{language: 'en'}).then((res) => {
+        const concepts = res.outputs[0].data.concepts || []; 
+        console.log('-- detect',i,product.sku,product.title,concepts.map(c=>c.name).join(','))
+        return concepts;
       }).catch((err) => {
-        console.log('-- ERR',err)
+        console.log('-- ERR',err.message||err);
         return [];
       });
     }).then((predicts:any)=>{
       predicts.forEach(function(concepts,i){
-        var tags=concepts.filter((concept) => (concept.value>0.95)).map((e) => e.name);
+        var tags=concepts.filter((concept) => (concept.value>0.92)).map((e) => e.name);
         $this.predicts.push({
           sku:products[i].sku,
           title:products[i].title,
@@ -123,6 +165,18 @@ export class Concepts{
     });
   }
 
+  // extractTags() {
+  //   const model ="9504135848be0dd2c39bdab0002f78e9";
+  //   app.models.predict(model, "This is a text string").then(
+  //     function(response) {
+  //       // do something with response
+  //     },
+  //     function(err) {
+  //       // there was an error
+  //     }
+  //   );
+   
+  // }
 
   //
   //
@@ -155,6 +209,7 @@ export class Concepts{
         this.concepts[tag]=Math.log(prod_sz/this.concepts[tag]);
       });
 
+
       // TF
       // tag vs le nombre de tags dans un produit 1/N
       this.products.forEach(prod =>{
@@ -166,24 +221,26 @@ export class Concepts{
           return b.score-a.score;
         });
       });
+
+
     }
     //
     // build graph between products
-    this.products.forEach(prod =>{
-      //
-      // graph best concetp with the product
-      prod.tags=prod.tags.filter(tag=>tag.score>score);
-      prod.tags.forEach(tag=>{
-        if(!this.graph.best[tag.name]){
-          this.graph.best[tag.name]=[];
-        }
-        this.graph.best[tag.name].push({
-          product:prod,
-          score:tag.score
-        }); 
+    // this.products.forEach(prod =>{
+    //   //
+    //   // graph best concetp with the product
+    //   prod.tags=prod.tags.filter(tag=>tag.score>score);
+    //   prod.tags.forEach(tag=>{
+    //     if(!this.graph.best[tag.name]){
+    //       this.graph.best[tag.name]=[];
+    //     }
+    //     this.graph.best[tag.name].push({
+    //       product:prod,
+    //       score:tag.score
+    //     }); 
   
-      })
-    });
+    //   })
+    // });
         
 
     return this.products;
@@ -201,7 +258,7 @@ export class Concepts{
       if(tag.score<score){
         return;
       }
-      linked=_.uniq(linked.concat(this.graph.best[tag.name]));
+      linked=linked.concat(this.graph.best[tag.name]).filter(uniq);
     });  
     return linked;
   }

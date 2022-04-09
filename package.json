@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@types/node": "^10.12.9",
-    "bluebird": "^3.5.2",
     "clarifai": "^2.8.1",
     "json2csv": "^4.2.1",
     "likely": "^0.2.0",
@@ -41,7 +40,7 @@
     "moment": "^2.22.2",
     "node-serialize": "0.0.4",
     "should": "^13.2.3",
-    "stopwords-fr": "^0.2.0",
+    "stopword": "^2.0.1",
     "sylvester": "0.0.21"
   },
   "peerDependencies": {},
