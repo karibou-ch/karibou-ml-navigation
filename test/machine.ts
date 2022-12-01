@@ -1,212 +1,166 @@
 
-import $products from './data/products-subset.json';
-import $orders from './data/orders-subset.json';
+import $products from './data/products-xs.json';
+import $orders from './data/orders-xs.json';
+
+
+const MachineIndex = require('../lib').MachineIndex;
+const MachineCreate = require('../lib').MachineCreate;
+
+const machine = new MachineCreate({
+  domain:'test'
+});
+
+//
+//Traversing orders to find the distinct list of customers and products
+const customers = $orders.map(order=>order.customer.id).filter((elem, pos, arr) => {
+  return arr.indexOf(elem) == pos;
+});
+  
+const sortBySum = (a,b) => {
+  return b.score-a.score;
+}
 
 import 'should';
 
-
-//
-// overload date
-declare interface Date {
-  plusDays : (nb: number) => Date;
-}
-
-
-(function () {
-  Date.prototype.plusDays = function(nb: number) {
-    const plus=new Date(this);
-    plus.setDate(this.getDate()+nb);
-    return plus;
-  }
-})();
-
 describe('machine index', function() {
   this.timeout(5000);
-  const Machine = require('../lib').Machine;
-  const machine = new Machine({
-    domain:'test',
-  });
-
   let machineIndex;
-  
-  //
-  // PUBLIC API
-
-  const toObject=(product)=>{
-    const shop=product.vendor;
-    const natural=product.details.bio||
-                product.details.natural||
-                product.details.biodynamics||
-                product.details.bioconvertion;
-    const category = product.categories ? product.categories.slug:'undefined';
-    return {
-      sku:product.sku,
-      categories: category,
-      vendor: shop.urlpath?shop.urlpath:shop,
-      created:product.created,
-      updated:product.updated,
-      discount:product.attributes.discount,
-      boost: product.attributes.boost,
-  
-      // title:product.title,
-      // slug:product.slug,
-      // photo:product.photo.url,
-      // created:product.created,
-      // updated:product.updated,
-      // discount:product.attributes.discount,
-      // boost: product.attributes.boost,
-      // natural:natural,
-      // local:product.details.local  
-    }
-  }
-  
-  const mapSaves = async (iterable, action) => {
-    let i=0;for (const x of iterable) {
-      await action(x,i++);
-    }
-  }
-  
-  const betweeThan=(date,weeks)=>{
-    let now=new Date();
-    date = new Date(date);
-    return date.plusDays(weeks*7)>now;
-  }
-
-  //
-  // load a subset of all orders
-  // before(async () => {
-  //   const subsetFile = '/data/orders-subset.json';
-  //   const fs = require('fs');
-  //   if (fs.existsSync(__dirname +subsetFile)) {
-  //     $orders = require('.'+subsetFile);
-  //     return;
-  //   }
-  //   const itemMap = (item) => {
-  //     return {
-  //       sku:item.sku,
-  //       vendor:item.vendor,
-  //       qty:item.qty,
-  //       category:item.category,
-  //     };
-  //   };
-
-  //   const orders: any[] = require('./data/orders.json');
-  //   $orders = orders.sort(() => .5 - Math.random()).slice(0,10).map(order => {      
-  //     const shipping = order.shipping;
-  //     shipping.when = shipping.when.$date || shipping.when;
-  //     return {
-  //       oid: order.oid,
-  //       shipping: shipping,
-  //       customer: order.customer,
-  //       items: order.items.map(itemMap)
-  //     }
-  //   })
-
-  //   fs.writeFileSync(__dirname + subsetFile, JSON.stringify($orders, null , 2 ), { flag:'w' });
-
-  // });
-
-  //
-  // load a subset of all orders
   before(async () => {
-    const now = new Date();
-    //
-    // product 4 is updated
-    $products[4].updated = (now.plusDays(-10).toISOString())
-
-    //
-    // product 7 and 8 are new
-    $products[6].created = (now.plusDays(-10).toISOString())
-    $products[7].created = (now.plusDays(-1).toISOString())
 
   });
 
 
-  it('create index', async function() {
-    const orders = $orders as any[];
-    const products = $products as any[];
+  it('create index', async () => {    
+
     //
-    //Traversing orders to find the distinct list of customers and products
-    const customers = orders.map(order=>order.customer.id).filter((elem, pos, arr) => {
-      return arr.indexOf(elem) == pos;
-    });
+    // load JSON with FS to keep the same relative PATH !!
+    // Only get orders for a specific domain
+    // 
+    //
+    //- customer.id
+    //- item.sku
+    //- item.quantity
+    //- order.customer.likes
+    const orders = $orders.map(order=>machine.orderToLeanObject(order));
     
-    machine.setModel(customers,products,orders);
-
-    //
-    // BOOST content
-    orders.forEach(order => {
-      order.items.forEach(item => {
+    const products = $products.map(product => machine.productToLeanObject(product));
     
-        let product=products.find(product=>product.sku==item.sku);
-        if(!product||!product.sku){
-          return;
+    
+    const betweeThan=(date,weeks)=>{
+      let now=new Date();
+      date = new Date(date);
+      return machine.datePlusDays(date,weeks*7)>now;
+    }
+    
+    const indexOrders=async (products)=>{      
+      
+      machine.setModel(customers,products,orders);
+      
+      //
+      // BOOST content
+      orders.forEach(order => {
+        order.items.forEach(item => {
+    
+          let product=products.find(product=>product.sku==item.sku);
+          if(!product||!product.sku){
+            return;
+          }
+    
+          //
+          // mark this product indexed
+          product.indexed = true;
+    
+          //
+          // initial score value
+          let boost=(+item.qty || +item.quantity);
+    
+          //
+          // product boosters activated  product.boost
+          boost=(product.boost)?(boost*10) : boost;
+    
+          //
+          //boosters  discount
+          boost=product.discount?(boost*5) : boost;
+    
+          //
+          //boosters  user.likes
+          if(order.customer.likes.indexOf(item.sku)>-1) {
+            boost = (boost*5);
+          }
+          
+    
+          //
+          // boosters NEW product.created < 8WEEK
+          if(betweeThan(product.created,8)){
+            boost=((boost)*4);
+            console.log('created before 8weeks',product.sku, boost);
+          } else
+          //
+          //boosters  product.updated < 2WEEK
+          if(betweeThan(product.updated,4)){        
+            boost=(boost*2);
+            // console.log('updated before 3weeks',product.sku, boost);
+          }
+    
+          // console.log('--learn uid',order.customer.id,'product',product.sku,'boost',boost);
+          machine.learn(order.customer.id,product.sku,boost);   
+        })
+      });
+    
+    
+      
+      console.log('- taining (products,orders)',products.length,orders.length);
+      machineIndex = machine.train();
+
+      //
+      // product not indexed (means never buyed)
+      products.filter(product => !product.indexed).forEach(product => {
+        const newProduct = betweeThan(product.created,4);
+        if(product.discount || product.boost || newProduct){
+          machine.boost(product);   
         }
+      });
 
-        //
-        // initial score value
-        let boost=item.quantity;
+      console.log('- taining done','all rating products');
 
-        //
-        // product boosters activated  product.boost
-        boost=(product.boost)?(boost*2) : boost;
-
-        //
-        //boosters  discount
-        boost=product.discount?(boost*2) : boost;
-
-        //
-        //boosters  user.likes
-        if(order.customer.likes.indexOf(item.sku)>-1) {
-          boost = (boost*2);
-        }
-        
-
-        //
-        // boosters NEW product.created < 8WEEK
-        if(betweeThan(product.created,8)){
-          // console.log('created before 8weeks',product.sku);
-          boost=((boost)*2);
-        } else
-        //
-        //boosters  product.updated < 2WEEK
-        if(betweeThan(product.updated,3)){
-          // console.log('updated before 3weeks',product.sku);
-          boost=(boost*2);
-        }
-
-        // console.log('--learn uid',order.customer.id,'product',product.sku,'boost',boost);
-        machine.learn(order.customer.id,product.sku,boost);  
-      })
-    });
-
-    //
-    // train
-    machineIndex = machine.train();
-        
-
+    }
+    
+    indexOrders(products)
+    
+    
 
   });
 
-  // E**O//2360346371241611  C**D//739049451726747 M**R//1099354922508877  K**L 1847885976581568
-  it('use index for user 5', async function() {
-    const user = 5;
+  it('machine index for anonymous', async function() {
+    const ratings = machineIndex.ratings('anonymous',200);
+    ratings.length.should.not.equal(0)
+  });
+
+  //
+  // 1. first more buyed item 1, 
+  // 2. boosted new product item 5, 
+  // 3. second more buyed item 1, 
+  // 4. item 3 is common score (anonymous)
+  it('use index for user 1', async function() {
+    const user = 1;
     const options = {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 5 rating: ',ratings)
+    console.log('user 1 rating: ',ratings.sort(sortBySum))
   });
 
-  it('use index for user 15', async function() {
-    const user = 15;
+  it('use index for user 2', async function() {
+    const user = 2;
     const options = {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 15 rating: ', ratings)
+    console.log('user 2 rating: ', ratings.sort(sortBySum))
 
   });
+
+
 
   it('use index for anonymous', async function() {
     const user = 'anonymous';
@@ -214,79 +168,18 @@ describe('machine index', function() {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user anonymous rating: ', ratings)
+    console.log('user anonymous rating: ', ratings.sort(sortBySum))
 
   });
 
-  it('use index for user 15 and one HUB (set of vendors)', async function() {
+  xit('use index for user 15 and one HUB (set of vendors)', async function() {
     const user = 5;
     const options = {
       vendors:['d','b','c'],
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 5 in HUB rating: ',ratings)
+    console.log('user 5 in HUB rating: ',ratings.sort(sortBySum))
 
   });
-
-
-  xit('print order csv', async function() {
-    const orders = require('./data/orders.json');
-    const csv = [];
-    //
-    //Traversing orders to find the distinct list of customers and products
-    orders.forEach(order=> 
-      order.items.forEach(item => {
-        csv.push({
-          oid: order.oid,
-          user: order.customer.id,
-          when: order.shipping.when.$date,
-          sku: item.sku,
-          vendor: item.vendor,
-          quantity: (item.quantity || item.qty),
-          category: item.category          
-        });
-      })
-    );
-    csv.forEach(line => console.log(line.oid + ',' + line.user + ',' + line.when + ',' + line.sku + ',' + line.vendor + ',' + line.quantity + ',' + line.category));
-  });
-
-
-
-  it('oe live products score', async function() {
-    const products = require('./data/oe.json');
-    const csv = [];
-    //
-    //Traversing orders to find the distinct list of customers and products
-    products.forEach(product=> 
-        csv.push({
-          sku: product.sku,
-          title: product.title,
-          sales: product.stats.sales,
-          issues: product.stats.issues,
-          score: product.stats.score,
-          category: product.categories.slug          
-        })
-    );
-    csv.forEach(line => console.log(line.sku + ',' + line.title + ',' + line.sales + ',' + (line.issues || 0) + ',' + line.score + ',' + line.category));
-  });
-
-  xit('oe live products vegetables score', async function() {
-    const products = require('./data/oe-vegetables.json');
-    const csv = [];
-    //
-    //Traversing orders to find the distinct list of customers and products
-    products.forEach(product=> 
-        csv.push({
-          sku: product.sku,
-          title: product.title,
-          sales: product.stats.sales,
-          issues: product.stats.issues,
-          score: product.stats.score,
-          category: product.categories.slug          
-        })
-    );
-    csv.forEach(line => console.log(line.sku + ',' + line.title + ',' + line.sales + ',' + (line.issues || 0) + ',' + line.score + ',' + line.category));
-  });
-
 });

@@ -1,9 +1,12 @@
 {
   "name": "karibou-mlx",
-  "version": "0.100.7",
+  "version": "0.3.2",
   "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
   "main": "./dist/index.js",
   "scripts": {
+    "download:products": "wget -O data/products.json https://api.karibou.ch/v1/products",
+    "download:categories": "wget -O data/products.json https://ch-fr.openfoodfacts.org/categories.json",
+    "download:ingredients": "wget -O data/products.json https://ch-fr.openfoodfacts.org/ingredients.json",
     "build": "tsc",
     "build:watch": "tsc -watch",
     "tslint": "tslint"
@@ -31,14 +34,18 @@
     "url": "https://github.com/karibou-ch/karibou-ml-userx/issues"
   },
   "dependencies": {
+    "@google-cloud/vision": "^2.4.2",
     "@types/node": "^10.12.9",
+    "brain.js": "^2.0.0-beta.15",
     "clarifai": "^2.8.1",
+    "clarifai-nodejs-grpc": "^8.0.0",
     "json2csv": "^4.2.1",
     "likely": "^0.2.0",
     "lodash": "^4.17.11",
     "matrix-js": "^1.4.0",
     "moment": "^2.22.2",
     "node-serialize": "0.0.4",
+    "request": "^2.88.2",
     "should": "^13.2.3",
     "stopword": "^2.0.1",
     "sylvester": "0.0.21"

@@ -1,0 +1,63 @@
+[
+  {
+    "sku": 1,
+    "categories": "c1",
+    "vendor": "a",
+    "created": "2014-11-23T10:42:31.114Z",
+    "updated": "2021-04-13T15:04:18.057Z",
+    "discount": false,
+    "boost": false,
+    "photo": "//ucarecdn.com/2d9a4bed-67f1-4f40-b43d-60bee07e8da8/"
+  },
+  {
+    "sku": 2,
+    "categories": "c1",
+    "vendor": "a",
+    "created": "2014-11-30T14:18:11.497Z",
+    "updated": "2021-03-04T16:43:45.580Z",
+    "discount": false,
+    "boost": false,
+    "photo": "//ucarecdn.com/f25bb39d-ac67-466e-afa6-7f2a7fea5713/-/crop/747x747/47,327/-/preview/"
+  },
+  {
+    "sku": 3,
+    "categories": "c2",
+    "vendor": "a",
+    "created": "2014-12-04T11:28:34.224Z",
+    "updated": "2021-04-30T13:20:34.349Z",
+    "discount": false,
+    "boost": false,
+    "photo": "//ucarecdn.com/0ff806b5-4d60-4905-ab93-36dd61dad8fe/"
+  },
+  {
+    "sku": 4,
+    "categories": "c2",
+    "vendor": "a",
+    "created": "2020-11-03T23:00:00.000Z",
+    "updated": "2020-11-03T23:00:00.000Z",
+    "discount": false,
+    "boost": false,
+    "photo": "//ucarecdn.com/cd1b24c5-3f2d-461d-9562-2eb3c1d7f1a2/"
+  },
+  {
+    "sku": 5,
+    "categories": "c2",
+    "vendor": "a",
+    "created": "2022-11-03T23:00:00.000Z",
+    "updated": "2022-11-03T23:00:00.000Z",
+    "discount": false,
+    "boost": false,
+    "photo": "//ucarecdn.com/cd1b24c5-3f2d-461d-9562-2eb3c1d7f1a2/"
+  },
+  {
+    "sku": 6,
+    "categories": "c2",
+    "vendor": "a",
+    "created": "2020-11-03T23:00:00.000Z",
+    "updated": "2022-11-03T23:00:00.000Z",
+    "discount": false,
+    "boost": true,
+    "photo": "//ucarecdn.com/cd1b24c5-3f2d-461d-9562-2eb3c1d7f1a2/"
+  }
+
+]
