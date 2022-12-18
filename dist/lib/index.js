@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //
 //
 // export API
-var concepts_1 = require("./concepts");
-Object.defineProperty(exports, "Concepts", { enumerable: true, get: function () { return concepts_1.Concepts; } });
+//export { Concepts } from './concepts';
 var customers_1 = require("./customers");
-Object.defineProperty(exports, "Customers", { enumerable: true, get: function () { return customers_1.Customers; } });
-var machine_1 = require("./machine");
-Object.defineProperty(exports, "Machine", { enumerable: true, get: function () { return machine_1.Machine; } });
+exports.Customers = customers_1.Customers;
+var machine_create_1 = require("./machine-create");
+exports.MachineCreate = machine_create_1.MachineCreate;
 var machine_index_1 = require("./machine-index");
-Object.defineProperty(exports, "MachineIndex", { enumerable: true, get: function () { return machine_index_1.MachineIndex; } });
+exports.MachineIndex = machine_index_1.MachineIndex;

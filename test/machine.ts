@@ -172,14 +172,24 @@ describe('machine index', function() {
 
   });
 
-  xit('use index for user 15 and one HUB (set of vendors)', async function() {
-    const user = 5;
+  it('use index for user 1 and one HUB (set of vendors)', async function() {
+    const user = 1;
     const options = {
-      vendors:['d','b','c'],
+      vendors:['b','c'],
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 5 in HUB rating: ',ratings.sort(sortBySum))
-
+    console.log('user 1 in HUB rating: ',ratings.sort(sortBySum))
   });
+
+  it('use index for user 1 and one category', async function() {
+    const user = 1;
+    const options = {
+      category:'c1',
+      pad:true
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    console.log('user 1 in C1 rating: ',ratings.sort(sortBySum))
+  });
+
 });

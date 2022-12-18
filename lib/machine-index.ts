@@ -99,13 +99,14 @@ export class MachineIndex{
     }
     this.categories={};
     this.products.forEach(prod=>{
-      this.categories[prod.categories]=[];
+      this.categories[prod.categories] = this.categories[prod.categories] || [];
+      this.categories[prod.categories].push(prod.sku);
     });
     return Object.keys(this.categories).sort();
   }
 
   getCategorySku(category){
-    if(!this.categories[category].length){
+    if(!this.categories[category]||!this.categories[category].length){
       this.categories[category]=this.products.filter(product=>product.categories==category).map(product=>product.sku);
     }
     return this.categories[category];
@@ -205,15 +206,15 @@ export class MachineIndex{
     //
     // popular by category
     if(params.category){
-      const categories = this.getCategorySku(params.category);
-      result=result.filter(rate=>categories[params.category].indexOf(rate.item)>-1);
+      const categorySku = this.getCategorySku(params.category);
+      result=result.filter(rate=>categorySku.indexOf(rate.item)>-1);
     }
 
     //
     // popular by vendor
     if(params.vendor){
-      const vendors = this.getVendorSku(params.vendor);
-      result=result.filter(rate=>vendors[params.vendor].indexOf(rate.item)>-1);
+      const vendorSku = this.getVendorSku(params.vendor);
+      result=result.filter(rate=>vendorSku.indexOf(rate.item)>-1);
     }
 
     //

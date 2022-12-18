@@ -9,11 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Concepts = void 0;
 const moment = require('moment');
-const _ = require('lodash');
-const stopwords = require('stopwords-fr'); // array of stopwords
 const Clarifai = require('clarifai');
+const { removeStopwords, fra } = require('stopword');
+const uniq = (v, i, a) => a.indexOf(v) === i;
 const mapSaves = (iterable, action) => __awaiter(void 0, void 0, void 0, function* () {
     let i = 0;
     let results = [];
@@ -59,9 +58,7 @@ class Concepts {
         let tags = [];
         products.forEach(product => {
             let words = this.stringToWorlds(product.title || product.categories);
-            tags = tags
-                .concat(words.filter(word => stopwords.indexOf(word) == -1))
-                .filter((v, i, a) => a.indexOf(v) === i).sort();
+            tags = tags.concat(removeStopwords(words, fra)).filter(uniq).sort();
         });
         return tags;
     }
@@ -226,7 +223,7 @@ class Concepts {
             if (tag.score < score) {
                 return;
             }
-            linked = _.uniq(linked.concat(this.graph.best[tag.name]));
+            linked = linked.concat(this.graph.best[tag.name]).filter(uniq);
         });
         return linked;
     }
