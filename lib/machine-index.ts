@@ -170,7 +170,7 @@ export class MachineIndex{
     return this.products.find(p=>p.sku==sku);
   }
 
-  recommendations(user,n,params){
+  ratemmendations(user,n,params){
     if(params.category){
       this.getCategorySku(params.category);
       return this.model.recommendations(user,1000).filter(reco=>this.categories[params.category].indexOf(reco.item)>-1).slice(0,n||20);
@@ -200,20 +200,20 @@ export class MachineIndex{
     //
     // initial values
     this.rating[user]=this.rating[user]||[];
-    let result= this.rating[user].filter(reco=>reco);
+    let result= this.rating[user].filter(rate=>rate);
 
     //
     // popular by category
     if(params.category){
-      this.getCategorySku(params.category);
-      result=result.filter(reco=>this.categories[params.category].indexOf(reco.item)>-1);
+      const categories = this.getCategorySku(params.category);
+      result=result.filter(rate=>categories[params.category].indexOf(rate.item)>-1);
     }
 
     //
     // popular by vendor
     if(params.vendor){
-      this.getVendorSku(params.vendor);
-      result=result.filter(reco=>this.vendors[params.vendor].indexOf(reco.item)>-1);
+      const vendors = this.getVendorSku(params.vendor);
+      result=result.filter(rate=>vendors[params.vendor].indexOf(rate.item)>-1);
     }
 
     //
@@ -225,23 +225,32 @@ export class MachineIndex{
     }
 
     //
-    // window of sorted results
-    result = result.sort(this.sortByScore).slice(0,n);
-
-    //
-    // pad cell with anonymous ratings
+    // pad items with normalized ratings
     if(
       params.pad &&
       result.length < n &&
       user !== 'anonymous'
     ){
-      n=(n-result.length);
+      const padN=(n-result.length);
       //
       // merge anonymous data for missing score
-      result=result.concat(this.ratings('anonymous',n,params));
+      result=result.concat(this.ratings('anonymous',padN+1,params));
+      //
+      // unique items
       result=result.filter((elem: any,index, array: any[]) => array.findIndex(sub => sub.item == elem.item) === index);
     }
-    return result;
+
+    //
+    // if !pad, add randomness
+    if(!params.pad && user !== 'anonymous') {
+      const padN = (Math.random()*n / 2)|0;
+      result=result.concat(this.ratings('anonymous',padN,params));
+    }
+
+
+    //
+    // window of sorted results
+    return result.sort(this.sortByScore).slice(0,n);;
   }
 
   sortByScore(a,b){

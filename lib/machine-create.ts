@@ -124,7 +124,7 @@ export class MachineCreate{
       return console.log('-- ERROR missing product in anonymous index',sku);
     }
 
-    const factor = (product.boost)? .4 : (product.discount)? .2 : 0.1;
+    const factor = (product.boost)? .9 : (product.discount)? .5 : 0.25;
 
     console.log('- boost product',sku,factor);
 
