@@ -35,17 +35,11 @@ export class MachineIndex{
     this.domain=options.domain||'karibou.ch';
     this.file=".model.json";
     this.model=options.model;
-    this.likely=options.likely;
     this.rating=options.rating||{};
     this.products=options.products||[];
     this.vendors;
     this.categories;    
     this.path=options.path;
-    if(this.likely){
-      this.model=new this.likely.Model(sylvester.Matrix.create(options.model.input),options.model.rowLabels,options.model.colLabels);
-			this.model.input = sylvester.Matrix.create(options.model.input);	
-      this.model.estimated=sylvester.Matrix.create(options.model.estimated);
-    }
     console.log('--- DATE',this.timestamp);
     // console.log('--- CF likely',(!!this.likely));
     // console.log('--- CF jonfon',(!!this.model));
@@ -167,30 +161,14 @@ export class MachineIndex{
     });
   }  
 
-  mapProduct(sku){
-    return this.products.find(p=>p.sku==sku);
-  }
-
-  ratemmendations(user,n,params){
-    if(params.category){
-      this.getCategorySku(params.category);
-      return this.model.recommendations(user,1000).filter(reco=>this.categories[params.category].indexOf(reco.item)>-1).slice(0,n||20);
-      // return this.model.recommendations(user,1000).filter(reco=>this.categories[category].indexOf(reco.item)>-1).slice(0,n||20);
-    }
-    if(params.vendor){
-      this.getVendorSku(params.vendor);
-      return this.model.recommendations(user,1000).filter(reco=>this.vendors[params.vendor].indexOf(reco.item)>-1).slice(0,n||20);
-      // return this.model.recommendations(user,1000).filter(reco=>this.vendors[vendor].indexOf(reco.item)>-1).slice(0,n||20);
-    }
-    return this.model.recommendations(user,n).slice(0,n||20);
-  }
-
   reload(){
     let mi=MachineIndex.load(this.path,this.domain);
     if(mi.timestamp>this.timestamp){
       Object.assign(this,mi);
     }
   }
+
+  
   ratings(user,n,params){
     //
     // default values
@@ -262,7 +240,6 @@ export class MachineIndex{
     var $this=this;
     var content = {
       timestamp:Date.now(),
-      likely:this.likely,
       products:this.products,
       domain:this.domain,
       model:this.model,
