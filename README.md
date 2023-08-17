@@ -11,11 +11,36 @@ L'objectif de l'index est de produire des listes d'identifiants de produits (SKU
 # Motivation
 Produire des listes de produits de manière efficace et rapide est un élément important de karibou.ch. Nous souhaitons isoler completement ce rôle de l'application principale. 
 
-# Specification
+# Specifications
 
 ## 0. Création d'un espace vectoriel
-Analyse des différentes pistes pour créer un produit en vecteur (x1,x2) dans un espace euclidien.
+Création un espace vertoriel à N dimensions avec GPT (1536 dim) pour chaque produit.
+Ceci pour permettre de trouver des similarité entre produits et recettes de cuisine avec KNN.
+* [From KNN to BERT: A Data Science Interviewee’s Guide to Algorithms and Techniques](https://namratesh.medium.com/from-knn-to-bert-a-data-science-interviewees-guide-to-algorithms-and-techniques-da20b445b8fd)
 
+```ts
+require('dotenv').config();
+const { Configuration, OpenAIApi } = require("openai");
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const input = `Boudin blanc truffé`;
+const embedd = async () => {
+  try{
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.createEmbedding({
+      model: "text-embedding-ada-002",
+      input,
+    });
+    const content = response.data
+    console.log(content.data[0].embedding);
+  }catch(err) {
+    console.log('---- DBG ERROR',err.response)
+  }
+}
+
+```
 
 ## 1. Calcul du score d'un produit 
 Nous souhaitons créer une liste des meilleurs produits selon les critères suivants
@@ -41,6 +66,11 @@ _La fréquence d'achat du produit est une mesure de l'importance du produit dans
  score = attenuation x prodFreq/UserOrders * boost/penalties
 ```
 
+1. **Model:** on créé une MATRIX constituée de N lignes (utilisateurs) et M colonne (produits)
+1. **Learn:** on modifie notre MATRIX  (produits (M) + utilisateurs (N)) avec la somme des quantités commandées dans l'historique des cmd.
+1. **Score:** on calcul un score pour chaque produit avec la formule précédente
+1. **Mitigation:** le score est attenué/amplifié en fonction du contexte de la commande 
+
 ### Création d'un index pour l'utilisateur Anonymous
 On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score normalisé des produits de l'utilisateur Anonymous est le score pondéré par l'ensemble des utilisateurs. La liste des produits associée a l'utilisateur anonymous est aussi utilisée pour compléter une proposition pour un utilisateur qui n'a pas passé sufisament de commandes.
 
@@ -65,7 +95,12 @@ On peut appliquer un boost (un facteur d'amplification) au score d'un produit po
 
 ### Normalisation des scores entres les différents marchés
 Lorsque l'on créé un nouveau marché composé de nouvelles boutiques et de boutiques d'un autre marché, les scores des produits doivent rester cohérents. 
-> TODO
+1. Le facteur de Boost artificiel des nouveaux produits (sans commande) doit se situer dans la moyenne des produits existants. 
+2. Il faut connaître le min/max de l'ensemble des produits
+3. Il faut connaître le min/max de l'ensemble des vendeurs
+4. Il faut connaître le min/max de l'ensemble des marchés
+
+**TODO** ceci reste a faire
 
 
 ### Penalties
@@ -88,6 +123,6 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 
 # Liens* 
 * https://www.npmjs.com/package/stopword
-* https://fr.wikipedia.org/wiki/TF-IDF (très intéressant)
+* https://fr.wikipedia.org/wiki/TF-IDF 
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
 * LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits

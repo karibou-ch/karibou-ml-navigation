@@ -1,16 +1,14 @@
-var assert       = require('assert');
+import { strict as assert } from 'assert';
 import { MachineIndex } from './machine-index';
+
+//
+// Create new score on product for each customer
+// Anonymous user is the average score of all users
+//
 
 //
 // vector, matrix and geometry library
 // http://sylvester.jcoglan.com/
-
-//
-// machine learning
-// var jonfon = require('jonfon');
-// var Engine = jonfon.Engine;
-// var Strategy = jonfon.Strategy;
-
 
 export class MachineCreate{
 
