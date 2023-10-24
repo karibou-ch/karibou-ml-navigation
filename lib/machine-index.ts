@@ -1,8 +1,7 @@
 "use strict";
-var assert   = require('assert');
-var _        = require('lodash');
-var fs       = require('fs');
-var sylvester= require('sylvester');
+const assert   = require('assert');
+const _        = require('lodash');
+const fs       = require('fs');
 
 //
 // vector, matrix and geometry library

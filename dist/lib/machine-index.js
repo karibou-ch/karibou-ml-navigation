@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MachineIndex = void 0;
 var assert = require('assert');
 var _ = require('lodash');
 var fs = require('fs');

@@ -276,7 +276,7 @@ export class MachineCreate{
 
       // ∑O    => count orders for one user
       // ∑(p ⊂ O)  => count orders for one product
-      // fP     => freqency product for all orders (freq is >= of p⊂O)
+      // fP     => frequency product for all orders (freq is >= of p⊂O)
       // log(CUp x Fa)/ CU x Fp
       if(prodFreq && orders.length){
         score=(dimmedSum*(prodFreq/orderItemCount));  
@@ -333,7 +333,7 @@ export class MachineCreate{
   indexAnonymous(){
     // make sure anonymous doesn't outperform any uid
     this.ratings['anonymous']=this.ratings['anonymous'].map(elem=>{
-      elem.score=elem.score/this.users.length;
+      elem.score=elem.score/2;
       return elem;
     }).sort((a,b)=>{
       return b.score-a.score;

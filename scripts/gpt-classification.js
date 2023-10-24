@@ -10,28 +10,32 @@ const natural = require('natural');
 //Je souhaite 4 repas pour la semaine avec la commande de produits qui suit.
 
 const message = `
-En tant que diététicien j'aimerais que tu classes les aliments fournis dans les différentes thématiques suivantes. Tu dois absolument suivre les points suivants :
+Tu agis comme un diététicien avec de nombreuses années d'expérience en cuisine qui travaille dans la ville de Genève. 
+J'aimerais que tu classes les aliments fournis dans les différentes classifications suivantes.
 
-A. Utilises la liste des aliments fournis avec le nom de l'aliment suivi de ":" pour sa description.
-B. N'utilises pas les descriptions des aliments pour les classifier.
-C. Ne crées pas d'aliments fictifs et ne les extrait pas des descriptions.
-D. Attribue seulement les aliments qui correspondent à 90% aux thématiques mentionnées ci-dessous.
-E. Tu dois afficher le résulat  UNIQUEMENT  au format JSON (thematique, names) 
+Instructions pour les données d'entrée :
 
-Thématiques :
+A. Les aliments sont décrits par leur nom et une description, séparés par le caractère ":".
+B. Utilise uniquement le nom pour la classification. La description sert uniquement à fournir le contexte.
+C. Ne crée pas de nouveaux aliments ou n'extrais pas des aliments de la description.
 
-Apéritif gourmand
-Grillades festives
-Cuisine suisse authentique
-Cuisine française raffinée
-Cuisine italienne chaleureuse
-Cuisine végétarienne inspirante
-Cuisine d'été rafraîchissante
-Cuisine d'hiver réconfortante
-Cuisine exotique
-Cuisine santé et équilibrée
-Cuisine méditerranéenne
-Petit-déjeuner gourmand
+Instructions pour le traitement :
+
+D. Attribue les aliments uniquement s'ils correspondent à plus de 90% aux thématiques mentionnées ci-dessous. Si un aliment est classé dans une thématique, il ne doit pas apparaître dans une autre.
+E. Le résultat doit être produit au format JSON strict qui contient une liste des aliments pour chaque classe
+
+Classification :
+
+* Raclette
+* Fondue
+* Fromages à pâtes dures 
+* Fromages à pâtes molle
+* Fromages Bleus
+* Fromages râpés
+* Mozzarella & fromages frais
+* Fromages italiens
+* Fromage de brebis, de chèvre & de buffle
+* Produits laitiers et Oeufs
 
 Voici la liste des aliments à classer :
 
@@ -47,26 +51,26 @@ const cleanTags = (text) => {
 
 const categories = [
   "fromages-produits-frais",
-  "traiteur-maison",
-  "fruits-legumes",
-  "boulangerie-artisanale",
-  "boucherie-artisanale",
-  "poissonnerie",
-  "charcuterie-pates",
-  "pates-sauces",
-  "antipasti-conserves",
-  "cereales-legumineuses-graines",
-  "miels-confitures-et-plus",
-  "douceurs-chocolats",
-  "boissons",
-  "bieres-artisanales",
-  "vins-rouges",
-  "vins-blancs-roses",
-  "fleurs"
+  // "traiteur-maison",
+  // "fruits-legumes",
+  // "boulangerie-artisanale",
+  // "boucherie-artisanale",
+  // "poissonnerie",
+  // "charcuterie-pates",
+  // "pates-sauces",
+  // "antipasti-conserves",
+  // "cereales-legumineuses-graines",
+  // "miels-confitures-et-plus",
+  // "douceurs-chocolats",
+  // "boissons",
+  // "bieres-artisanales",
+  // "vins-rouges",
+  // "vins-blancs-roses",
+  // "fleurs"
 ];
 
 const main = async (category)=>{
-  const filename = "./data/products-"+category+".json";  
+  const filename = "./data/classification-"+category+".json";  
   let items=[];  
 
   console.log('--- DBG 1. download items for : ',category);
@@ -76,23 +80,27 @@ const main = async (category)=>{
     return {
       sku:product.sku,
       title: (product.title),
-      description: cleanTags(product.details.description).substr(0, 60),
+      description: cleanTags(product.details.description).substr(0, 60)+"...",
     }
   }).sort((a,b)=>{
     return a.title.localeCompare(b.title);
   });
+
+  // const classifications = products.map(product => product.categories.slug);
   
+  // console.log('---', classifications);
+  // process.exit();
   
   //
   // models: gpt-3.5-turbo, gpt-4
   const model = new OpenAI({
-    temperature: 0.3,
+    temperature: 0.2,
     maxTokens:-1,
     modelName:"gpt-4",  
     openAIApiKey: process.env.OPENAI_API_KEY
   });
   try{
-    const chunkSize = 10;
+    const chunkSize = 20;
     let classifier = {};
     let filterItems = [];
 
@@ -117,13 +125,14 @@ const main = async (category)=>{
 
     for (let i = 0; i < items.length; i += chunkSize) {
 
-      const context = "* "+ items.slice(i, i + chunkSize).map(item => item.title+' : '+item.description).join('\n* ');    
+      const context = "\n* "+ items.slice(i, i + chunkSize).map(item => item.title+' : '+item.description).join('\n* ');    
       //const numTokens = await model.getNumTokens(message+context);
-      console.log(' --- DBG 2. products context\n\n',context);
-      console.log(' --- DBG 2. chunk position',i,' of ',items.length);
+      console.log(' --- DBG products context\n\n',context);
+      console.log('\n\n --- DBG chunk position',i,' of ',items.length);
       const res = await model.call(message+context);
       try{
         const json = /[^{]*(.*?)\}/gi.exec(res);
+        console.log(res)
         const content = JSON.parse(`{${json[0]}`);
         Object.keys(content).forEach(key=>{
           classifier[key] = classifier[key] || [];
@@ -149,7 +158,8 @@ const main = async (category)=>{
     writeFileSync(filename, JSON.stringify(classifier,null,2), 'utf8');
 
   }catch(err) {
-    console.log('---DBG error',err.response||err);
+    const stack = (err.response||err);
+    console.log('---DBG error',stack.data||stack);
   }
 }
 

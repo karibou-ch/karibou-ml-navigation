@@ -1,0 +1,177 @@
+{
+  "Apéritif gourmand": [
+    "Amandes toastées:1003949"
+  ],
+  "Grillades festives": [],
+  "Cuisine du terroir": [
+    "Borlotti sec:1003140",
+    "Bramata:1004079",
+    "Farine de maïs:1004080",
+    "Graines de lin:1002604",
+    "Haricot blanc \"cocco bianco di Spello\"  \"Cuore Verde\" BIO:1002304",
+    "Lentilles Beluga:1003141",
+    "Lentilles biologiques de Spello \"Cuore Verde\" BIO:1003309",
+    "Lentilles Rosana:1003328",
+    "Lentilles verte:1002602",
+    "Pois chiche:1002603",
+    "Pois chiches biologiques \"Cuore Verde\" BIO:1003310",
+    "Polenta rapide:1002830",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine rapide et facile": [
+    "Maïzena 250g:1003049",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine de montagne réconfortante": [
+    "Bramata:1004079",
+    "Farine à polenta jaune de Storo:1002311",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830"
+  ],
+  "Cuisine suisse authentique": [
+    "Borlotti sec:1003140",
+    "Bramata:1004079",
+    "Farine de maïs:1004080",
+    "Graines de lin:1002604",
+    "Lentilles Beluga:1003141",
+    "Lentilles verte:1002602",
+    "Maïzena 250g:1003049",
+    "Pois chiche:1002603",
+    "Polenta:1004078",
+    "Polenta rapide:1002830"
+  ],
+  "Cuisine française raffinée": [
+    "Lentilles Beluga:1003141",
+    "Lentilles verte:1002602"
+  ],
+  "Cuisine italienne chaleureuse": [
+    "Borlotti sec:1003140",
+    "Cannellini sec:1002193",
+    "Corona sec:1004337",
+    "Farine à polenta jaune de Storo:1002311",
+    "Haricot blanc \"cocco bianco di Spello\"  \"Cuore Verde\" BIO:1002304",
+    "Lentilles biologiques de Spello \"Cuore Verde\" BIO:1003309",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830",
+    "Riz Carnaroli Superfino:1002312"
+  ],
+  "Cuisine espagnole ensoleillée": [
+    "Pois chiche:1002603",
+    "Pois chiches biologiques \"Cuore Verde\" BIO:1003310"
+  ],
+  "Cuisine de la mer": [],
+  "Cuisine asiatique moderne": [
+    "Riz complet noir Venere:1002313"
+  ],
+  "Cuisine végétarienne inspirante": [
+    "Amandes toastées:1003949",
+    "Borlotti sec:1003140",
+    "Cannellini sec:1002193",
+    "Corona sec:1004337",
+    "Farine de sarrasin:1004081",
+    "Graines de lin:1002604",
+    "Haricot blanc \"cocco bianco di Spello\"  \"Cuore Verde\" BIO:1002304",
+    "Lentilles Beluga:1003141",
+    "Lentilles biologiques de Spello \"Cuore Verde\" BIO:1003309",
+    "Lentilles Rosana:1003328",
+    "Lentilles verte:1002602",
+    "Pois chiche:1002603",
+    "Pois chiches biologiques \"Cuore Verde\" BIO:1003310",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830",
+    "Riz Carnaroli Superfino:1002312",
+    "Riz complet noir Venere:1002313",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine d'hiver réconfortante": [
+    "Borlotti sec:1003140",
+    "Bramata:1004079",
+    "Farine à polenta jaune de Storo:1002311",
+    "Lentilles Beluga:1003141",
+    "Lentilles verte:1002602",
+    "Pois chiche:1002603",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine de printemps revitalisante": [
+    "Haricot blanc \"cocco bianco di Spello\"  \"Cuore Verde\" BIO:1002304",
+    "Lentilles biologiques de Spello \"Cuore Verde\" BIO:1003309",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine d'été rafraîchissante": [],
+  "Cuisine d'automne chaleureuse": [
+    "Borlotti sec:1003140",
+    "Bramata:1004079",
+    "Farine à polenta jaune de Storo:1002311",
+    "Lentilles Rosana:1003328",
+    "Pois chiche:1002603",
+    "Pois chiches biologiques \"Cuore Verde\" BIO:1003310",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine exotique": [
+    "Riz complet noir Venere:1002313"
+  ],
+  "Cuisine santé et équilibrée": [
+    "Amandes toastées:1003949",
+    "Borlotti sec:1003140",
+    "Cannellini sec:1002193",
+    "Corona sec:1004337",
+    "Farine de sarrasin:1004081",
+    "Graines de lin:1002604",
+    "Haricot blanc \"cocco bianco di Spello\"  \"Cuore Verde\" BIO:1002304",
+    "Lentilles Beluga:1003141",
+    "Lentilles biologiques de Spello \"Cuore Verde\" BIO:1003309",
+    "Lentilles Rosana:1003328",
+    "Lentilles verte:1002602",
+    "Pois chiche:1002603",
+    "Pois chiches biologiques \"Cuore Verde\" BIO:1003310",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830",
+    "Riz Carnaroli Superfino:1002312",
+    "Riz complet noir Venere:1002313",
+    "Soupe aux légumineuses:1002806"
+  ],
+  "Cuisine méditerranéenne": [
+    "Amandes toastées:1003949",
+    "Cannellini sec:1002193",
+    "Corona sec:1004337",
+    "Haricot blanc \"cocco bianco di Spello\"  \"Cuore Verde\" BIO:1002304",
+    "Pois chiche:1002603",
+    "Pois chiches biologiques \"Cuore Verde\" BIO:1003310",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Riz Carnaroli Superfino:1002312"
+  ],
+  "Petit-déjeuner gourmand": [
+    "Amandes toastées:1003949",
+    "Farine de sarrasin:1004081"
+  ],
+  "Brunch dominical": [
+    "Amandes toastées:1003949",
+    "Farine de sarrasin:1004081",
+    "Lentilles Beluga:1003141",
+    "Lentilles verte:1002602",
+    "Pois chiche:1002603"
+  ],
+  "Cuisine sans gluten": [
+    "Borlotti sec:1003140",
+    "Bramata:1004079",
+    "Farine à polenta jaune de Storo:1002311",
+    "Farine de maïs:1004080",
+    "Maïzena 250g:1003049",
+    "Polenta:1004078",
+    "Polenta bramata:1002831",
+    "Polenta rapide:1002830",
+    "Riz Carnaroli Superfino:1002312",
+    "Riz complet noir Venere:1002313"
+  ]
+}
