@@ -1,48 +1,54 @@
 # Objectif
-L'objectif de l'index est de produire des listes d'identifiants de produits (SKU) à moindre coût. Voici quelques exemples de listes intéressantes:
+L'objectif de l'index est de produire des listes d'identifiants de produits (SKU) à moindre coût selon les besoins du clients. Quelques exemples de listes:
 
-* Produire la liste des produits préférés d'un utilisateur.
-* Produire la liste des produits de saison.
-* Produire la liste des produits similaires.
-* Produire la liste des produits en fonction d'un tag.
-* Produire la liste des produits de commerçants, de marchés ou/et de catégories.
+* Les produits préférés d'un utilisateur.
+* Les produits de saison.
+* Les produits similaires.
+* Les produits d'une catégorie.
+* Les produits d'une thématique.
+* Les produits d'un commerçants.
+* Les produits d'un marché.
+* Les produits associés à une question.
 
 
 # Motivation
-Produire des listes de produits de manière efficace et rapide est un élément important de karibou.ch. Nous souhaitons isoler completement ce rôle de l'application principale. 
+Produire des listes de produits de manière efficace (mémoire utilisée) et rapide (<50ms) est un élément important pour karibou.ch. Nous devons déléguer ce rôle de l'application principale. 
 
 # Specifications
 
 ## 0. Création d'un espace vectoriel
-Création un espace vertoriel à N dimensions avec GPT (1536 dim) pour chaque produit.
-Ceci pour permettre de trouver des similarité entre produits et recettes de cuisine avec KNN.
+Utilisation d'OpenAI pour créer un espace vertoriel à N dimensions (1536) pour chaque produit. Ceci permet de régler les problèmes suivants:
+* trouver des similarité entre produits.
+* trouver les produits associés à une question au format *Chat*
+
+Pour l'Index des vecteurs, nous avons plusieurs options
+* [Mongodb Atlas Vector Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/knn-vector/#std-label-fts-knn-vector-type-options)
+* [github.com/esteininger/vector-search](https://github.com/esteininger/vector-search/tree/master/use-cases/question-and-answering)
 * [From KNN to BERT: A Data Science Interviewee’s Guide to Algorithms and Techniques](https://namratesh.medium.com/from-knn-to-bert-a-data-science-interviewees-guide-to-algorithms-and-techniques-da20b445b8fd)
 
-```ts
-require('dotenv').config();
-const { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+### Models
+On peut soit utiliser un modèle standard, soit utiliser un modèle [fine-tuned](https://platform.openai.com/docs/api-reference/models/list), soit utiliser le modèle standard `text-embedding-ada-002` 
 
-const input = `Boudin blanc truffé`;
-const embedd = async () => {
-  try{
-    const openai = new OpenAIApi(configuration);
-    const response = await openai.createEmbedding({
-      model: "text-embedding-ada-002",
-      input,
-    });
-    const content = response.data
-    console.log(content.data[0].embedding);
-  }catch(err) {
-    console.log('---- DBG ERROR',err.response)
-  }
-}
+```ts
+  const { OpenAI } = require("openai");
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+
+  //
+  // models: gpt-3.5-turbo, gpt-4
+  const embedding = await openai.embeddings.create({
+    model: "text-embedding-ada-002",
+    input: "The quick brown fox jumped over the lazy dog",
+    encoding_format: "float",
+  });
+
+  console.log(embedding.data[0].embedding); // [float,float,...];
 
 ```
 
 ## 1. Calcul du score d'un produit 
+Le score d'un produit est une fonction des achats et du temps.
 Nous souhaitons créer une liste des meilleurs produits selon les critères suivants
 1. un produit souvent acheté dans le présent est **très** valorisé
 1. un produit acheté en petite quantité mais régulièrement est **très** valorisé
