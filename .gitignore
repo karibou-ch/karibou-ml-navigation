@@ -7,6 +7,8 @@ dist/*
 npm-debug.log*
 package-lock.json
 *model*.json
+# Env local vars
+.env
 
 # Runtime data
 pids
