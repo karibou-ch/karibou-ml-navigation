@@ -35,16 +35,14 @@
   },
   "dependencies": {
     "@dqbd/tiktoken": "^1.0.7",
-    "axios": "^1.4.0",
-    "clarifai": "^2.8.1",
-    "clarifai-nodejs-grpc": "^8.0.0",
-    "dotenv": "^16.0.3",
-    "langchain": "^0.0.97",
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
     "lodash": "^4.17.11",
     "matrix-js": "^1.6.1",
     "moment": "^2.22.2",
-    "natural": "^6.5.0",
-    "node-fetch": "^3.3.1",
+    "natural": "^6.8.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.14.0",
     "should": "^13.2.3",
     "stopword": "^2.0.8",
     "sylvester": "0.0.21"
@@ -57,6 +55,6 @@
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
     "tslint": "^5.20.1",
-    "typescript": "^4.0.0"
+    "typescript": "^5.2.2"
   }
 }
