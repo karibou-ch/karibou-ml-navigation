@@ -152,7 +152,7 @@ export class MachineIndex{
       return new MachineIndex({
         path:path,
         timestamp:new Date(model.timestamp),
-        likely:model.likely,
+        categoriesWeight:model.categoriesWeight,
         model:model.model,
         products:model.products,
         rating:model.rating,
@@ -254,6 +254,7 @@ export class MachineIndex{
     var content = {
       timestamp:Date.now(),
       products:this.products,
+      categoriesWeight:this.categoriesWeight,
       domain:this.domain,
       model:this.model,
       rating:this.rating

@@ -288,9 +288,9 @@ export class MachineCreate{
   train(){
     console.log('--- users score');
     this.users.forEach(this.index.bind(this));
+    const cats = Object.keys(this.maxScore);
 
-    console.log('--- categories score');
-    this.categoriesWeight = Object.keys(this.maxScore).map(cat =>{
+    this.categoriesWeight = cats.map(cat =>{
       return {
         name:cat,
         min:this.minScore[cat],
@@ -298,6 +298,7 @@ export class MachineCreate{
         max:this.maxScore[cat],
       }
     });
+    console.log('--- categories score',this.categoriesWeight.length);
 
 
     return new MachineIndex({
