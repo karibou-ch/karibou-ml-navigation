@@ -225,4 +225,12 @@ describe('machine index', function() {
     console.log('user 1 in C1 rating: ',ratings.sort(sortBySum))
   });
 
+  it('list category name', async function() {
+    machineIndex.categoriesList.forEach(cat => console.log(cat));
+  });
+
+  it('list category with score', async function() {
+    machineIndex.categoriesScore.forEach(cat => console.log(cat.name,cat.max,cat.min,cat.avg));
+  });
+
 });

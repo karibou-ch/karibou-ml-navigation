@@ -20,6 +20,19 @@ export const datePlusDays=(date,nb) => {
   return plus;
 }
 
+export const memoryUsage = (info)=> {
+  const format = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`;
+
+  const memoryData = process.memoryUsage();
+
+  const memoryUsage = {
+    heapTotal: `${format(memoryData.heapTotal)} -> total size allocated heap`,
+    heapUsed: `${format(memoryData.heapUsed)} -> heap used for ${info}`
+  };  
+  console.log(memoryUsage);
+}
+
+
 export const orderToLeanObject = (order) => {
   const obj = {
     customer: {

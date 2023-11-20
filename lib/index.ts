@@ -6,4 +6,4 @@ export { Customers } from './customers';
 export { MachineCreate } from './machine-create';
 export { MachineIndex } from './machine-index';
 export { MachineOpenAI} from './machine-openai';
-export { cleanTags, dateBetweeThan, datePlusDays,orderToLeanObject, productToLeanObject } from './utils';
+export { cleanTags, dateBetweeThan, datePlusDays,memoryUsage, orderToLeanObject, productToLeanObject } from './utils';

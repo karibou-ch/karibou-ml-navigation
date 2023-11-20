@@ -16,7 +16,6 @@ export class MachineCreate{
   today;
   domain;
   file;
-  approach;
   users;
   groups;
   orders;
@@ -24,10 +23,10 @@ export class MachineCreate{
   matrix;
   model;
   ratings;
-  engine;
   maxScore;
   minScore;
-  initialBoost;
+
+  categoriesWeight;
 
   constructor(options){
     this.options=options||{};
@@ -47,7 +46,7 @@ export class MachineCreate{
     this.ratings={};
     this.maxScore = {};
     this.minScore = {};
-    this.initialBoost = {};
+    this.categoriesWeight = [];
   }
 
 
@@ -287,11 +286,23 @@ export class MachineCreate{
   }
 
   train(){
-    console.log('--- build users')
+    console.log('--- users score');
     this.users.forEach(this.index.bind(this));
+
+    console.log('--- categories score');
+    this.categoriesWeight = Object.keys(this.maxScore).map(cat =>{
+      return {
+        name:cat,
+        min:this.minScore[cat],
+        avg:(this.maxScore[cat]-this.minScore[cat])/2, 
+        max:this.maxScore[cat],
+      }
+    });
+
 
     return new MachineIndex({
       products:this.products,
+      categoriesWeight:this.categoriesWeight,
       rating:this.ratings,
       model:this.model,
       domain:this.domain,

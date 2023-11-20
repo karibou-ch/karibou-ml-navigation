@@ -11,7 +11,7 @@ export class MachineIndex{
   domain;
   file;
   model;
-  likely;
+  categoriesWeight;
   rating;
   products;
   vendors;
@@ -27,6 +27,7 @@ export class MachineIndex{
     this.domain=options.domain||'karibou.ch';
     this.file=".model.json";
     this.model=options.model;
+    this.categoriesWeight = options.categoriesWeight||[];
     this.rating=options.rating||{};
     this.products=options.products||[];
     this.vendors;
@@ -40,8 +41,10 @@ export class MachineIndex{
 
     //
     // initial list creation
-    console.log('--- categories',this.categoriesList);
-    console.log('--- vendors',this.vendorsList);
+    this.categoriesList;
+    this.vendorsList;
+    // console.log('--- categories',this.categoriesList);
+    // console.log('--- vendors',this.vendorsList);
 
   }
 
@@ -73,6 +76,10 @@ export class MachineIndex{
       this.categories[prod.categories].push(prod.sku);
     });
     return Object.keys(this.categories).sort();
+  }
+
+  get categoriesScore(){
+    return this.categoriesWeight.sort((a,b)=> a.name.localeCompare(b.name));
   }
 
   //
@@ -134,12 +141,23 @@ export class MachineIndex{
   }
 
   static load(path,domain){
-    var content;
     try{
-      content=fs.readFileSync(path+'/'+domain+".model.json",{ encoding: 'utf8' });
+      const content=fs.readFileSync(path+'/'+domain+".model.json",{ encoding: 'utf8' });
       if(!content.length) {
         throw new Error('Error missing content for file:'+path+'/'+domain+".model.json")
       }
+
+      const model=JSON.parse(content);
+
+      return new MachineIndex({
+        path:path,
+        timestamp:new Date(model.timestamp),
+        likely:model.likely,
+        model:model.model,
+        products:model.products,
+        rating:model.rating,
+        domain:model.domain
+      });      
     }catch(e){
       console.log('-- ','Error reading file:'+path+'/'+domain+".model.json")
       // throw new Error('Error reading file:'+path+'/'+domain+"-model.json");
@@ -151,18 +169,6 @@ export class MachineIndex{
         domain:domain
       });
     }
-    
-    content=JSON.parse(content);
-
-    return new MachineIndex({
-      path:path,
-      timestamp:new Date(content.timestamp),
-      likely:content.likely,
-      model:content.model,
-      products:content.products,
-      rating:content.rating,
-      domain:content.domain
-    });
   }  
 
   reload(){
