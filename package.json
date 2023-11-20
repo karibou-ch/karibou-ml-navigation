@@ -1,6 +1,6 @@
 {
   "name": "karibou-mlx",
-  "version": "0.3.6",
+  "version": "1.0.0",
   "description": "Use machine learning to get a better «friction less» user experience with karibou.ch",
   "main": "./dist/index.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "@dqbd/tiktoken": "^1.0.7",
     "axios": "^1.5.1",
     "dotenv": "^16.3.1",
+    "hnswlib-node": "^1.4.2",
     "lodash": "^4.17.11",
     "matrix-js": "^1.6.1",
     "moment": "^2.22.2",
