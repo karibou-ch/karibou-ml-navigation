@@ -120,15 +120,16 @@ export class MachineCreate{
   //
   // matrixCell('category','movie-name', 'user', 'score');
   // return matrix
-  learn(user,product,qty){
+  learn(user,product,qty, cluster){
     qty=qty||1;
     // https://github.com/raghavgujjar/matrix#readme
     assert(product);
     assert(user);
-    let uid=user.id||user;
-    let pid=product.sku||product;    
-    let row=this.users.findIndex(user=>(user.id||user)==uid);
-    let col=this.products.findIndex(product=>product.sku==pid);
+    const plen = this.products.length;
+    const uid=user.id||user;
+    const pid=product.sku||product;    
+    const row=this.users.findIndex(user=>(user.id||user)==uid);
+    const col=this.products.findIndex(product=>product.sku==pid);
     if(col<0){
       return console.log('-- ERROR missing product',pid);
     }
@@ -141,8 +142,11 @@ export class MachineCreate{
     if(!this.matrix[row][col]){
       this.matrix[row][col]=0;
     }
-    
-    this.matrix[row][col]+=qty;    
+    if(cluster) {
+      this.matrix[row][col]= (this.matrix[row][col]+qty)/(cluster);
+    }else {
+      this.matrix[row][col]+=qty;          
+    }
   }
 
 
@@ -285,8 +289,6 @@ export class MachineCreate{
   train(){
     console.log('--- build users')
     this.users.forEach(this.index.bind(this));
-    console.log('--- build anonymous')
-    // this.indexAnonymous();
 
     return new MachineIndex({
       products:this.products,

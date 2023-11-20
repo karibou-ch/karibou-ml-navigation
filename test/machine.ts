@@ -113,11 +113,11 @@ describe('machine index', function() {
           // learn for named group of customer
           const plan = order.customer.plan;
           if(plan) {
-            machine.learn(plan,product.sku,boost);   
+            machine.learn(plan,product.sku,boost, 10);   
           }
           //
-          // learn for anonymous
-          machine.learn('anonymous',product.sku,boost);   
+          // learn for anonymous (only when it's a customer)
+          machine.learn('anonymous',product.sku,boost, 10);   
         })
       });
     
@@ -200,8 +200,8 @@ describe('machine index', function() {
     const options = {
     };
     const ratings = machineIndex.ratings(user,200,options);
-    ratings.length.should.equal(5);
     console.log('user anonymous rating: ', ratings.sort(sortBySum))
+    ratings.length.should.equal(5);
 
   });
 

@@ -45,6 +45,10 @@ export class MachineIndex{
 
   }
 
+  get usersList() {
+    return Object.keys(this.rating);
+  }
+
   get vendorsList(){
     if(this.vendors){
       return Object.keys(this.vendors).sort();
