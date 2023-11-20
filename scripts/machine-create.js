@@ -54,8 +54,10 @@ const indexOrders=async (products)=>{
   // BOOST content
   orders.forEach(order => {
     order.items.forEach(item => {
-
-      let product=products.find(product=>product.sku==item.sku);
+      //
+      // attenuation is a value  [0.15;2] => [24months;today]
+      const attenuation = machine.attenuationByTime(order.shipping.when);
+      const product=products.find(product=>product.sku==item.sku);
       if(!product||!product.sku){
         return;
       }
@@ -68,19 +70,12 @@ const indexOrders=async (products)=>{
       // initial score value
       let boost=(+item.qty || +item.quantity);
 
-      //
-      // product boosters activated  product.boost
-      boost=(product.boost)?(boost*10) : boost;
 
       //
-      //boosters  discount
-      boost=product.discount?(boost*5) : boost;
-
-      //
-      //boosters  user.likes
-      if(order.customer.likes.indexOf(item.sku)>-1) {
-        boost = (boost*5);
-      }
+      // FIXME boosters  user.likes
+      // if(order.customer.likes.indexOf(item.sku)>-1) {
+      //   boost = (boost*5);
+      // }
       
 
       //
@@ -94,27 +89,47 @@ const indexOrders=async (products)=>{
       if(betweeThan(product.updated,4)){        
         boost=(boost*2);
         // console.log('updated before 3weeks',product.sku, boost);
+      } else 
+      //
+      //boosters for discount or paid boost
+      if(product.boost||product.discount){
+        boost=(product.boost)?(boost*4) : boost;
+        boost=product.discount?(boost*2) : boost;
       }
 
-      // console.log('--learn uid',order.customer.id,'product',product.sku,'boost',boost);
+      //
+      // finaly apply attenutation
+      boost = attenuation * boost;
+
+      //
+      // learn for customer
       machine.learn(order.customer.id,product.sku,boost);   
+      //
+      // learn for named group of customer
+      const plan = order.customer.plan;
+      if(plan) {
+        machine.learn(plan,product.sku,boost);   
+      }
+      //
+      // learn for anonymous
+      machine.learn('anonymous',product.sku,boost);   
     })
   });
 
   
   console.log('- taining (products,orders)',products.length,orders.length);
-  const index = machine.train()
-  await index.save('./');
-  console.log('- taining done','all rating products');
+  const index = machine.train();
 
   //
-  // product not indexed (means never buyed)
+  // product not indexed (means never buyed) 
+  // they have a boosted time
   products.filter(product => !product.indexed).forEach(product => {
-    const newProduct = betweeThan(product.created,4);
-    if(product.discount || product.boost || newProduct){
-      machine.boost(product);   
-    }
+    const factor = machine.attenuationByTime(product.created);
+    machine.boost(product,factor);   
   });
+
+  await index.save('./');
+  console.log('- taining done','all rating products');
 
   //
   // get all rating products

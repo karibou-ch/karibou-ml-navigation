@@ -1,10 +1,14 @@
 
+// minimal format for testing purposes
 import $products from './data/products-xs.json';
 import $orders from './data/orders-xs.json';
 
 
 const MachineIndex = require('../lib').MachineIndex;
 const MachineCreate = require('../lib').MachineCreate;
+const orderToLeanObject = require('../lib').orderToLeanObject;
+const productToLeanObject = require('../lib').productToLeanObject;
+const dateBetweeThan = require('../lib').dateBetweeThan;
 
 const machine = new MachineCreate({
   domain:'test'
@@ -12,10 +16,11 @@ const machine = new MachineCreate({
 
 //
 //Traversing orders to find the distinct list of customers and products
-const customers = $orders.map(order=>order.customer.id).filter((elem, pos, arr) => {
-  return arr.indexOf(elem) == pos;
-});
-  
+const uniqCustomer = (elem, pos, arr) => {
+  return arr.findIndex(cus => cus.id==elem.id) == pos;
+}
+const customers = $orders.map(order=>order.customer).filter(uniqCustomer);
+
 const sortBySum = (a,b) => {
   return b.score-a.score;
 }
@@ -41,27 +46,23 @@ describe('machine index', function() {
     //- item.sku
     //- item.quantity
     //- order.customer.likes
-    const orders = $orders.map(order=>machine.orderToLeanObject(order));
+    const orders = $orders.map(order=>orderToLeanObject(order));
     
-    const products = $products.map(product => machine.productToLeanObject(product));
+    const products = $products.map(product => productToLeanObject(product));
     
-    
-    const betweeThan=(date,weeks)=>{
-      let now=new Date();
-      date = new Date(date);
-      return machine.datePlusDays(date,weeks*7)>now;
-    }
     
     const indexOrders=async (products)=>{      
       
-      machine.setModel(customers,products,orders);
-      
+      machine.setModel(customers,products,orders);      
       //
       // BOOST content
       orders.forEach(order => {
+        //
+        // attenuation is a value  [0.15;2] => [24months;today]
+        const attenuation = machine.attenuationByTime(order.shipping.when);
         order.items.forEach(item => {
-    
-          let product=products.find(product=>product.sku==item.sku);
+      
+          const product=products.find(product=>product.sku==item.sku);
           if(!product||!product.sku){
             return;
           }
@@ -81,29 +82,42 @@ describe('machine index', function() {
           //
           //boosters  discount
           boost=product.discount?(boost*5) : boost;
-    
-          //
-          //boosters  user.likes
-          if(order.customer.likes.indexOf(item.sku)>-1) {
-            boost = (boost*5);
-          }
-          
-    
-          //
+      
+                    //
           // boosters NEW product.created < 8WEEK
-          if(betweeThan(product.created,8)){
+          if(dateBetweeThan(product.created,8)){
             boost=((boost)*4);
             console.log('created before 8weeks',product.sku, boost);
           } else
           //
           //boosters  product.updated < 2WEEK
-          if(betweeThan(product.updated,4)){        
+          if(dateBetweeThan(product.updated,4)){        
             boost=(boost*2);
             // console.log('updated before 3weeks',product.sku, boost);
+          } else 
+          //
+          //boosters for discount or paid boost
+          if(product.boost||product.discount){
+            boost=(product.boost)?(boost*4) : boost;
+            boost=product.discount?(boost*2) : boost;
           }
-    
-          // console.log('--learn uid',order.customer.id,'product',product.sku,'boost',boost);
+
+          //
+          // finaly apply attenutation
+          boost = attenuation * boost;
+
+          //
+          // learn for customer
           machine.learn(order.customer.id,product.sku,boost);   
+          //
+          // learn for named group of customer
+          const plan = order.customer.plan;
+          if(plan) {
+            machine.learn(plan,product.sku,boost);   
+          }
+          //
+          // learn for anonymous
+          machine.learn('anonymous',product.sku,boost);   
         })
       });
     
@@ -115,19 +129,16 @@ describe('machine index', function() {
       //
       // product not indexed (means never buyed)
       products.filter(product => !product.indexed).forEach(product => {
-        const newProduct = betweeThan(product.created,4);
-        if(product.discount || product.boost || newProduct){
-          machine.boost(product);   
-        }
+        const factor = machine.attenuationByTime(product.created);
+        machine.boost(product,factor);   
       });
-
+    
       console.log('- taining done','all rating products');
 
     }
     
     indexOrders(products)
-    
-    
+      
 
   });
 
@@ -141,33 +152,55 @@ describe('machine index', function() {
   // 2. boosted new product item 5, 
   // 3. second more buyed item 1, 
   // 4. item 3 is common score (anonymous)
-  it('use index for user 1', async function() {
+  it('use index for user 1 without padding', async function() {
     const user = 1;
     const options = {
-      pad:true
+      pad:false
     };
     const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(3);
     console.log('user 1 rating: ',ratings.sort(sortBySum))
   });
 
-  it('use index for user 2', async function() {
+  it('use index for user 2 without padding', async function() {
     const user = 2;
     const options = {
-      pad:true
+      pad:false
     };
     const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(3);
     console.log('user 2 rating: ', ratings.sort(sortBySum))
 
   });
 
+  it('use index for cool without padding', async function() {
+    const user = 'cool';
+    const options = {
+      pad:false
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(3);
+    console.log('user cool rating: ', ratings.sort(sortBySum))
 
+  });
 
-  it('use index for anonymous', async function() {
-    const user = 'anonymous';
+  it('use index for cool with padding', async function() {
+    const user = 'cool';
     const options = {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(5);
+    console.log('user cool rating: ', ratings.sort(sortBySum))
+
+  });
+
+  it('use index for anonymous', async function() {
+    const user = 'anonymous';
+    const options = {
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(5);
     console.log('user anonymous rating: ', ratings.sort(sortBySum))
 
   });
@@ -179,7 +212,7 @@ describe('machine index', function() {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 1 in HUB rating: ',ratings.sort(sortBySum))
+    console.log('user 1 in HUB rating (set of vendors [b,c]): ',ratings.sort(sortBySum))
   });
 
   it('use index for user 1 and one category', async function() {
