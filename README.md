@@ -68,7 +68,8 @@ On peut appliquer un boost (un facteur d'amplification) au score d'un produit po
 ```
 > Note: les constantes sont à determiner et à valider
 
-![image](https://user-images.githubusercontent.com/1422935/162250655-47499e41-6bab-4140-bdd2-4102643e4609.png)
+![image](https://github.com/karibou-ch/karibou-ml-userx/assets/1422935/8f8ff35e-1ef1-4892-82b3-5cac2597e37e)
+
 
 ### Normalisation des scores entres les différents marchés
 Lorsque l'on créé un nouveau marché composé de nouvelles boutiques et de boutiques d'un autre marché, les scores des produits doivent rester cohérents. 
