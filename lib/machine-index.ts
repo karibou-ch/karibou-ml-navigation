@@ -79,7 +79,7 @@ export class MachineIndex{
   }
 
   get categoriesScore(){
-    return this.categoriesWeight.sort((a,b)=> a.name.localeCompare(b.name));
+    return this.categoriesWeight.sort((a,b)=> b.avg-(a.avg));
   }
 
   //
