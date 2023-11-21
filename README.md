@@ -40,7 +40,7 @@ _La fréquence d'achat du produit est une mesure de l'importance du produit dans
 * Il faut extraire les scores min/max/avg par catégories 
 
 ```
- score = attenuation x prodFreq/UserOrders * boost/penalties
+ score =  log(attenuation * prodFreq) * prodOrders/(UserOrders+1)
 ```
 
 1. **Model:** on créé une MATRIX constituée de N lignes (utilisateurs) et M colonne (produits)
