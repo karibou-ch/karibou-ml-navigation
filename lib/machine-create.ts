@@ -25,7 +25,7 @@ export class MachineCreate{
   ratings;
   maxScore;
   minScore;
-
+  attenuation;
   categoriesWeight;
 
   constructor(options){
@@ -36,6 +36,12 @@ export class MachineCreate{
 
 
     // model
+    this.attenuation = {
+      fA:options.fA||0.9,
+      fB:options.fB||1,
+      fC:options.fC||2.5,
+      fD:options.fD||0.1
+    }
     this.domain=this.options.domain||'karibou.ch';
     this.file="-model.json";
     this.users=[];
@@ -47,24 +53,6 @@ export class MachineCreate{
     this.maxScore = {};
     this.minScore = {};
     this.categoriesWeight = [];
-  }
-
-
-
-  
-
-  getRatings(uid){
-    assert(uid);
-    let row=this.users.findIndex(id=>id==uid);
-    // this.model.ratings(uid)  
-
-    return this.matrix[row].map((col,i)=>{
-      return {
-        item:this.products[i].sku,score:col
-      }
-    }).sort((a,b)=>{
-      return b.score-a.score;
-    });
   }
 
 
@@ -84,7 +72,7 @@ export class MachineCreate{
     //
     // place the product in the average screen
     this.ratings['anonymous'][row].sum = 1;
-    this.ratings['anonymous'][row].score = (this.maxScore[category]) * factor;
+    this.ratings['anonymous'][row].score = (this.maxScore[category]/2) * factor;
 
   }
 
@@ -121,7 +109,6 @@ export class MachineCreate{
   // return matrix
   learn(user,product,qty, cluster){
     qty=qty||1;
-    // https://github.com/raghavgujjar/matrix#readme
     assert(product);
     assert(user);
     const plen = this.products.length;
@@ -163,9 +150,10 @@ export class MachineCreate{
 
     //
     // compute attenuation
-    // https://www.desmos.com/calculator/3yogioggkp?lang=fr
+    // https://www.desmos.com/calculator/asm4ovwczk?lang=fr
     //let boost=1/(Math.pow(timeInMonth+1,4)*0.15)+0.01;
-    const boost=1/(Math.pow(timeInMonth+0.9,1)*1.8)+0.1;
+    const att = this.attenuation;
+    const boost=1/(Math.pow(timeInMonth+att.fA,att.fB)*att.fC)+att.fD;
     return boost;
   }
 
