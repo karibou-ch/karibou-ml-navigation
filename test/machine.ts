@@ -11,7 +11,7 @@ const productToLeanObject = require('../lib').productToLeanObject;
 const dateBetweeThan = require('../lib').dateBetweeThan;
 
 const machine = new MachineCreate({
-  domain:'test'
+  domain:'test',debug:1
 });
 
 //

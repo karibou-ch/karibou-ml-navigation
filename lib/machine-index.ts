@@ -194,6 +194,12 @@ export class MachineIndex{
     let result= this.rating[user].filter(rate=>rate);
 
     //
+    // map ratings from input SKUS
+    if(params.skus && params.skus.length) {
+      return result.filter(rate =>  params.skus.some(sku => rate.item == sku)).sort(this.sortByScore);
+    }
+
+    //
     // popular by category
     if(params.category){
       const categorySku = this.getCategorySku(params.category);

@@ -27,6 +27,7 @@ export class MachineCreate{
   minScore;
   attenuation;
   categoriesWeight;
+  debug;
 
   constructor(options){
     this.options=options||{};
@@ -42,6 +43,7 @@ export class MachineCreate{
       fC:options.fC||2.5,
       fD:options.fD||0.1
     }
+    this.debug = options.debug;
     this.domain=this.options.domain||'karibou.ch';
     this.file="-model.json";
     this.users=[];
@@ -63,17 +65,20 @@ export class MachineCreate{
     const category=product.categories;
     let row=this.ratings['anonymous'].findIndex(rate=>rate.item==sku);
     if(row<0){
-      return console.log('-- ERROR missing product in anonymous index',sku);
+      return this.debug && console.log('-- ERROR missing product in anonymous index',sku);
     }
 
 
-    console.log('- boost product',sku,factor);
+    this.debug && console.log('- boost product',sku,factor);
 
     //
     // place the product in the average screen
     this.ratings['anonymous'][row].sum = 1;
     this.ratings['anonymous'][row].score = (this.maxScore[category]/2) * factor;
-
+    if(Number.isNaN(this.ratings['anonymous'][row].score)) {
+      console.log('--- DBG error boost score == NaN',sku,'anonymous',this.maxScore[category],factor );
+    }
+  
   }
 
   //
@@ -111,7 +116,12 @@ export class MachineCreate{
     qty=qty||1;
     assert(product);
     assert(user);
-    const plen = this.products.length;
+
+    // customer is an alias of anonymous
+    if(user == 'customer') {
+      return;
+    }
+
     const uid=user.id||user;
     const pid=product.sku||product;    
     const row=this.users.findIndex(user=>(user.id||user)==uid);
@@ -153,7 +163,7 @@ export class MachineCreate{
     // https://www.desmos.com/calculator/asm4ovwczk?lang=fr
     //let boost=1/(Math.pow(timeInMonth+1,4)*0.15)+0.01;
     const att = this.attenuation;
-    const boost=1/(Math.pow(timeInMonth+att.fA,att.fB)*att.fC)+att.fD;
+    const boost=1/(Math.pow(timeInMonth+att.fA,att.fB)) * att.fC +att.fD;
     return boost;
   }
 
@@ -170,7 +180,7 @@ export class MachineCreate{
     let orders=this.orders.filter(o=> [o.customer.id,o.customer.plan].indexOf(uid)>-1);
     let rowuid=this.users.findIndex(user=>(user.id||user)==uid);
 
-    console.log('---        index user',rowuid, uid, this.matrix[rowuid].length);
+    this.debug && console.log('---        index user',rowuid, uid, this.matrix[rowuid].length);
      
     this.ratings[uid]=this.matrix[rowuid].map((prodFreq,i)=>{
 
@@ -196,11 +206,15 @@ export class MachineCreate{
       //
 
       //
-      // https://github.com/karibou-ch/karibou-ml-userx/
-      // CU : nombre total de commandes pour un utilisateur
-      // CUp: nombre de commandes de l'utilisateur où le produit p_{i} apparaît      
-      score=((prodFreq/orderFreq));  
+      // 1. donne du poids aux sku qui sont plus fréquents dans l'ensemble des commandes
+      // orderFreq / ordersLen
+      // nombre de commandes de l'utilisateur pour ce produit, atténué par le temps
 
+      const ordersLen = orders.length+1;
+      score = Math.log(prodFreq) * (( orderFreq / ordersLen));
+      if(Number.isNaN(score)) {
+        console.log('--- DBG error index score == NaN',sku,uid, prodFreq,orderFreq,ordersLen )
+      }
       // 
       // the roof of max score 
       if(!this.maxScore[category]){
@@ -230,48 +244,14 @@ export class MachineCreate{
       }
     });
 
-    
-
     //
     // sort user
     this.ratings[uid]=this.ratings[uid].filter(rating=>rating).sort((a,b)=>{
       return b.score-a.score;
     });
-  
     //console.log('---        DBG rating for ',uid, this.ratings[uid]);
-
   }
 
-
-  indexAnonymous(){
-
-    //
-    // anonymous score
-    this.ratings['anonymous'] = this.products.map(product => ({
-      score:0.01,
-      sum:0,
-      sku:product.sku
-    }));
-    
-    // this.ratings[uid].forEach((elem,i)=>{
-    //   let row=this.ratings['anonymous'].findIndex($elem=>$elem.item==elem.item);
-    //   this.ratings['anonymous'][row].score= (this.ratings['anonymous'][row].score + elem.score) / 2;
-    //   this.ratings['anonymous'][row].sum = (this.ratings['anonymous'][row].sum + elem.sum) / 2;
-    // });
-
-
-    // make sure anonymous doesn't outperform any uid
-    this.ratings['anonymous']=this.ratings['anonymous'].map(elem=>{
-      elem.score=elem.score/2;
-      return elem;
-    }).sort((a,b)=>{
-      return b.score-a.score;
-    });
-
-    // [0,1,2,3,4,5,6].forEach(i=>{
-    //   console.log('----- anonyous',this.ratings['anonymous'][i].score,this.ratings['anonymous'][i].item)
-    // });
-  }
 
   train(){
     console.log('--- users score');

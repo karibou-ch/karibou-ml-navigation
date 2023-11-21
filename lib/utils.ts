@@ -7,6 +7,15 @@ export const cleanTags = (text) => {
   return text.replace(/<br>(?=(?:\s*<[^>]*>)*$)|(<br>)|<[^>]*>/gi, (x, y) => y ? ' & ' : '');//.slice(0, text.indexOf('.')).replace(/(\r\n|\n|\r)/gm, "")
 }
 
+export const dateInMonths = (when) => {
+  const onemonth=86400000*30;
+  const today = Date.now();
+  //
+  // time lapse in months
+  return ((today-when.getTime())/onemonth);
+}
+
+
 
 export const dateBetweeThan=(date,weeks)=>{
   let now=new Date();
