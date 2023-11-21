@@ -183,7 +183,9 @@ export class MachineIndex{
     //
     // default values
     limit = limit || 20;
+    // default user is anon and customer is an alias of anon
     user=user || 'anonymous';
+    if(user == 'customer' ) user = 'anonymous';
     params = params || {};
 
     //
@@ -231,8 +233,9 @@ export class MachineIndex{
     //
     // if !pad, add 20% of randomness
     if(!params.pad && user !== 'anonymous') {
-      const padN = (Math.random()*result.length / 4)|0;
-      const randomness = this.ratings('anonymous',padN,params);      
+      const randomness = this.ratings('anonymous',limit,params)
+                             .sort((a, b) => 0.5 - Math.random())
+                             .slice(0,result.length / 5);      
       for (const elem of randomness) {
         if(result.some(item => item.sku == elem.sku))  continue;
         result.push(elem);
