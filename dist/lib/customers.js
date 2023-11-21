@@ -7,11 +7,11 @@ exports.Customers = void 0;
 const moment_1 = __importDefault(require("moment"));
 class Customers {
     constructor(orders) {
-        this.today = moment_1.default();
-        this.oneYear = moment_1.default(this.today).subtract(12, "months");
-        this.oneSemester = moment_1.default(this.today).subtract(6, "months");
-        this.oneQuarter = moment_1.default(this.today).subtract(3, "months");
-        this.oneMonth = moment_1.default(this.today).subtract(1, "months");
+        this.today = (0, moment_1.default)();
+        this.oneYear = (0, moment_1.default)(this.today).subtract(12, "months");
+        this.oneSemester = (0, moment_1.default)(this.today).subtract(6, "months");
+        this.oneQuarter = (0, moment_1.default)(this.today).subtract(3, "months");
+        this.oneMonth = (0, moment_1.default)(this.today).subtract(1, "months");
         this.orders = [];
         this.computed = {};
         this.orders = orders;
@@ -72,12 +72,12 @@ class Customers {
             semester: 0,
             quarter: 0,
             month: 0,
-            last: moment_1.default(this.today).subtract(10, "years"),
+            last: (0, moment_1.default)(this.today).subtract(10, "years"),
             past: 0
         };
         this.computed[id].orders.forEach(o => {
             // console.log('---',o.shipping.when.$date)
-            var when = moment_1.default(o.shipping.when.$date);
+            var when = (0, moment_1.default)(o.shipping.when.$date);
             if (when.isAfter(this.oneYear)) {
                 freqs.year++;
             }

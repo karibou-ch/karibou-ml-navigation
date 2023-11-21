@@ -1,0 +1,164 @@
+{
+  "Apéritif gourmand": [
+    "LE SIROP DE MENTHE CARAMÉLISÉE:1004106",
+    "LE SIROP DE THÉ DE JASMIN:1004105",
+    "LE SIROP DE THYM:1004105",
+    "LE SIROP DE VERVEINE:1004108",
+    "Limonade COLD MATÉ:1004386",
+    "Zinzin du Coin:1003850"
+  ],
+  "Grillades festives": [],
+  "Cuisine du terroir": [
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "Menthe marocaine:1001022",
+    "Zinzin du Coin:1003850"
+  ],
+  "Cuisine rapide et facile": [
+    "Infusion 'Flocons d'hiver':1001771",
+    "Infusion Fraîcheur d'automne:1001770",
+    "LE SIROP DE VERVEINE:1004108",
+    "Limonade COLD MATÉ:1004386",
+    "Menthe marocaine:1001022",
+    "Verveine citronnelle:1000844",
+    "Zinzin du Coin:1003850"
+  ],
+  "Cuisine de montagne réconfortante": [
+    "Infusion 'Flocons d'hiver':1001771"
+  ],
+  "Cuisine suisse authentique": [
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "Menthe marocaine:1001022",
+    "Zinzin du Coin:1003850"
+  ],
+  "Cuisine française raffinée": [],
+  "Cuisine italienne chaleureuse": [
+    "Café Quarta:1002144"
+  ],
+  "Cuisine espagnole ensoleillée": [],
+  "Cuisine de la mer": [],
+  "Cuisine asiatique moderne": [
+    "LE SIROP DE GINGEMBRE (DOUX):-",
+    "LE SIROP DE GINGEMBRE CONCENTRÉ (FORT):-",
+    "LE SIROP DE THÉ DE JASMIN:1004105",
+    "Verveine citronnelle:1000844"
+  ],
+  "Cuisine végétarienne inspirante": [
+    "Camomille matricaire:1001767",
+    "Infusion \"Bon Matin\":1003917",
+    "Infusion 'Flocons d'hiver':1001771",
+    "Infusion Fraîcheur d'automne:1001770",
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "Menthe marocaine:1001022",
+    "Verveine citronnelle:1000844"
+  ],
+  "Cuisine d'hiver réconfortante": [
+    "Café Kimbo:1002749",
+    "Café Najjar \"cardamome\":1004034",
+    "Café Najjar \"classique\":1004033",
+    "Infusion \"Bon Matin\":1003917",
+    "Infusion 'Flocons d'hiver':1001771",
+    "LE SIROP DE VERVEINE:1004108"
+  ],
+  "Cuisine de printemps revitalisante": [
+    "Eau de fleur d'oranger:1003964",
+    "Eau de rose:1003967",
+    "LE SIROP DE MENTHE CARAMÉLISÉE:1004106",
+    "Menthe marocaine:1001022",
+    "Verveine citronnelle:1000844"
+  ],
+  "Cuisine d'été rafraîchissante": [
+    "Eau de fleur d'oranger:1003964",
+    "Eau de rose:1003967",
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "LE SIROP DE MENTHE CARAMÉLISÉE:1004106",
+    "Limonade COLD MATÉ:1004386",
+    "Menthe marocaine:1001022",
+    "Verveine citronnelle:1000844"
+  ],
+  "Cuisine d'automne chaleureuse": [
+    "Café Kimbo:1002749",
+    "Café Najjar \"cardamome\":1004034",
+    "Café Najjar \"classique\":1004033",
+    "Infusion Fraîcheur d'automne:1001770",
+    "LE SIROP DE VERVEINE:1004108"
+  ],
+  "Cuisine exotique": [
+    "LE SIROP DE GINGEMBRE (DOUX):-",
+    "LE SIROP DE GINGEMBRE CONCENTRÉ (FORT):-",
+    "Eau de fleur d'oranger:1003964",
+    "Eau de rose:1003967",
+    "LE SIROP DE THÉ DE JASMIN:1004105"
+  ],
+  "Cuisine santé et équilibrée": [
+    "Camomille matricaire:1001767",
+    "Infusion \"Bon Matin\":1003917",
+    "Infusion 'Flocons d'hiver':1001771",
+    "Infusion Fraîcheur d'automne:1001770",
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "Menthe marocaine:1001022",
+    "Verveine citronnelle:1000844",
+    "Zinzin du Coin:1003850"
+  ],
+  "Cuisine méditerranéenne": [
+    "Café Kimbo:1002749",
+    "Café Najjar \"cardamome\":1004034",
+    "Café Najjar \"classique\":1004033",
+    "Eau de fleur d'oranger:1003964",
+    "Eau de rose:1003967",
+    "Menthe marocaine:1001022"
+  ],
+  "Petit-déjeuner gourmand": [
+    "Café Kimbo:1002749",
+    "Café Najjar \"cardamome\":1004034",
+    "Café Najjar \"classique\":1004033",
+    "Infusion \"Bon Matin\":1003917",
+    "Infusion 'Flocons d'hiver':1001771",
+    "Infusion Fraîcheur d'automne:1001770",
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "LE SIROP DE VERVEINE:1004108",
+    "Zinzin du Coin:1003850"
+  ],
+  "Brunch dominical": [
+    "Café Kimbo:1002749",
+    "Café Najjar \"cardamome\":1004034",
+    "Café Najjar \"classique\":1004033",
+    "Infusion \"Bon Matin\":1003917",
+    "Infusion 'Flocons d'hiver':1001771",
+    "Infusion Fraîcheur d'automne:1001770",
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "LE SIROP DE VERVEINE:1004108",
+    "Limonade COLD MATÉ:1004386",
+    "Zinzin du Coin:1003850"
+  ],
+  "Cuisine sans gluten": [
+    "LE SIROP DE GINGEMBRE (DOUX):-",
+    "LE SIROP DE GINGEMBRE CONCENTRÉ (FORT):-",
+    "Café Kimbo:1002749",
+    "Café Najjar \"cardamome\":1004034",
+    "Café Najjar \"classique\":1004033",
+    "Café Quarta:1002144",
+    "Camomille matricaire:1001767",
+    "Eau de fleur d'oranger:1003964",
+    "Eau de rose:1003967",
+    "Infusion \"Bon Matin\":1003917",
+    "Infusion 'Flocons d'hiver':1001771",
+    "Infusion Fraîcheur d'automne:1001770",
+    "Jus de pommes pasteurisé:1000569",
+    "Jus de raisin du coin:1002236",
+    "LE SIROP DE MENTHE CARAMÉLISÉE:1004106",
+    "LE SIROP DE THÉ DE JASMIN:1004105",
+    "LE SIROP DE THYM:1004105",
+    "LE SIROP DE VERVEINE:1004108",
+    "Limonade COLD MATÉ:1004386",
+    "Menthe marocaine:1001022",
+    "Verveine citronnelle:1000844",
+    "Zinzin du Coin:1003850"
+  ]
+}

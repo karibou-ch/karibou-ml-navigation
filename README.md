@@ -1,48 +1,55 @@
 # Objectif
-L'objectif de l'index est de produire des listes d'identifiants de produits (SKU) à moindre coût. Voici quelques exemples de listes intéressantes:
+L'objectif d'un index est de produire des listes d'identifiants de produits (SKU) à très faible coût (CPU+MEM) qui match les besoins du clients. Quelques exemples de listes:
 
-* Produire la liste des produits préférés d'un utilisateur.
-* Produire la liste des produits de saison.
-* Produire la liste des produits similaires.
-* Produire la liste des produits en fonction d'un tag.
-* Produire la liste des produits de commerçants, de marchés ou/et de catégories.
+* Les produits préférés d'un utilisateur.
+* Les produits de saison.
+* Les produits similaires.
+* Les produits d'une catégorie.
+* Les produits d'une thématique.
+* Les produits d'un commerçants.
+* Les produits d'un marché.
+* Les produits associés à une phrase.
 
 
 # Motivation
-Produire des listes de produits de manière efficace et rapide est un élément important de karibou.ch. Nous souhaitons isoler completement ce rôle de l'application principale. 
+Produire des listes de produits de manière efficace (faible mémoire utilisée) et rapide (<50ms) est un élément important pour karibou.ch. Nous devons déléguer ce travail de l'application principale (karibou-api). 
 
-# Specification
-
-## 0. Création d'un espace vectoriel
-Analyse des différentes pistes pour créer un produit en vecteur (x1,x2) dans un espace euclidien.
-
+# Specifications
 
 ## 1. Calcul du score d'un produit 
-Nous souhaitons créer une liste des meilleurs produits selon les critères suivants
+Le score d'un produit est le résultat d'une fonction des achats dans le temps. Nous devons créer une liste des meilleurs produits selon les critères suivants.
 1. un produit souvent acheté dans le présent est **très** valorisé
 1. un produit acheté en petite quantité mais régulièrement est **très** valorisé
 2. un nouveau produit ou un produit de saison activé  est **très** valorisé
 3. un produit souvent acheté dans le passé est **moyennement** valorisé
 4. un produit acheté en grande quantité une sur une commandes est **moyennement** valorisé 
 
-> Note: Il faut prendre en compte le contexte lors de la génération d'une liste. Il faut pouvoir filtrer cette liste avec les commercants actifs du ou des marchés sélectionnés. 
+> Note: Il faut prendre en compte le contexte lors de la génération d'une liste. Il faut pouvoir contraindre les données avec les commercants actifs d'un marché spécifique. 
 
-### L’algorithme doit produire une liste de produits en fonction des commandes passées.
-_La fréquence d'achat du produit est une mesure de l'importance du produit dans l'ensemble des commandes d'un client. Elle vise à donner <u>un poids plus important aux produits les plus fréquents, considérés comme plus discriminants</u>_. Les éléments retenus: 
+### Apprentissage.
+_La fréquence d'achat du produit est une mesure de l'importance du produit dans l'ensemble des commandes d'un client. Elle vise à donner <u>un poids plus important aux produits les plus fréquents, considérés comme plus discriminants</u>_. 
 
-* Liste des produits **`p{i}`** de 1 à N
-* Liste des commandes **`o{i}`** de 1 à N
-* Le nombre de commande **`O{N}`**  pour un utilisateur 
-* Le nombre de commandes **`p{i}O{N}`** où le produit **`p{i}`** apparaît
-* La fréquence d'achat d'un produit **`fp{i}`** c'est **`p{i}`** pour **`O{N}`** 
-* Il faut extraire les scores min/max ainsi que la médiane par catégories 
+
+
+* Ensemble des utilisateurs **`{u}`** de 1 à N
+  * contient les clients, les groupes de clients et l'utilisateur `Anonymous`
+* Ensemble des produits **`{p}`** de 1 à N
+* Ensemble des commandes **`{o}`** de 1 à N
+* Le nombre de commande **`oFreq`**  pour un utilisateur 
+* Le nombre de commandes **`pFreq`** où le produit apparaît
+* Il faut extraire les scores min/max/avg par catégories 
 
 ```
- score = attenuation x prodFreq/UserOrders * boost/penalties
+ score =  log(attenuation * prodFreq) * prodOrders/(UserOrders+1)
 ```
+
+1. **Model:** on créé une MATRIX constituée de N lignes (utilisateurs) et M colonne (produits)
+1. **Learn:** on modifie notre MATRIX  (produits (M) + utilisateurs (N)) avec la somme des quantités commandées dans l'historique des cmd.
+1. **Score:** on calcul un score pour chaque produit avec la formule précédente
+1. **Mitigation:** le score est attenué/amplifié en fonction du contexte de la commande 
 
 ### Création d'un index pour l'utilisateur Anonymous
-On considère un index qui appartient à un utilisateur neutre nommé Anonymous. Le score normalisé des produits de l'utilisateur Anonymous est le score pondéré par l'ensemble des utilisateurs. La liste des produits associée a l'utilisateur anonymous est aussi utilisée pour compléter une proposition pour un utilisateur qui n'a pas passé sufisament de commandes.
+On considère un index qui appartient à un utilisateur neutre `Anonymous`. Le score normalisé des produits de l'utilisateur `Anonymous` est le score pondéré par l'ensemble des utilisateurs. La liste des produits associée a l'utilisateur anonymous est aussi utilisée pour compléter une proposition pour un utilisateur qui n'a pas passé sufisament de commandes.
 
 ### boost
 On peut appliquer un boost (un facteur d'amplification) au score d'un produit pour différente situations. 
@@ -57,15 +64,16 @@ On peut appliquer un boost (un facteur d'amplification) au score d'un produit po
 * un produit perd de son intéret dans le temps jusqu'à ~ 24 mois => 
 * On doit pouvoir représenter la courbe idéale pour effectuer des tests et déterminer les bons paramêtes :fire:
 ```
- attenuation = 1 / ( timeInMonth + 1)^4 x 0.9 + 0.01 
+ attenuation = 1 / ( timeInMonth + 0.9)^1 x 1.8 + 0.1 
 ```
 > Note: les constantes sont à determiner et à valider
 
-![image](https://user-images.githubusercontent.com/1422935/162250655-47499e41-6bab-4140-bdd2-4102643e4609.png)
+![image](https://github.com/karibou-ch/karibou-ml-userx/assets/1422935/8f8ff35e-1ef1-4892-82b3-5cac2597e37e)
+
 
 ### Normalisation des scores entres les différents marchés
 Lorsque l'on créé un nouveau marché composé de nouvelles boutiques et de boutiques d'un autre marché, les scores des produits doivent rester cohérents. 
-> TODO
+1. On utilise les valeurs min/max/avg de chaque catégories pour déterminer les scores initiaux d'un nouveau marchés .
 
 
 ### Penalties
@@ -73,9 +81,21 @@ La valeur subjective d'un produit est corrélée avec celle de son score. Cepend
 * plusieurs clients on manifestés un problème avec un même produit (ex. avocat pas assez mûr)
 * des clients n'ont pas ressus des produits commandés (mauvaise gestion des stocks)
 
-## 2. Caractérisation des produits pour connaître les produits similaires.
-Il serait intéressant de travailler sur la caractérisation du produit selon la base de données [openfoodfacts](https://raw.githubusercontent.com/openfoodfacts/openfoodfacts-nodejs/develop/test/mockdata/categories.json) ([2](https://world.openfoodfacts.org/categories)) à la place de l'identifiant. En effet deux produits de deux commerçants différents peuvent concerner le même aliment. 
-Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaitons également représenter le corpus des produits dans un espace vectoriel (x,y). Il faudra définir la meilleure option sur la base du produit, de la commande, de l'utilisateur et de la fréquence d'achat. 
+## 2. Création d'un espace vectoriel (par utilisateur) pour remplacer le score
+
+L'intégration des techniques d'apprentissage automatique et l'analyse des vecteurs d'embedding peuvent considérablement améliorer la pertinence des recommandations. Et comme depuis peu, la possibilité de créer un espace-vertoriel à N dim (1536) pour chaque produit est ultra-simplifié, nous souhaitons transformer karibou-api en un esemble d'espaces de vecteurs à 1536 dim afin de capturer des nuances plus subtiles dans les préférences des utilisateurs.
+* trouver des similarité entre produits.
+* trouver les produits associés à un *text*
+
+Pour l'Index des vecteurs, nous avons plusieurs options
+* [Mongodb Atlas Vector Search](https://www.mongodb.com/docs/atlas/atlas-search/field-types/knn-vector/#std-label-fts-knn-vector-type-options)
+* [github.com/esteininger/vector-search](https://github.com/esteininger/vector-search/tree/master/use-cases/question-and-answering)
+* [From KNN to BERT: A Data Science Interviewee’s Guide to Algorithms and Techniques](https://namratesh.medium.com/from-knn-to-bert-a-data-science-interviewees-guide-to-algorithms-and-techniques-da20b445b8fd)
+
+### Models
+On peut soit utiliser un modèle standard, soit utiliser un modèle [fine-tuned](https://platform.openai.com/docs/api-reference/models/list), soit utiliser le modèle standard `text-embedding-ada-002` 
+
+
 
 * https://api.karibou.ch/v1/products
 * https://world.openfoodfacts.org/categories.json
@@ -89,6 +109,6 @@ Une fois caractérisé, avec une table de correspondance `f(sku)`, nous souhaito
 # Liens* 
 * [collaborative filtering / recommendation engine](https://www.npmjs.com/search?q=recommendation+engine)
 * https://www.npmjs.com/package/stopword
-* https://fr.wikipedia.org/wiki/TF-IDF (très intéressant)
+* https://fr.wikipedia.org/wiki/TF-IDF 
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
 * LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits

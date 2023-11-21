@@ -1,0 +1,66 @@
+[
+  {
+    "customer": { "id": 1, "likes": [], "plan":"cool" },
+    "items": [
+      {
+        "sku": "A",
+        "vendor": "a",
+        "qty": 5
+      },
+      {
+        "sku": "F",
+        "vendor": "a",
+        "qty": 5
+      }
+    ],
+    "shipping": { "when": "2022-10-04T14:00:00.000Z" }
+  },
+  {
+    "customer": { "id": 1, "likes": [], "plan":"cool" },
+    "items": [
+      {
+        "sku": "A",
+        "vendor": "a",
+        "qty": 1
+      },
+      {
+        "sku": "B",
+        "vendor": "a",
+        "qty": 1
+      }
+    ],
+    "shipping": { "when": "2022-10-07T14:00:00.000Z" }
+  },
+  {
+    "customer": { "id": 2, "likes": [4] },
+    "items": [
+      {
+        "sku": "B",
+        "vendor": "a",
+        "qty": 2
+      },
+      {
+        "sku": "C",
+        "vendor": "a",
+        "qty": 1
+      }
+    ],
+    "shipping": { "when": "2021-10-04T14:00:00.000Z" }
+  },
+  {
+    "customer": { "id": 2, "likes": [4] },
+    "items": [
+      {
+        "sku": "C",
+        "vendor": "a",
+        "qty": 1
+      },
+      {
+        "sku": "D",
+        "vendor": "a",
+        "qty": 10
+      }
+    ],
+    "shipping": { "when": "2021-10-04T14:00:00.000Z" }
+  }
+]

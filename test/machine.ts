@@ -1,292 +1,236 @@
 
-import $products from './data/products-subset.json';
-import $orders from './data/orders-subset.json';
+// minimal format for testing purposes
+import $products from './data/products-xs.json';
+import $orders from './data/orders-xs.json';
+
+
+const MachineIndex = require('../lib').MachineIndex;
+const MachineCreate = require('../lib').MachineCreate;
+const orderToLeanObject = require('../lib').orderToLeanObject;
+const productToLeanObject = require('../lib').productToLeanObject;
+const dateBetweeThan = require('../lib').dateBetweeThan;
+
+const machine = new MachineCreate({
+  domain:'test',debug:1
+});
+
+//
+//Traversing orders to find the distinct list of customers and products
+const uniqCustomer = (elem, pos, arr) => {
+  return arr.findIndex(cus => cus.id==elem.id) == pos;
+}
+const customers = $orders.map(order=>order.customer).filter(uniqCustomer);
+
+const sortBySum = (a,b) => {
+  return b.score-a.score;
+}
 
 import 'should';
 
-
-//
-// overload date
-declare interface Date {
-  plusDays : (nb: number) => Date;
-}
-
-
-(function () {
-  Date.prototype.plusDays = function(nb: number) {
-    const plus=new Date(this);
-    plus.setDate(this.getDate()+nb);
-    return plus;
-  }
-})();
-
 describe('machine index', function() {
   this.timeout(5000);
-  const Machine = require('../lib').Machine;
-  const machine = new Machine({
-    domain:'test',
-  });
-
   let machineIndex;
-  
-  //
-  // PUBLIC API
-
-  const toObject=(product)=>{
-    const shop=product.vendor;
-    const natural=product.details.bio||
-                product.details.natural||
-                product.details.biodynamics||
-                product.details.bioconvertion;
-    const category = product.categories ? product.categories.slug:'undefined';
-    return {
-      sku:product.sku,
-      categories: category,
-      vendor: shop.urlpath?shop.urlpath:shop,
-      created:product.created,
-      updated:product.updated,
-      discount:product.attributes.discount,
-      boost: product.attributes.boost,
-  
-      // title:product.title,
-      // slug:product.slug,
-      // photo:product.photo.url,
-      // created:product.created,
-      // updated:product.updated,
-      // discount:product.attributes.discount,
-      // boost: product.attributes.boost,
-      // natural:natural,
-      // local:product.details.local  
-    }
-  }
-  
-  const mapSaves = async (iterable, action) => {
-    let i=0;for (const x of iterable) {
-      await action(x,i++);
-    }
-  }
-  
-  const betweeThan=(date,weeks)=>{
-    let now=new Date();
-    date = new Date(date);
-    return date.plusDays(weeks*7)>now;
-  }
-
-  //
-  // load a subset of all orders
-  // before(async () => {
-  //   const subsetFile = '/data/orders-subset.json';
-  //   const fs = require('fs');
-  //   if (fs.existsSync(__dirname +subsetFile)) {
-  //     $orders = require('.'+subsetFile);
-  //     return;
-  //   }
-  //   const itemMap = (item) => {
-  //     return {
-  //       sku:item.sku,
-  //       vendor:item.vendor,
-  //       qty:item.qty,
-  //       category:item.category,
-  //     };
-  //   };
-
-  //   const orders: any[] = require('./data/orders.json');
-  //   $orders = orders.sort(() => .5 - Math.random()).slice(0,10).map(order => {      
-  //     const shipping = order.shipping;
-  //     shipping.when = shipping.when.$date || shipping.when;
-  //     return {
-  //       oid: order.oid,
-  //       shipping: shipping,
-  //       customer: order.customer,
-  //       items: order.items.map(itemMap)
-  //     }
-  //   })
-
-  //   fs.writeFileSync(__dirname + subsetFile, JSON.stringify($orders, null , 2 ), { flag:'w' });
-
-  // });
-
-  //
-  // load a subset of all orders
   before(async () => {
-    const now = new Date();
-    //
-    // product 4 is updated
-    $products[4].updated = (now.plusDays(-10).toISOString())
-
-    //
-    // product 7 and 8 are new
-    $products[6].created = (now.plusDays(-10).toISOString())
-    $products[7].created = (now.plusDays(-1).toISOString())
 
   });
 
 
-  it('create index', async function() {
-    const orders = $orders as any[];
-    const products = $products as any[];
+  it('create index', async () => {    
+
     //
-    //Traversing orders to find the distinct list of customers and products
-    const customers = orders.map(order=>order.customer.id).filter((elem, pos, arr) => {
-      return arr.indexOf(elem) == pos;
-    });
+    // load JSON with FS to keep the same relative PATH !!
+    // Only get orders for a specific domain
+    // 
+    //
+    //- customer.id
+    //- item.sku
+    //- item.quantity
+    //- order.customer.likes
+    const orders = $orders.map(order=>orderToLeanObject(order));
     
-    machine.setModel(customers,products,orders);
-
-    //
-    // BOOST content
-    orders.forEach(order => {
-      order.items.forEach(item => {
+    const products = $products.map(product => productToLeanObject(product));
     
-        let product=products.find(product=>product.sku==item.sku);
-        if(!product||!product.sku){
-          return;
-        }
-
+    
+    const indexOrders=async (products)=>{      
+      
+      machine.setModel(customers,products,orders);      
+      //
+      // BOOST content
+      orders.forEach(order => {
         //
-        // initial score value
-        let boost=item.quantity;
+        // attenuation is a value  [0.15;2] => [24months;today]
+        const attenuation = machine.attenuationByTime(order.shipping.when);
+        order.items.forEach(item => {
+      
+          const product=products.find(product=>product.sku==item.sku);
+          if(!product||!product.sku){
+            return;
+          }
+    
+          //
+          // mark this product indexed
+          product.indexed = true;
+    
+          //
+          // initial score value
+          let boost=(+item.qty || +item.quantity);
+    
+          //
+          // product boosters activated  product.boost
+          boost=(product.boost)?(boost*10) : boost;
+    
+          //
+          //boosters  discount
+          boost=product.discount?(boost*5) : boost;
+      
+                    //
+          // boosters NEW product.created < 8WEEK
+          if(dateBetweeThan(product.created,8)){
+            boost=((boost)*4);
+            console.log('created before 8weeks',product.sku, boost);
+          } else
+          //
+          //boosters  product.updated < 2WEEK
+          if(dateBetweeThan(product.updated,4)){        
+            boost=(boost*2);
+            // console.log('updated before 3weeks',product.sku, boost);
+          } else 
+          //
+          //boosters for discount or paid boost
+          if(product.boost||product.discount){
+            boost=(product.boost)?(boost*4) : boost;
+            boost=product.discount?(boost*2) : boost;
+          }
 
-        //
-        // product boosters activated  product.boost
-        boost=(product.boost)?(boost*2) : boost;
+          //
+          // finaly apply attenutation
+          boost = attenuation * boost;
 
-        //
-        //boosters  discount
-        boost=product.discount?(boost*2) : boost;
+          //
+          // learn for customer
+          machine.learn(order.customer.id,product.sku,boost);   
+          //
+          // learn for named group of customer
+          const plan = order.customer.plan;
+          if(plan) {
+            machine.learn(plan,product.sku,boost, 10);   
+          }
+          //
+          // learn for anonymous (only when it's a customer)
+          machine.learn('anonymous',product.sku,boost, 10);   
+        })
+      });
+    
+    
+      
+      console.log('- taining (products,orders)',products.length,orders.length);
+      machineIndex = machine.train();
 
-        //
-        //boosters  user.likes
-        if(order.customer.likes.indexOf(item.sku)>-1) {
-          boost = (boost*2);
-        }
-        
+      //
+      // product not indexed (means never buyed)
+      products.filter(product => !product.indexed).forEach(product => {
+        const factor = machine.attenuationByTime(product.created);
+        machine.boost(product,factor);   
+      });
+    
+      console.log('- taining done','all rating products');
 
-        //
-        // boosters NEW product.created < 8WEEK
-        if(betweeThan(product.created,8)){
-          // console.log('created before 8weeks',product.sku);
-          boost=((boost)*2);
-        } else
-        //
-        //boosters  product.updated < 2WEEK
-        if(betweeThan(product.updated,3)){
-          // console.log('updated before 3weeks',product.sku);
-          boost=(boost*2);
-        }
-
-        // console.log('--learn uid',order.customer.id,'product',product.sku,'boost',boost);
-        machine.learn(order.customer.id,product.sku,boost);  
-      })
-    });
-
-    //
-    // train
-    machineIndex = machine.train();
-        
-
+    }
+    
+    indexOrders(products)
+      
 
   });
 
-  // E**O//2360346371241611  C**D//739049451726747 M**R//1099354922508877  K**L 1847885976581568
-  it('use index for user 5', async function() {
-    const user = 5;
+  it('machine index for anonymous', async function() {
+    const ratings = machineIndex.ratings('anonymous',200);
+    ratings.length.should.not.equal(0)
+  });
+
+  //
+  // 1. first more buyed item 1, 
+  // 2. boosted new product item 5, 
+  // 3. second more buyed item 1, 
+  // 4. item 3 is common score (anonymous)
+  it('use index for user 1 without padding', async function() {
+    const user = 1;
+    const options = {
+      pad:false
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(3);
+    console.log('user 1 rating: ',ratings.sort(sortBySum))
+  });
+
+  it('use index for user 2 without padding', async function() {
+    const user = 2;
+    const options = {
+      pad:false
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(3);
+    console.log('user 2 rating: ', ratings.sort(sortBySum))
+
+  });
+
+  it('use index for cool without padding', async function() {
+    const user = 'cool';
+    const options = {
+      pad:false
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(3);
+    console.log('user cool rating: ', ratings.sort(sortBySum))
+
+  });
+
+  it('use index for cool with padding', async function() {
+    const user = 'cool';
     const options = {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 5 rating: ',ratings)
-  });
-
-  it('use index for user 15', async function() {
-    const user = 15;
-    const options = {
-      pad:true
-    };
-    const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 15 rating: ', ratings)
+    ratings.length.should.equal(5);
+    console.log('user cool rating: ', ratings.sort(sortBySum))
 
   });
 
   it('use index for anonymous', async function() {
     const user = 'anonymous';
     const options = {
-      pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user anonymous rating: ', ratings)
+    console.log('user anonymous rating: ', ratings.sort(sortBySum))
+    ratings.length.should.equal(5);
 
   });
 
-  it('use index for user 15 and one HUB (set of vendors)', async function() {
-    const user = 5;
+  it('use index for user 1 and one HUB (set of vendors)', async function() {
+    const user = 1;
     const options = {
-      vendors:['d','b','c'],
+      vendors:['b','c'],
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
-    console.log('user 5 in HUB rating: ',ratings)
-
+    console.log('user 1 in HUB rating (set of vendors [b,c]): ',ratings.sort(sortBySum))
   });
 
-
-  xit('print order csv', async function() {
-    const orders = require('./data/orders.json');
-    const csv = [];
-    //
-    //Traversing orders to find the distinct list of customers and products
-    orders.forEach(order=> 
-      order.items.forEach(item => {
-        csv.push({
-          oid: order.oid,
-          user: order.customer.id,
-          when: order.shipping.when.$date,
-          sku: item.sku,
-          vendor: item.vendor,
-          quantity: (item.quantity || item.qty),
-          category: item.category          
-        });
-      })
-    );
-    csv.forEach(line => console.log(line.oid + ',' + line.user + ',' + line.when + ',' + line.sku + ',' + line.vendor + ',' + line.quantity + ',' + line.category));
+  it('use index for user 1 and one category', async function() {
+    const user = 1;
+    const options = {
+      category:'c1',
+      pad:true
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    console.log('user 1 in C1 rating: ',ratings.sort(sortBySum))
   });
 
-
-
-  it('oe live products score', async function() {
-    const products = require('./data/oe.json');
-    const csv = [];
-    //
-    //Traversing orders to find the distinct list of customers and products
-    products.forEach(product=> 
-        csv.push({
-          sku: product.sku,
-          title: product.title,
-          sales: product.stats.sales,
-          issues: product.stats.issues,
-          score: product.stats.score,
-          category: product.categories.slug          
-        })
-    );
-    csv.forEach(line => console.log(line.sku + ',' + line.title + ',' + line.sales + ',' + (line.issues || 0) + ',' + line.score + ',' + line.category));
+  it('list category name', async function() {
+    machineIndex.categoriesList.forEach(cat => console.log(cat));
   });
 
-  xit('oe live products vegetables score', async function() {
-    const products = require('./data/oe-vegetables.json');
-    const csv = [];
-    //
-    //Traversing orders to find the distinct list of customers and products
-    products.forEach(product=> 
-        csv.push({
-          sku: product.sku,
-          title: product.title,
-          sales: product.stats.sales,
-          issues: product.stats.issues,
-          score: product.stats.score,
-          category: product.categories.slug          
-        })
-    );
-    csv.forEach(line => console.log(line.sku + ',' + line.title + ',' + line.sales + ',' + (line.issues || 0) + ',' + line.score + ',' + line.category));
+  it('list category with score', async function() {
+    machineIndex.categoriesScore.forEach(cat => console.log(cat.name,cat.max,cat.min,cat.avg));
   });
 
 });

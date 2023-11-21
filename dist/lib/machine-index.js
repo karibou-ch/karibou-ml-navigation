@@ -76,12 +76,13 @@ class MachineIndex {
         }
         this.categories = {};
         this.products.forEach(prod => {
-            this.categories[prod.categories] = [];
+            this.categories[prod.categories] = this.categories[prod.categories] || [];
+            this.categories[prod.categories].push(prod.sku);
         });
         return Object.keys(this.categories).sort();
     }
     getCategorySku(category) {
-        if (!this.categories[category].length) {
+        if (!this.categories[category] || !this.categories[category].length) {
             this.categories[category] = this.products.filter(product => product.categories == category).map(product => product.sku);
         }
         return this.categories[category];
@@ -137,7 +138,7 @@ class MachineIndex {
     mapProduct(sku) {
         return this.products.find(p => p.sku == sku);
     }
-    recommendations(user, n, params) {
+    ratemmendations(user, n, params) {
         if (params.category) {
             this.getCategorySku(params.category);
             return this.model.recommendations(user, 1000).filter(reco => this.categories[params.category].indexOf(reco.item) > -1).slice(0, n || 20);
@@ -165,18 +166,18 @@ class MachineIndex {
         //
         // initial values
         this.rating[user] = this.rating[user] || [];
-        let result = this.rating[user].filter(reco => reco);
+        let result = this.rating[user].filter(rate => rate);
         //
         // popular by category
         if (params.category) {
-            this.getCategorySku(params.category);
-            result = result.filter(reco => this.categories[params.category].indexOf(reco.item) > -1);
+            const categorySku = this.getCategorySku(params.category);
+            result = result.filter(rate => categorySku.indexOf(rate.item) > -1);
         }
         //
         // popular by vendor
         if (params.vendor) {
-            this.getVendorSku(params.vendor);
-            result = result.filter(reco => this.vendors[params.vendor].indexOf(reco.item) > -1);
+            const vendorSku = this.getVendorSku(params.vendor);
+            result = result.filter(rate => vendorSku.indexOf(rate.item) > -1);
         }
         //
         // constrains by HUBs of vendors
@@ -186,20 +187,28 @@ class MachineIndex {
             });
         }
         //
-        // window of sorted results
-        result = result.sort(this.sortByScore).slice(0, n);
-        //
-        // pad cell with anonymous ratings
+        // pad items with normalized ratings
         if (params.pad &&
             result.length < n &&
             user !== 'anonymous') {
-            n = (n - result.length);
+            const padN = (n - result.length);
             //
             // merge anonymous data for missing score
-            result = result.concat(this.ratings('anonymous', n, params));
+            result = result.concat(this.ratings('anonymous', padN + 1, params));
+            //
+            // unique items
             result = result.filter((elem, index, array) => array.findIndex(sub => sub.item == elem.item) === index);
         }
-        return result;
+        //
+        // if !pad, add randomness
+        if (!params.pad && user !== 'anonymous') {
+            const padN = (Math.random() * n / 2) | 0;
+            result = result.concat(this.ratings('anonymous', padN, params));
+        }
+        //
+        // window of sorted results
+        return result.sort(this.sortByScore).slice(0, n);
+        ;
     }
     sortByScore(a, b) {
         return b.score - a.score;

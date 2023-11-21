@@ -1,25 +1,17 @@
 "use strict";
-var assert   = require('assert');
-var _        = require('lodash');
-var fs       = require('fs');
-var sylvester= require('sylvester');
+const assert   = require('assert');
+const _        = require('lodash');
+const fs       = require('fs');
 
 //
 // vector, matrix and geometry library
 // http://sylvester.jcoglan.com/
-
-//
-// machine learning
-// var jonfon = require('jonfon');
-// var Model = jonfon.Model;
-
-
 export class MachineIndex{
 
   domain;
   file;
   model;
-  likely;
+  categoriesWeight;
   rating;
   products;
   vendors;
@@ -35,29 +27,59 @@ export class MachineIndex{
     this.domain=options.domain||'karibou.ch';
     this.file=".model.json";
     this.model=options.model;
-    this.likely=options.likely;
+    this.categoriesWeight = options.categoriesWeight||[];
     this.rating=options.rating||{};
     this.products=options.products||[];
     this.vendors;
     this.categories;    
     this.path=options.path;
-    if(this.likely){
-      this.model=new this.likely.Model(sylvester.Matrix.create(options.model.input),options.model.rowLabels,options.model.colLabels);
-			this.model.input = sylvester.Matrix.create(options.model.input);	
-      this.model.estimated=sylvester.Matrix.create(options.model.estimated);
-    }
     console.log('--- DATE',this.timestamp);
-    // console.log('--- CF likely',(!!this.likely));
-    // console.log('--- CF jonfon',(!!this.model));
-    // console.log('--- model      size',this.humanSz(JSON.stringify(this.model||'').length));
     console.log('--- rating     size',this.humanSz(JSON.stringify(this.rating).length));
     console.log('--- product    size',this.humanSz(JSON.stringify(this.products).length),this.products.length);
     assert(this.domain);
     assert(options.products);
 
-    this.getCategories();
-    this.getVendors();
+    //
+    // initial list creation
+    this.categoriesList;
+    this.vendorsList;
+    // console.log('--- categories',this.categoriesList);
+    // console.log('--- vendors',this.vendorsList);
 
+  }
+
+  get usersList() {
+    return Object.keys(this.rating);
+  }
+
+  get vendorsList(){
+    if(this.vendors){
+      return Object.keys(this.vendors).sort();
+    }
+    this.vendors={};
+    this.products.forEach(prod=>{
+      this.vendors[prod.vendor]= this.vendors[prod.vendor] ||[];
+      this.vendors[prod.vendor].push(prod.sku);
+    });
+    return Object.keys(this.vendors).sort();
+  }
+
+
+
+  get categoriesList(){
+    if(this.categories){
+      return Object.keys(this.categories).sort();
+    }
+    this.categories={};
+    this.products.forEach(prod=>{
+      this.categories[prod.categories] = this.categories[prod.categories] || [];
+      this.categories[prod.categories].push(prod.sku);
+    });
+    return Object.keys(this.categories).sort();
+  }
+
+  get categoriesScore(){
+    return this.categoriesWeight.sort((a,b)=> b.avg-(a.avg));
   }
 
   //
@@ -93,54 +115,49 @@ export class MachineIndex{
   }
 
 
-  getCategories(){
-    if(this.categories){
-      return Object.keys(this.categories).sort();
-    }
-    this.categories={};
-    this.products.forEach(prod=>{
-      this.categories[prod.categories]=[];
-    });
-    return Object.keys(this.categories).sort();
-  }
-
   getCategorySku(category){
-    if(!this.categories[category].length){
+    //
+    // first time
+    if(!this.categories[category]||!this.categories[category].length){
       this.categories[category]=this.products.filter(product=>product.categories==category).map(product=>product.sku);
     }
-    return this.categories[category];
+    return this.categories[category] ||[];
   }
 
-  getMedianScore(){
-    
-  }
 
-  getVendors(){
-    if(this.vendors){
-      return Object.keys(this.vendors).sort();
-    }
-    this.vendors={};
-    this.products.forEach(prod=>{
-      this.vendors[prod.vendor]=[];
-    });
-    return Object.keys(this.vendors).sort();
-  }
-
+  //
+  // get list of SKU from one vendor or a list [v1,v2,v3]
   getVendorSku(vendor){
+    if(Array.isArray(vendor)) {
+      return vendor.reduce((skus, vendor) => (this.vendors[vendor]||[]).concat(skus),[]);
+    }
 
+    //
+    // first time can not be an Array
     if(!this.vendors[vendor] || !this.vendors[vendor].length){
       this.vendors[vendor]=this.products.filter(product=>product.vendor==vendor).map(product=>product.sku);
     }
-    return this.vendors[vendor];
+    return this.vendors[vendor]||[];
   }
 
   static load(path,domain){
-    var content;
     try{
-      content=fs.readFileSync(path+'/'+domain+".model.json",{ encoding: 'utf8' });
+      const content=fs.readFileSync(path+'/'+domain+".model.json",{ encoding: 'utf8' });
       if(!content.length) {
         throw new Error('Error missing content for file:'+path+'/'+domain+".model.json")
       }
+
+      const model=JSON.parse(content);
+
+      return new MachineIndex({
+        path:path,
+        timestamp:new Date(model.timestamp),
+        categoriesWeight:model.categoriesWeight,
+        model:model.model,
+        products:model.products,
+        rating:model.rating,
+        domain:model.domain
+      });      
     }catch(e){
       console.log('-- ','Error reading file:'+path+'/'+domain+".model.json")
       // throw new Error('Error reading file:'+path+'/'+domain+"-model.json");
@@ -152,37 +169,7 @@ export class MachineIndex{
         domain:domain
       });
     }
-    
-    content=JSON.parse(content);
-
-    return new MachineIndex({
-      path:path,
-      timestamp:new Date(content.timestamp),
-      likely:content.likely,
-      model:content.model,
-      products:content.products,
-      rating:content.rating,
-      domain:content.domain
-    });
   }  
-
-  mapProduct(sku){
-    return this.products.find(p=>p.sku==sku);
-  }
-
-  recommendations(user,n,params){
-    if(params.category){
-      this.getCategorySku(params.category);
-      return this.model.recommendations(user,1000).filter(reco=>this.categories[params.category].indexOf(reco.item)>-1).slice(0,n||20);
-      // return this.model.recommendations(user,1000).filter(reco=>this.categories[category].indexOf(reco.item)>-1).slice(0,n||20);
-    }
-    if(params.vendor){
-      this.getVendorSku(params.vendor);
-      return this.model.recommendations(user,1000).filter(reco=>this.vendors[params.vendor].indexOf(reco.item)>-1).slice(0,n||20);
-      // return this.model.recommendations(user,1000).filter(reco=>this.vendors[vendor].indexOf(reco.item)>-1).slice(0,n||20);
-    }
-    return this.model.recommendations(user,n).slice(0,n||20);
-  }
 
   reload(){
     let mi=MachineIndex.load(this.path,this.domain);
@@ -190,58 +177,81 @@ export class MachineIndex{
       Object.assign(this,mi);
     }
   }
-  ratings(user,n,params){
+
+  
+  ratings(user,limit,params){
     //
     // default values
-    n = n || 20;
+    limit = limit || 20;
+    // default user is anon and customer is an alias of anon
     user=user || 'anonymous';
+    if(user == 'customer' ) user = 'anonymous';
     params = params || {};
 
     //
     // initial values
     this.rating[user]=this.rating[user]||[];
-    let result= this.rating[user].filter(reco=>reco);
+    let result= this.rating[user].filter(rate=>rate);
+
+    //
+    // map ratings from input SKUS
+    if(params.skus && params.skus.length) {
+      return result.filter(rate =>  params.skus.some(sku => rate.item == sku)).sort(this.sortByScore);
+    }
 
     //
     // popular by category
     if(params.category){
-      this.getCategorySku(params.category);
-      result=result.filter(reco=>this.categories[params.category].indexOf(reco.item)>-1);
+      const categorySku = this.getCategorySku(params.category);
+      result=result.filter(rate=>categorySku.indexOf(rate.item)>-1);
     }
 
     //
     // popular by vendor
     if(params.vendor){
-      this.getVendorSku(params.vendor);
-      result=result.filter(reco=>this.vendors[params.vendor].indexOf(reco.item)>-1);
+      const vendorSku = this.getVendorSku(params.vendor);
+      result=result.filter(rate=>vendorSku.indexOf(rate.item)>-1);
     }
 
     //
     // constrains by HUBs of vendors
     if(params.vendors && params.vendors.length){      
-      result=result.filter(elem=>{
-        return params.vendors.some(vendor => this.getVendorSku(vendor).indexOf(elem.item)>-1);        
-      });
+      const vendorSku = this.getVendorSku(params.vendors);
+      result=result.filter(rate=>vendorSku.indexOf(rate.item)>-1);
     }
+
+    //
+    // pad items with normalized ratings
+    if(
+      params.pad &&
+      result.length < limit &&
+      user !== 'anonymous'
+    ){
+      const padN=(limit-result.length);
+      //
+      // merge anonymous data for missing score
+      result=result.concat(this.ratings('anonymous',padN+1,params));
+      //
+      // unique items
+      result=result.filter((elem: any,index, array: any[]) => array.findIndex(sub => sub.item == elem.item) === index);
+    }
+
+    //
+    // if !pad, add 20% of randomness
+    if(!params.pad && user !== 'anonymous') {
+      const randomness = this.ratings('anonymous',limit,params)
+                             .sort((a, b) => 0.5 - Math.random())
+                             .slice(0,result.length / 5);      
+      for (const elem of randomness) {
+        if(result.some(item => item.sku == elem.sku))  continue;
+        result.push(elem);
+      }
+    }
+
 
     //
     // window of sorted results
-    result = result.sort(this.sortByScore).slice(0,n);
-
-    //
-    // pad cell with anonymous ratings
-    if(
-      params.pad &&
-      result.length < n &&
-      user !== 'anonymous'
-    ){
-      n=(n-result.length);
-      //
-      // merge anonymous data for missing score
-      result=result.concat(this.ratings('anonymous',n,params));
-      result=result.filter((elem: any,index, array: any[]) => array.findIndex(sub => sub.item == elem.item) === index);
-    }
-    return result;
+    return result.sort(this.sortByScore).slice(0,limit);
   }
 
   sortByScore(a,b){
@@ -252,8 +262,8 @@ export class MachineIndex{
     var $this=this;
     var content = {
       timestamp:Date.now(),
-      likely:this.likely,
       products:this.products,
+      categoriesWeight:this.categoriesWeight,
       domain:this.domain,
       model:this.model,
       rating:this.rating

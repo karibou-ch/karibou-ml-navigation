@@ -99,14 +99,15 @@ class Machine {
         // Array(9).fill().map(()=>Array(9).fill())
         this.matrix = [];
         for (var i = 0; i < this.users.length; i++) {
-            // FIXME remove fill(0) when using jonfon !!
-            this.matrix[i] = new Array(this.products.length).fill(0);
+            // FIXME remove fill(0) and use sparce matrix for faster computation  !!
+            this.matrix[i] = new Array(this.products.length);
         }
         // make a Matrix Object
         //this.matrix=matrix(matrix);
     }
     //
     // compute attenuation by time
+    // -https://www.desmos.com/calculator/3yogioggkp?lang=fr
     dimmerSum(orders, sku) {
         let today = Date.now();
         let onemonth = 86400000 * 30;
@@ -142,19 +143,26 @@ class Machine {
         // one month => 24h * 30
         let onemonth = 86400000 * 30;
         let today = Date.now();
-        let orders = this.orders.filter(o => o.customer.id == uid);
-        let row = this.users.findIndex(id => id == uid);
+        let grouped = Object.keys(this.options.groups || {}).find(key => {
+            return this.options.groups[key].indexOf(uid) > -1;
+        });
+        let grouped_uid = grouped ? this.options.groups[grouped] : [uid];
+        let orders = this.orders.filter(o => grouped_uid.indexOf(o.customer.id));
+        let rowuid = this.users.findIndex(id => id == uid);
         //
         // simple check
-        orders.forEach(order => {
-            assert(order.customer.id == uid);
-        });
-        // console.log('-- train',this.matrix[row].length,this.matrix[row].filter(o=>o).length)
+        // orders.forEach(order=>{
+        //   assert(order.customer.id==uid);
+        // })
+        // console.log('-- train',this.matrix[rowuid].length,this.matrix[rowuid].filter(o=>o).length)
         // total order by products
         // if(uid=='739049451726747'){
-        //   console.log('-- products',this.matrix[row].length,this.products.length,this.matrix[row].filter(elem=>elem).length)
+        //   console.log('-- products',this.matrix[rowuid].length,this.products.length,this.matrix[rowuid].filter(elem=>elem).length)
         // }
-        this.ratings[uid] = this.matrix[row].map((prodFreq, i) => {
+        console.log('---        index user', rowuid);
+        this.ratings[uid] = this.matrix[rowuid].map((prodFreq, i) => {
+            //
+            // use default value when prodFreq is undefined (sparce matric)
             prodFreq = prodFreq || 0.01;
             //
             // get product SKU
@@ -164,8 +172,8 @@ class Machine {
                 this.maxScore[category] = 2;
             }
             // get attenuation(sum)
-            let dimmedSum = this.dimmerSum(orders, sku);
             let orderItemCount = orders.filter(order => order.items.some(item => item.sku == sku)).length + 1;
+            let dimmedSum = this.dimmerSum(orders, sku);
             //  
             // compute the score
             let score = 0.0;
@@ -249,6 +257,7 @@ class Machine {
         // });
     }
     train() {
+        console.log('--- build 0');
         if (this.likely) {
             console.log('--- build likely');
             this.model = this.likely.buildModel(this.matrix, this.users, this.products.map(product => product.sku));
@@ -259,8 +268,11 @@ class Machine {
             // this.engine.process(this.approach, this.domain,{similarity: 'pearson',threshold:.1});
             // this.model=this.engine.getModel(this.domain);  
         }
+        console.log('--- build 1');
         this.users.forEach(this.index.bind(this));
+        console.log('--- build 2');
         this.indexAnonymous();
+        console.log('--- build 3');
         return new machine_index_1.MachineIndex({
             products: this.products,
             rating: this.ratings,

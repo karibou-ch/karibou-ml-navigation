@@ -1,0 +1,178 @@
+{
+    "aperitif-gourmand": {
+        "fr": "Apéritif gourmand",
+        "en": "Gourmet appetizer",
+        "description": {
+            "fr": "Des petites bouchées pour commencer le repas.",
+            "en": "Small bites to start the meal."
+        }
+    },
+    "grillades-festives": {
+        "fr": "Grillades festives",
+        "en": "Festive barbecues",
+        "description": {
+            "fr": "Des viandes et légumes grillés pour des moments conviviaux.",
+            "en": "Grilled meats and vegetables for convivial moments."
+        }
+    },
+    "cuisine-du-terroir": {
+        "fr": "Cuisine du terroir",
+        "en": "Local cuisine",
+        "description": {
+            "fr": "Des plats traditionnels mettant en avant les produits locaux.",
+            "en": "Traditional dishes highlighting local products."
+        }
+    },
+    "cuisine-rapide-et-facile": {
+        "fr": "Cuisine rapide et facile",
+        "en": "Quick and easy cuisine",
+        "description": {
+            "fr": "Des recettes simples et rapides pour le quotidien.",
+            "en": "Simple and quick recipes for everyday."
+        }
+    },
+    "cuisine-de-montagne-reconfortante": {
+        "fr": "Cuisine de montagne réconfortante",
+        "en": "Comforting mountain cuisine",
+        "description": {
+            "fr": "Des plats chaleureux inspirés des montagnes suisses.",
+            "en": "Warm dishes inspired by the Swiss mountains."
+        }
+    },
+    "cuisine-suisse-authentique": {
+        "fr": "Cuisine suisse authentique",
+        "en": "Authentic Swiss cuisine",
+        "description": {
+            "fr": "Des spécialités typiquement suisses, du rösti à la fondue.",
+            "en": "Typically Swiss specialties, from rösti to fondue."
+        }
+    },
+    "cuisine-française-raffinee": {
+        "fr": "Cuisine française raffinée",
+        "en": "Refined French cuisine",
+        "description": {
+            "fr": "L'élégance et la finesse de la cuisine française.",
+            "en": "The elegance and finesse of French cuisine."
+        }
+    },
+    "cuisine-italienne-chaleureuse": {
+        "fr": "Cuisine italienne chaleureuse",
+        "en": "Warm Italian cuisine",
+        "description": {
+            "fr": "Des plats généreux aux saveurs de l'Italie.",
+            "en": "Generous dishes with flavors of Italy."
+        }
+    },
+    "cuisine-espagnole-ensoleillee": {
+        "fr": "Cuisine espagnole ensoleillée",
+        "en": "Sunny Spanish cuisine",
+        "description": {
+            "fr": "La chaleur et la gaieté des plats espagnols.",
+            "en": "The warmth and cheerfulness of Spanish dishes."
+        }
+    },
+    "cuisine-de-la-mer": {
+        "fr": "Cuisine de la mer",
+        "en": "Seafood cuisine",
+        "description": {
+            "fr": "Des plats frais mettant en avant les produits de la mer.",
+            "en": "Fresh dishes highlighting seafood."
+        }
+    },
+    "cuisine-asiatique-moderne": {
+        "fr": "Cuisine asiatique moderne",
+        "en": "Modern Asian cuisine",
+        "description": {
+            "fr": "Une fusion des saveurs d'Asie, du sushi au curry.",
+            "en": "A fusion of Asian flavors, from sushi to curry."
+        }
+    },
+    "cuisine-vegetarienne-inspirante": {
+        "fr": "Cuisine végétarienne inspirante",
+        "en": "Inspiring vegetarian cuisine",
+        "description": {
+            "fr": "Des plats sains et délicieux sans viande ni poisson.",
+            "en": "Healthy and delicious dishes without meat or fish."
+        }
+    },
+    "cuisine-dhiver-reconfortante": {
+        "fr": "Cuisine d'hiver réconfortante",
+        "en": "Comforting winter cuisine",
+        "description": {
+            "fr": "Des recettes pour se réchauffer lors des froides journées d'hiver.",
+            "en": "Recipes to warm up during cold winter days."
+        }
+    },
+    "cuisine-de-printemps-revitalisante": {
+        "fr": "Cuisine de printemps revitalisante",
+        "en": "Revitalizing spring cuisine",
+        "description": {
+            "fr": "Des plats légers et colorés pour accueillir le printemps.",
+            "en": "Light and colorful dishes to welcome spring."
+        }
+    },
+    "cuisine-dete-rafraîchissante": {
+        "fr": "Cuisine d'été rafraîchissante",
+        "en": "Refreshing summer cuisine",
+        "description": {
+            "fr": "Des recettes fraîches pour les chaudes journées d'été.",
+            "en": "Fresh recipes for hot summer days."
+        }
+    },
+    "cuisine-dautomne-chaleureuse": {
+        "fr": "Cuisine d'automne chaleureuse",
+        "en": "Warm autumn cuisine",
+        "description": {
+            "fr": "Des plats aux couleurs et saveurs automnales.",
+            "en": "Dishes with autumnal colors and flavors."
+        }
+    },
+    "cuisine-exotique": {
+        "fr": "Cuisine exotique",
+        "en": "Exotic cuisine",
+        "description": {
+            "fr": "Des saveurs venues d'ailleurs pour voyager depuis sa cuisine.",
+            "en": "Flavors from abroad to travel from your kitchen."
+        }
+    },
+    "cuisine-sante-et-equilibree": {
+        "fr": "Cuisine santé et équilibrée",
+        "en": "Healthy and balanced cuisine",
+        "description": {
+            "fr": "Des plats équilibrés pour une alimentation saine.",
+            "en": "Balanced dishes for healthy eating."
+        }
+    },
+    "cuisine-mediterraneenne": {
+        "fr": "Cuisine méditerranéenne",
+        "en": "Mediterranean cuisine",
+        "description": {
+            "fr": "Les saveurs ensoleillées du bassin méditerranéen.",
+            "en": "Sunny flavors from the Mediterranean basin."
+        }
+    },
+    "petit-dejeuner-gourmand": {
+        "fr": "Petit-déjeuner gourmand",
+        "en": "Gourmet breakfast",
+        "description": {
+            "fr": "Pour commencer la journée avec gourmandise.",
+            "en": "Start the day with something delicious."
+        }
+    },
+    "brunch-dominical": {
+        "fr": "Brunch dominical",
+        "en": "Sunday brunch",
+        "description": {
+            "fr": "Un mélange de petit-déjeuner et déjeuner pour les week-ends.",
+            "en": "A mix of breakfast and lunch for weekends."
+        }
+    },
+    "cuisine-sans-gluten": {
+        "fr": "Cuisine sans gluten",
+        "en": "Gluten-free cuisine",
+        "description": {
+            "fr": "Des recettes adaptées pour ceux qui évitent le gluten.",
+            "en": "Recipes adapted for those avoiding gluten."
+        }
+    }
+}
