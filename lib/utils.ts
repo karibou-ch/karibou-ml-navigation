@@ -58,6 +58,8 @@ export const orderToLeanObject = (order) => {
 }
 
 export const productToLeanObject = (product) => {
+  const regex = /^([^.;:]+)$/gm;
+
   const tags: string[] = [];
   const isLean = !product.details;
   const bio = !isLean && (    
@@ -76,22 +78,56 @@ export const productToLeanObject = (product) => {
     tags.push('naturel');
   }
 
-  const categories = isLean? product.categories:(product.categories ? product.categories.slug:'orphan');
-  const vendor = isLean ? (product.vendor||''):(product.vendor.urlpath ? product.vendor.urlpath: product.vendor);
+  let categories = (product.categories.slug || product.categories).toLocaleLowerCase();
+  if(categories && product.belong && product.belong.name){
+    categories = (categories+'; '+product.belong.name).toLocaleLowerCase();
+  }
+
+  const vendor = isLean ? (product.vendor||''):(product.vendor.name ? product.vendor.name: product.vendor);
   const discount = (isLean?product.discount:product.attributes.discount);
   const boost = (isLean?product.boost:product.attributes.boost);
-  let description = cleanTags(product.description||product.details.description);
+  const description = cleanTags(product.description||product.details.description).toLocaleLowerCase();
+  const short = regex.exec(description)
+  const text = `
+  Titre: ${product.title.toLocaleLowerCase()}
+  Context: ${categories}
+  Description: ${short?short[1]:description}
+  `;
+
+
   const obj = {
     sku: product.sku,
-    title: product.title,
-    description,
+    title: product.title.toLocaleLowerCase(),
+    boost,
+    discount,
     categories,
     vendor,
     created:product.created,
     updated:product.updated,
-    discount,
-    boost,
-    text: (product.title + ' (' + tags.join(',') + ') (description):' + description + ')').replace('()', '')
+    tags: (tags.join(',')),
+    text
   };
+  //
+  // text: (product.title + ' (' + tags.join(',') + ') (description):' + description + ')').replace('()', '')
+
   return obj;
 }
+
+
+export const downloadProducts = async (skus, options)=>{
+  const query = skus.join('&skus=');
+  const url = `https://${options.server}/api/v1/products?skus=${query}`;
+  const response = await options.axios.get(url);
+  const products = response.data ||[];
+  if(!options.tiny) {
+    return products.sort(sortByTitle);
+  }
+  return products.map(productToLeanObject).sort(sortByTitle);
+}
+
+
+//
+// private api
+const sortByTitle = ((a,b)=>{
+  return a.title.localeCompare(b.title);
+})

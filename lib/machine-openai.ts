@@ -21,13 +21,15 @@ export class MachineOpenAI{
 
   vectorsfile;
   vectorsindex;
+  vectorsdistance;
+  inmemory;
   system;
   assistant;
   temperature;
   space;  
   openai;
   OPENAI_API_KEY;
-
+  debug;
   //
   // options
   // - system
@@ -39,23 +41,28 @@ export class MachineOpenAI{
     // model
     this.embedding=options.embedding||'text-embedding-ada-002';
     this.chatmodel=options.chatmodel||'gpt-4';
-    this.temperature = options.temperature || 0.8;
+    this.temperature = options.temperature || 0.45;
+    this.inmemory = options.inmemory
     this.space=options.space||1536;
     this.system=options.system;
     this.assistant=options.assistant;
     this.timestamp=options.timestamp || Date.now();
     this.domain=options.domain||'karibou.ch';
-    this.vectorsfile=options.vectorsfile;
+    this.vectorsdistance=options.vectorsdistance||'l2';
+    this.vectorsfile=options.vectorsfile;    
     this.OPENAI_API_KEY = options.OPENAI_API_KEY;
-
+    this.debug = options.debug;
     if(!this.OPENAI_API_KEY) {
       throw new Error("OpenAI key is not available");
     }
 
     //
     // load index
+    // https://github.com/nmslib/hnswlib
+    // https://github.com/yoshoku/hnswlib-node
+
     if(fs.existsSync(this.vectorsfile)) {
-      this.vectorsindex = new HierarchicalNSW('l2', this.space);
+      this.vectorsindex = new HierarchicalNSW(this.vectorsdistance, this.space);
       this.vectorsindex.readIndexSync(this.vectorsfile);
     }
 
@@ -84,34 +91,54 @@ export class MachineOpenAI{
     return vectors;
   }
 
+  indexKnnGetPoints(label) {
+    if(!this.vectorsindex) {
+      throw new Error("KNN service is not available");
+    }
+    return this.vectorsindex.getPoint(label);
+  }
+
   //
   // create vector search indexer
-  indexKnn(vectors) {
+  indexKnn(vectors, opts?) {
+    opts = opts || { };
     const space = this.space; // the length of data point vector that will be indexed.
     const items = Object.keys(vectors);
     const maxElements = items.length; // the maximum number of data points.
 
 
     // declaring and intializing index.
-    const index = this.vectorsindex = new HierarchicalNSW('l2', space);
+    const index = this.vectorsindex = new HierarchicalNSW(this.vectorsdistance, space);
     console.log('init vectors index for ',maxElements,'entries');
-    index.initIndex(maxElements);
+
+    // https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md
+    // initIndex(maxElements, m?, efConstruction?, randomSeed?, allowReplaceDeleted?): void
+    // (elem,16, 200,100)
+    index.initIndex(maxElements, (opts.m||32), (opts.ef||400));
 
     for(let item of items){    
       if(item == 'timestamp') {continue}
       index.addPoint(vectors[item],+item );
     }
 
+    if(this.inmemory) {
+      return;
+    }
     //
     // save KNN and the source
     index.writeIndexSync(this.vectorsfile);
     fs.writeFileSync(this.vectorsfile+'.json', JSON.stringify(vectors,null,2), 'utf8');
   }
 
+  resetKnn() {
+    this.vectorsindex = new HierarchicalNSW(this.vectorsdistance, this.space);
+  }
+
   //
   // user vector KNN search
+  // return {sku,score}
   searchKnn(vectors, neighbors) {
-    neighbors = neighbors|| 30;
+    neighbors = neighbors|| 40;
 
     if(!this.vectorsindex) {
       throw new Error("KNN service is not available");
@@ -121,8 +148,11 @@ export class MachineOpenAI{
     if(!result||!result.neighbors||!result.neighbors.length) {
       return [];
     }
+    const skus = result.neighbors;
+    const arrscore = result.distances.map(s => parseFloat((1-s).toFixed(2)));
+    if(this.debug)console.log('---- DBG KNN search distance',arrscore);
 
-    return result.neighbors;
+    return skus.map((sku,idx)=> ({sku,score:(arrscore[idx])}));
   }
 
   async openaiChat(text, cbstream) {
@@ -135,6 +165,19 @@ export class MachineOpenAI{
       messages.unshift({ role: "system", content:this.system })
     }
 
+    // Température (0.0 - 0.3) :
+    //     Caractéristiques : Des réponses très cohérentes, logiques et prévisibles. Peu de variation entre les réponses.
+    //     Utilisation : Convient lorsque vous avez besoin de réponses très fiables et constantes.
+
+    // Température Moyenne (0.4 - 0.7) :
+    //     Caractéristiques : Un bon équilibre entre cohérence et créativité. Permet une certaine variabilité tout en restant généralement fiable.
+    //     Utilisation : Idéal si vous voulez une certaine variation dans les réponses sans sacrifier trop de cohérence.
+
+    // Température (0.8 - 1.0) :
+    //     Caractéristiques : Réponses plus aléatoires et créatives, avec une plus grande variabilité.
+    //     Utilisation : Moins prévisible, peut générer des réponses uniques et intéressantes mais parfois moins fiables.
+
+    // response_format:{ "type": "json_object" },
     const stream = await this.openai.chat.completions.create({
       model: this.chatmodel,
       stream:true,

@@ -26,6 +26,7 @@ const sortBySum = (a,b) => {
 }
 
 import 'should';
+import should from 'should';
 
 describe('machine index', function() {
   this.timeout(5000);
@@ -147,6 +148,14 @@ describe('machine index', function() {
     ratings.length.should.not.equal(0)
   });
 
+
+  it('machine index for anonymous', async function() {
+    const autocomplete = machineIndex.fuzzysort;
+    console.log('---- auto',autocomplete);
+    autocomplete.length.should.not.equal(0);
+  });
+
+
   //
   // 1. first more buyed item 1, 
   // 2. boosted new product item 5, 
@@ -224,6 +233,19 @@ describe('machine index', function() {
     const ratings = machineIndex.ratings(user,200,options);
     console.log('user 1 in C1 rating: ',ratings.sort(sortBySum))
   });
+
+
+  it('use index for user 1 and SKUS', async function() {
+    const user = 1;
+    const options = {
+      skus:["A","F"]
+    };
+    const ratings = machineIndex.ratings(user,200,options);
+    ratings.length.should.equal(2)
+    console.log('user 1 in [F] rating: ',ratings.sort(sortBySum))
+  });
+
+    
 
   it('list category name', async function() {
     machineIndex.categoriesList.forEach(cat => console.log(cat));

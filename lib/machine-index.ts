@@ -1,7 +1,11 @@
 "use strict";
+
+import { productToLeanObject } from "./utils";
+
 const assert   = require('assert');
 const _        = require('lodash');
 const fs       = require('fs');
+const fuzzysort= require('fuzzysort');
 
 //
 // vector, matrix and geometry library
@@ -12,6 +16,7 @@ export class MachineIndex{
   file;
   model;
   categoriesWeight;
+  autocomplete;
   rating;
   products;
   vendors;
@@ -31,7 +36,8 @@ export class MachineIndex{
     this.rating=options.rating||{};
     this.products=options.products||[];
     this.vendors;
-    this.categories;    
+    this.categories; 
+    this.autocomplete = options.autocomplete || [];   
     this.path=options.path;
     console.log('--- DATE',this.timestamp);
     console.log('--- rating     size',this.humanSz(JSON.stringify(this.rating).length));
@@ -46,6 +52,28 @@ export class MachineIndex{
     // console.log('--- categories',this.categoriesList);
     // console.log('--- vendors',this.vendorsList);
 
+  }
+
+  get fuzzysort() {
+
+    // filter out targets that you don't need to search! especially long ones!
+    
+    // if your targets don't change often, provide prepared targets instead of raw strings!
+    this.autocomplete.forEach(t => t.filePrepared = fuzzysort.prepare(t.file))
+    
+    // don't use options.key if you don't need a reference to your original obj
+    this.autocomplete = this.autocomplete.map(t => t.filePrepared);
+    
+    //
+    // for UX
+    // const options = {
+    //   limit: 100, // don't return more results than you need!
+    //   threshold: -10000, // don't return bad results
+    // }
+    // fuzzysort.go('gotta', this.autocomplete, options)
+
+
+    return this.autocomplete
   }
 
   get usersList() {
@@ -90,9 +118,18 @@ export class MachineIndex{
     if(this.rating['anonymous'].some(sku => product.sku === sku)) {
       return;
     }
+
+    //
+    // get average score
+    const tiny = productToLeanObject(product);
+    const catScore = this.categoriesScore.find(cat => cat.name == tiny.categories);
+    if(!catScore) {
+      return;
+    }
+    
     Object.keys(this.rating).forEach(user => {
       this.rating[user].push({
-        item:product.sku, score:0.555, sum: 1
+        item:product.sku, score:catScore.avg, sum: 1
       });
     });
 
@@ -156,6 +193,7 @@ export class MachineIndex{
         model:model.model,
         products:model.products,
         rating:model.rating,
+        autocomplete:model.autocomplete,
         domain:model.domain
       });      
     }catch(e){
@@ -178,11 +216,18 @@ export class MachineIndex{
     }
   }
 
+  randomRatings(list,length) {
+    const randomness = this.ratings('anonymous',100,{})
+                           .sort((a, b) => 0.5 - Math.random())
+                           .slice(0,length+5);      
+
+    return randomness.filter(elem => list.some(item => item.sku != elem.sku));
+  }
   
   ratings(user,limit,params){
     //
     // default values
-    limit = limit || 20;
+    limit = limit || 30;
     // default user is anon and customer is an alias of anon
     user=user || 'anonymous';
     if(user == 'customer' ) user = 'anonymous';
@@ -196,7 +241,12 @@ export class MachineIndex{
     //
     // map ratings from input SKUS
     if(params.skus && params.skus.length) {
-      return result.filter(rate =>  params.skus.some(sku => rate.item == sku)).sort(this.sortByScore);
+      let randomness = [];
+      if(result.length < params.skus.length) {
+        randomness = this.randomRatings(result,result.length/5);
+      }
+      const filtered = result.filter(rate =>  params.skus.some(sku => rate.item == sku));
+      return filtered.concat(randomness).sort(this.sortByScore);
     }
 
     //
@@ -239,13 +289,8 @@ export class MachineIndex{
     //
     // if !pad, add 20% of randomness
     if(!params.pad && user !== 'anonymous') {
-      const randomness = this.ratings('anonymous',limit,params)
-                             .sort((a, b) => 0.5 - Math.random())
-                             .slice(0,result.length / 5);      
-      for (const elem of randomness) {
-        if(result.some(item => item.sku == elem.sku))  continue;
-        result.push(elem);
-      }
+      const randomness = this.randomRatings(result,result.length/5);
+      return result.concat(randomness).sort(this.sortByScore);
     }
 
 
@@ -262,6 +307,7 @@ export class MachineIndex{
     var $this=this;
     var content = {
       timestamp:Date.now(),
+      autocomplete:this.autocomplete,
       products:this.products,
       categoriesWeight:this.categoriesWeight,
       domain:this.domain,

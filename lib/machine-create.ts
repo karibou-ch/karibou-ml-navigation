@@ -6,9 +6,6 @@ import { MachineIndex } from './machine-index';
 // Anonymous user is the average score of all users
 //
 
-//
-// vector, matrix and geometry library
-// http://sylvester.jcoglan.com/
 
 export class MachineCreate{
 
@@ -27,6 +24,7 @@ export class MachineCreate{
   minScore;
   attenuation;
   categoriesWeight;
+  autocomplete;
   debug;
 
   constructor(options){
@@ -54,7 +52,7 @@ export class MachineCreate{
     this.ratings={};
     this.maxScore = {};
     this.minScore = {};
-    this.categoriesWeight = [];
+    this.categoriesWeight = this.autocomplete = [];
   }
 
 
@@ -97,17 +95,8 @@ export class MachineCreate{
         // FIXME remove fill(0) and use sparce matrix for faster computation  !!
         this.matrix[i] = new Array(this.products.length);
     }
-
-    // this.ratings['anonymous']=this.products.map(product=>{
-    //   return {
-    //     item:product.sku,
-    //     score:0.01,
-    //     sum:0
-    //   };
-    // });
-
-    // console.log('--DBG',this.ratings['anonymous'].length,this.products.length);
   }
+
 
   //
   // matrixCell('category','movie-name', 'user', 'score');
@@ -166,6 +155,14 @@ export class MachineCreate{
     const boost=1/(Math.pow(timeInMonth+att.fA,att.fB)) * att.fC +att.fD;
     return boost;
   }
+
+
+  createAutocomplete(){
+    this.autocomplete = this.products.map(product => ({file:product.title})).filter(t => t.file.length < 1000);
+    //
+    // check MachineIndex for usage    
+  }
+
 
 
 
@@ -267,7 +264,8 @@ export class MachineCreate{
       }
     });
     console.log('--- categories score',this.categoriesWeight.length);
-
+    this.createAutocomplete();
+    console.log('--- autocomplte done',this.autocomplete.length);
 
     return new MachineIndex({
       products:this.products,
@@ -275,6 +273,7 @@ export class MachineCreate{
       rating:this.ratings,
       model:this.model,
       domain:this.domain,
+      autocomplete:this.autocomplete,
       timestamp: Date.now()
     });
   }
