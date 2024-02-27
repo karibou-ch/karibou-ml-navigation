@@ -1,10 +1,20 @@
 //
 //
 // export API
+import natural from 'natural';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 
+const sentenceTokenizer = new natural.SentenceTokenizer();
+
+
+export const time = (ttl) => {
+  return new Promise(res => {
+    setTimeout(res,ttl||100);
+  });  
+}
 
 export const cleanTags = (text) => {
-  return text.replace(/<br>(?=(?:\s*<[^>]*>)*$)|(<br>)|<[^>]*>/gi, (x, y) => y ? ' & ' : '');//.slice(0, text.indexOf('.')).replace(/(\r\n|\n|\r)/gm, "")
+  return text.replace(/<br>(?=(?:\s*<[^>]*>)*$)|(<br>)|<[^>]*>/gi, (x, y) => y ? ' & ' : '').replace(/(\r\n|\n|\r)/gm, "");//.slice(0, text.indexOf('.'))
 }
 
 export const dateInMonths = (when) => {
@@ -14,8 +24,6 @@ export const dateInMonths = (when) => {
   // time lapse in months
   return ((today-when.getTime())/onemonth);
 }
-
-
 
 export const dateBetweeThan=(date,weeks)=>{
   let now=new Date();
@@ -30,6 +38,7 @@ export const datePlusDays=(date,nb) => {
 }
 
 export const memoryUsage = (info)=> {
+  // require('v8').getHeapStatistics().heap_size_limit
   const format = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`;
 
   const memoryData = process.memoryUsage();
@@ -38,7 +47,9 @@ export const memoryUsage = (info)=> {
     heapTotal: `${format(memoryData.heapTotal)} -> total size allocated heap`,
     heapUsed: `${format(memoryData.heapUsed)} -> heap used for ${info}`
   };  
-  console.log(memoryUsage);
+  console.log('--- heap',memoryUsage.heapTotal);
+  console.log('--- heap',memoryUsage.heapUsed);
+  return memoryUsage;
 }
 
 
@@ -58,54 +69,91 @@ export const orderToLeanObject = (order) => {
 }
 
 export const productToLeanObject = (product) => {
-  const regex = /^([^.;:]+)$/gm;
+  const regex = /(.+?[.;:])/;
 
-  const tags: string[] = [];
+  const mapper = {
+    'fruits-legumes':'aliments végétaux'
+  }
+
+  //
+  // tags
   const isLean = !product.details;
-  const bio = !isLean && (    
-    product.details.bio ||
-    product.details.biodynamics ||
-    product.details.bioconvertion
-  ) || (product.bio);
+  let tags="";
+  if(!isLean) {
+    if(product.details.biodynamics||product.details.bio||product.details.bioconvertion){    
+      tags=" bio organique organic biodynamie naturel biodynamics";
+    }
+    if(product.details.vegetarian){    
+      tags+=" vegetarian végétarien";
+    }
+  
+    if(product.details.gluten){    
+        tags+=" gluten glutenfree sans-gluten";
+    }
+  
+    if(product.details.lactose){    
+        tags+=" lactose sans-lactose";
+    }
+  
+    if(product.details.grta){
+        tags+=" grta local";
+    }
+  
+    if(product.details.gastronomy){
+      tags+=" gastro gastronomy gastronomie finefood gourmet";
+    }
+  
+    if(product.details.handmade) {
+      tags+=" handmade Fait main artisanal";
+    }
+    if(product.details.homemade) {
+      tags+=" homemade fait maison artisanal";
+    }
+    tags = tags.trim().split(' ').join(',');
+  }
 
-  if ((!isLean) && (bio)) {
-    tags.push('bio');
-  }
-  if ((!isLean) && (product.details.homemade || product.details.handmade)) {
-    tags.push('artisanal');
-  }
-  if ((!isLean) && (!bio) && (product.details.natural) || (product.naturel)) {
-    tags.push('naturel');
+
+  //
+  // category
+  const categoriesToString = (product)=> {
+    if (!product.categories)
+    return 'none';
+    if (typeof product.categories.slug == 'string' )
+        return product.categories.slug;
+    if (product.categories._id)
+        return product.categories._id.toString();
+    return product.categories.toString();
   }
 
-  let categories = (product.categories.slug || product.categories).toLocaleLowerCase();
+
+
+  let categories = categoriesToString(product).toLocaleLowerCase();
+  let context = mapper[categories]||categories;
+
   if(categories && product.belong && product.belong.name){
-    categories = (categories+'; '+product.belong.name).toLocaleLowerCase();
+    context = (context+'; '+product.belong.name).toLocaleLowerCase();
   }
 
-  const vendor = isLean ? (product.vendor||''):(product.vendor.name ? product.vendor.name: product.vendor);
+  //
+  // context
+  const vendor = isLean ? (product.vendor||''):(product.vendor?.urlpath ? product.vendor.urlpath: product.vendor);
   const discount = (isLean?product.discount:product.attributes.discount);
   const boost = (isLean?product.boost:product.attributes.boost);
-  const description = cleanTags(product.description||product.details.description).toLocaleLowerCase();
-  const short = regex.exec(description)
-  const text = `
-  Titre: ${product.title.toLocaleLowerCase()}
-  Context: ${categories}
-  Description: ${short?short[1]:description}
-  `;
-
+  const description = cleanTags(product.description||product.details.description).toLocaleLowerCase().replace(/\s\s+/g, ' ');
+  const short = sentenceTokenizer.tokenize(description);
 
   const obj = {
     sku: product.sku,
-    title: product.title.toLocaleLowerCase(),
+    title: product.title.toLocaleLowerCase().replace(/\s\s+/g, ' '),
+    description: (short.length?short[0]:description),
     boost,
     discount,
     categories,
     vendor,
-    created:product.created,
-    updated:product.updated,
-    tags: (tags.join(',')),
-    text
+    created:(product.created && new Date(product.created)),
+    updated:(product.updated && new Date(product.updated)),
+    tags,
+    context  
   };
   //
   // text: (product.title + ' (' + tags.join(',') + ') (description):' + description + ')').replace('()', '')
@@ -113,16 +161,42 @@ export const productToLeanObject = (product) => {
   return obj;
 }
 
+export const parseJSON = (text) => {
+  text = text.trim();
+  const json1 = /\{([^{}]+)\}|\[([^[\]]+)\]/gi.exec(text); 
+  if(!json1) {
+    const err = new Error("JSON")
+    err['ctx'] = text;
+    throw err;
+  }
+  return JSON.parse(`${json1[0]}`);
+}
 
 export const downloadProducts = async (skus, options)=>{
+  if(options.store && options.name){
+    const file = options.store+'/products-'+options.name+'.json';
+    if(existsSync(file)) {
+      return JSON.parse(readFileSync(file,{encoding:'utf-8'}));
+    }
+  }
+
+  const saveCache = (products) => {
+    if(options.store && options.name){
+      const file = options.store+'/products-'+options.name+'.json';
+      const content = JSON.stringify(products,null,0);
+      writeFileSync(file,content);
+    }  
+    return products;
+  }
+
   const query = skus.join('&skus=');
   const url = `https://${options.server}/api/v1/products?skus=${query}`;
   const response = await options.axios.get(url);
   const products = response.data ||[];
   if(!options.tiny) {
-    return products.sort(sortByTitle);
+    return saveCache(products.sort(sortByTitle));
   }
-  return products.map(productToLeanObject).sort(sortByTitle);
+  return saveCache(products.map(productToLeanObject).sort(sortByTitle));
 }
 
 

@@ -1,14 +1,15 @@
 
 // minimal format for testing purposes
-import $products from './data/products-xs.json';
-import $orders from './data/orders-xs.json';
+require('should');
+const $products =require ('./data/products-xs.json');
+const $orders =require ('./data/orders-xs.json');
 
 
-const MachineIndex = require('../lib').MachineIndex;
-const MachineCreate = require('../lib').MachineCreate;
-const orderToLeanObject = require('../lib').orderToLeanObject;
-const productToLeanObject = require('../lib').productToLeanObject;
-const dateBetweeThan = require('../lib').dateBetweeThan;
+const MachineIndex = require('../dist').MachineIndex;
+const MachineCreate = require('../dist').MachineCreate;
+const orderToLeanObject = require('../dist').orderToLeanObject;
+const productToLeanObject = require('../dist').productToLeanObject;
+const dateBetweeThan = require('../dist').dateBetweeThan;
 
 const machine = new MachineCreate({
   domain:'test',debug:1
@@ -25,8 +26,6 @@ const sortBySum = (a,b) => {
   return b.score-a.score;
 }
 
-import 'should';
-import should from 'should';
 
 describe('machine index', function() {
   this.timeout(5000);
@@ -55,9 +54,15 @@ describe('machine index', function() {
     const indexOrders=async (products)=>{      
       
       machine.setModel(customers,products,orders);      
+
+      const preparedOrders = machine.preparedOrders;
+
+      const normalize = preparedOrders.length / customers.length;
+    
+  
       //
       // BOOST content
-      orders.forEach(order => {
+      preparedOrders.forEach(order => {
         //
         // attenuation is a value  [0.15;2] => [24months;today]
         const attenuation = machine.attenuationByTime(order.shipping.when);
@@ -112,13 +117,12 @@ describe('machine index', function() {
           machine.learn(order.customer.id,product.sku,boost);   
           //
           // learn for named group of customer
-          const plan = order.customer.plan;
-          if(plan) {
-            machine.learn(plan,product.sku,boost, 10);   
+          if(order.customer.plan) {
+            machine.learn(order.customer.plan,product.sku,boost, normalize);   
           }
           //
           // learn for anonymous (only when it's a customer)
-          machine.learn('anonymous',product.sku,boost, 10);   
+          machine.learn('anonymous',product.sku,boost, normalize);   
         })
       });
     
@@ -149,12 +153,6 @@ describe('machine index', function() {
   });
 
 
-  it('machine index for anonymous', async function() {
-    const autocomplete = machineIndex.fuzzysort;
-    console.log('---- auto',autocomplete);
-    autocomplete.length.should.not.equal(0);
-  });
-
 
   //
   // 1. first more buyed item 1, 
@@ -182,25 +180,25 @@ describe('machine index', function() {
 
   });
 
-  it('use index for cool without padding', async function() {
-    const user = 'cool';
+  it('use index for b2b without padding', async function() {
+    const user = 'b2b';
     const options = {
       pad:false
     };
     const ratings = machineIndex.ratings(user,200,options);
     ratings.length.should.equal(3);
-    console.log('user cool rating: ', ratings.sort(sortBySum))
+    console.log('user b2b rating: ', ratings.sort(sortBySum))
 
   });
 
-  it('use index for cool with padding', async function() {
-    const user = 'cool';
+  it('use index for b2b with padding', async function() {
+    const user = 'b2b';
     const options = {
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
     ratings.length.should.equal(5);
-    console.log('user cool rating: ', ratings.sort(sortBySum))
+    console.log('user b2b rating: ', ratings.sort(sortBySum))
 
   });
 
@@ -217,7 +215,7 @@ describe('machine index', function() {
   it('use index for user 1 and one HUB (set of vendors)', async function() {
     const user = 1;
     const options = {
-      vendors:['b','c'],
+      vendors:['v1','v3'],
       pad:true
     };
     const ratings = machineIndex.ratings(user,200,options);
@@ -234,7 +232,6 @@ describe('machine index', function() {
     console.log('user 1 in C1 rating: ',ratings.sort(sortBySum))
   });
 
-
   it('use index for user 1 and SKUS', async function() {
     const user = 1;
     const options = {
@@ -245,14 +242,24 @@ describe('machine index', function() {
     console.log('user 1 in [F] rating: ',ratings.sort(sortBySum))
   });
 
-    
-
-  it('list category name', async function() {
-    machineIndex.categoriesList.forEach(cat => console.log(cat));
-  });
 
   it('list category with score', async function() {
     machineIndex.categoriesScore.forEach(cat => console.log(cat.name,cat.max,cat.min,cat.avg));
   });
+
+  it('machine quick search for BB', async function() {
+    const res = machineIndex.quickSearch('bb');
+    res.length.should.equal(1);
+    console.log('---',res[0].score);
+    res[0].sku.should.equal('B')
+  });
+
+  it('machine quick search for BB', async function() {
+    const res = machineIndex.quickSearch('B');
+    res.length.should.equal(1);
+    console.log('---',res[0].score);
+    res[0].sku.should.equal('B')
+  });
+
 
 });

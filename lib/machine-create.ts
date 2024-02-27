@@ -14,6 +14,7 @@ export class MachineCreate{
   domain;
   file;
   users;
+  cohorts;
   groups;
   orders;
   products;
@@ -24,8 +25,9 @@ export class MachineCreate{
   minScore;
   attenuation;
   categoriesWeight;
-  autocomplete;
   debug;
+
+  path;
 
   constructor(options){
     this.options=options||{};
@@ -45,6 +47,7 @@ export class MachineCreate{
     this.domain=this.options.domain||'karibou.ch';
     this.file="-model.json";
     this.users=[];
+    this.cohorts = [];
     this.orders=[];
     this.products=[];
     this.matrix=[];
@@ -52,9 +55,12 @@ export class MachineCreate{
     this.ratings={};
     this.maxScore = {};
     this.minScore = {};
-    this.categoriesWeight = this.autocomplete = [];
+    this.categoriesWeight = [];    
+
+    this.path = options.path;
   }
 
+  get preparedOrders() { return this.orders;}
 
   //
   // Helper to index and boost new products that arent yet been purchased
@@ -83,10 +89,22 @@ export class MachineCreate{
   // 
   setModel(users,products,orders){
     // Init row/col labels
-    const cohorts = users.filter(user => user.plan && (user.plan.id||user.plan)).map(user => user.plan.id||user.plan);
-    this.users = users.concat(cohorts,['anonymous']);
+    const plans = (global.config && global.config.shared)? global.config.shared.user.plan: [{id:'b2b',index:true},{id:'b2b-school',index:true}];
+    this.cohorts = plans.filter(plan=>plan.index).map(plan=> plan.id);
+    this.users = users.map(user => user.id||user).concat(this.cohorts,['anonymous']);
+
+
     this.orders=orders;
     this.products=products;
+
+    //
+    // map user plan with orders history;
+    const planUids = users.filter(user => this.cohorts.some(cohort => cohort == (user.plan)))
+    this.orders.forEach(order => {
+      const user = planUids.find(user => user.id == order.customer.id)
+      order.customer.plan = user && user.plan;
+    })
+
 
     // INIT Matrix
     // Array(9).fill().map(()=>Array(9).fill())
@@ -101,19 +119,15 @@ export class MachineCreate{
   //
   // matrixCell('category','movie-name', 'user', 'score');
   // return matrix
-  learn(user,product,qty, cluster){
+  learn(user,product,qty, normalize){
     qty=qty||1;
     assert(product);
     assert(user);
 
-    // customer is an alias of anonymous
-    if(user == 'customer') {
-      return;
-    }
 
-    const uid=user.id||user;
+    const uid=user;
     const pid=product.sku||product;    
-    const row=this.users.findIndex(user=>(user.id||user)==uid);
+    const row=this.users.findIndex(user => user==uid);
     const col=this.products.findIndex(product=>product.sku==pid);
     if(col<0){
       return console.log('-- ERROR missing product',pid);
@@ -127,8 +141,10 @@ export class MachineCreate{
     if(!this.matrix[row][col]){
       this.matrix[row][col]=0;
     }
-    if(cluster) {
-      this.matrix[row][col]= (this.matrix[row][col]+qty)/(cluster);
+    //
+    // for plan or anonymous averaging the orders count (total orders / total users)
+    if(normalize) {
+      this.matrix[row][col]= (this.matrix[row][col]+qty)/(normalize);
     }else {
       this.matrix[row][col]+=qty;          
     }
@@ -156,26 +172,17 @@ export class MachineCreate{
     return boost;
   }
 
-
-  createAutocomplete(){
-    this.autocomplete = this.products.map(product => ({file:product.title})).filter(t => t.file.length < 1000);
-    //
-    // check MachineIndex for usage    
-  }
-
-
-
-
   //
   // index products by UID
   // user can be a cohort name (school, anon, etc.) or an uid
+  // in case of plan, uid is plan name and planUid is the uid that belongs to
   index(uid){
     uid = uid.id||uid;
 
     //
     // total orders for this user (or user plan)
-    let orders=this.orders.filter(o=> [o.customer.id,o.customer.plan].indexOf(uid)>-1);
-    let rowuid=this.users.findIndex(user=>(user.id||user)==uid);
+    let orders=this.orders.filter(o=> (o.customer.plan||o.customer.id) == (uid)>-1);
+    let rowuid=this.users.findIndex(user=>(user.id||user)==(uid));
 
     this.debug && console.log('---        index user',rowuid, uid, this.matrix[rowuid].length);
      
@@ -264,17 +271,17 @@ export class MachineCreate{
       }
     });
     console.log('--- categories score',this.categoriesWeight.length);
-    this.createAutocomplete();
-    console.log('--- autocomplte done',this.autocomplete.length);
-
+    const defaultPath = this.path||'./machine';
     return new MachineIndex({
       products:this.products,
       categoriesWeight:this.categoriesWeight,
       rating:this.ratings,
       model:this.model,
       domain:this.domain,
-      autocomplete:this.autocomplete,
-      timestamp: Date.now()
+      cohorts:this.cohorts,
+      timestamp: Date.now(),
+      vectorsfile: defaultPath+ '/' + 'hnswlib-openai-index',
+      path:defaultPath
     });
   }
 

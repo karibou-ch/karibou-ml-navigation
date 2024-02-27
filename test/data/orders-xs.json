@@ -1,31 +1,35 @@
 [
   {
-    "customer": { "id": 1, "likes": [], "plan":"cool" },
+    "customer": { "id": 1, "likes": [], "plan":"b2b" },
     "items": [
       {
         "sku": "A",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 5
       },
       {
         "sku": "F",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 5
       }
     ],
     "shipping": { "when": "2022-10-04T14:00:00.000Z" }
   },
   {
-    "customer": { "id": 1, "likes": [], "plan":"cool" },
+    "customer": { "id": 1, "likes": []},
     "items": [
       {
         "sku": "A",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 1
       },
       {
         "sku": "B",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 1
       }
     ],
@@ -36,12 +40,14 @@
     "items": [
       {
         "sku": "B",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 2
       },
       {
         "sku": "C",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 1
       }
     ],
@@ -52,12 +58,14 @@
     "items": [
       {
         "sku": "C",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 1
       },
       {
         "sku": "D",
-        "vendor": "a",
+        "vendor": "v1",
+        "category":"c1",
         "qty": 10
       }
     ],
