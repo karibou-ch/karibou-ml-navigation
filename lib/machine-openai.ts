@@ -1,10 +1,11 @@
 "use strict";
 
 import { strict as assert } from 'assert';
+import { accessSync, constants, readdirSync, unlinkSync, writeFileSync } from "fs";
+import axios from 'axios';
 import { time } from "./utils";
 
 import { OpenAI } from "openai";
-import { accessSync, constants, readdirSync } from "fs";
 
 
 
@@ -60,6 +61,7 @@ export class MachineOpenAI{
 
     this.openai = new OpenAI({
       apiKey: options.OPENAI_API_KEY,
+      timeout:(options.timeout||5000)
     });
     
     console.log('--- DATE',this.timestamp);
@@ -84,6 +86,65 @@ export class MachineOpenAI{
   }
 
 
+  // Yeah!
+  // prepare base64 mp3 for wisper
+  private async whisper_formdataFromBase64(base64, fieldName, fileName){
+    const header = base64.split(',');
+    // data:audio/mp3;base64,
+    const mimeType = 'audio/mp3';
+
+    const bytes = atob(header[1]);
+
+
+    const intArray = new Uint8Array(new ArrayBuffer(bytes.length));
+
+    //
+    // create temp file
+    await writeFileSync(
+      fileName, Buffer.from(intArray),"binary"
+    ); 
+    
+    console.log('---- DBG file play ',header[0],fileName);
+
+
+    for (let i = 0; i < bytes.length; i += 1) {
+      intArray[i] = bytes.charCodeAt(i);
+    }
+
+    const blob = new Blob([intArray], { type: mimeType });
+
+    const formData = new FormData();
+    formData.append(fieldName, blob, fileName);
+    formData.append('model','whisper-1');
+    return formData;
+  }
+
+  //
+  // https://medium.com/@david.richards.tech/ai-audio-conversations-with-openai-whisper-3c730a9c7123
+  async whisper(base64){
+    const rand = (Math.random() + 1).toString(36).substring(6);
+    const file = `/tmp/tmp-kng${rand}.mp3`
+    const data = await this.whisper_formdataFromBase64(base64, 'file', file);
+    const OPEN_AI_API_KEY = this.OPENAI_API_KEY;
+    try{
+      const result = await axios({
+        method: 'post',
+        url: 'https://api.openai.com/v1/audio/transcriptions',
+        data,
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${OPEN_AI_API_KEY}`
+        },
+      });
+      return result.data.text.replace(/[Cc]aribou/g,'karibou.ch');
+    }catch(err){
+      throw err;
+    }finally{
+      unlinkSync(file);
+    }
+  }
+
+
   // DEPRECATED
   // opts {cbstream, functions, history }
   //  - cbstream use fn(text) if you need streamed results
@@ -93,9 +154,11 @@ export class MachineOpenAI{
     opts = opts || {};
     const history:any[] = opts.history || [];
 
+    const name = opts.userName;
+
     //
     // append the request
-    history.push({ role: "user", content: text })
+    history.push({ role: "user", content: text, name })
 
     //
     // initial setup for this chat
@@ -121,7 +184,7 @@ export class MachineOpenAI{
     //     Caractéristiques : Un bon équilibre entre cohérence et créativité. Permet une certaine variabilité tout en restant généralement fiable.
     //     Utilisation : Idéal si vous voulez une certaine variation dans les réponses sans sacrifier trop de cohérence.
 
-    // Température (0.8 - 1.0) :
+    // Température (0.8 - 2.0) :
     //     Caractéristiques : Réponses plus aléatoires et créatives, avec une plus grande variabilité.
     //     Utilisation : Moins prévisible, peut générer des réponses uniques et intéressantes mais parfois moins fiables.
 

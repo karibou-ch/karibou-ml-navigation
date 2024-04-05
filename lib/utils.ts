@@ -68,84 +68,120 @@ export const orderToLeanObject = (order) => {
   return obj;
 }
 
+// Lean product, 
+//"sku": "F",
+//"title":"produit FF",
+//"description": "description FF",
+//"categories": "c2",
+//"vendor": "v2",
+//"created": "2020-11-03T23:00:00.000Z",
+//"updated": "2022-11-03T23:00:00.000Z",
+//"discount": false,
+//"boost": true,
+//"photo": "//ucarecdn.com/cd1b24c5-3f2d-461d-9562-2eb3c1d7f1a2/"
+//
+
 export const productToLeanObject = (product) => {
   const regex = /(.+?[.;:])/;
 
-  const mapper = {
-    'fruits-legumes':'aliments végétaux'
-  }
-
   //
-  // tags
-  const isLean = !product.details;
-  let tags="";
-  if(!isLean) {
-    if(product.details.biodynamics||product.details.bio||product.details.bioconvertion){    
-      tags=" bio organique organic biodynamie naturel biodynamics";
-    }
-    if(product.details.vegetarian){    
-      tags+=" vegetarian végétarien";
-    }
-  
-    if(product.details.gluten){    
-        tags+=" gluten glutenfree sans-gluten";
-    }
-  
-    if(product.details.lactose){    
-        tags+=" lactose sans-lactose";
-    }
-  
-    if(product.details.grta){
-        tags+=" grta local";
-    }
-  
-    if(product.details.gastronomy){
-      tags+=" gastro gastronomy gastronomie finefood gourmet";
-    }
-  
-    if(product.details.handmade) {
-      tags+=" handmade Fait main artisanal";
-    }
-    if(product.details.homemade) {
-      tags+=" homemade fait maison artisanal";
-    }
-    tags = tags.trim().split(' ').join(',');
+  // category
+  const mapper = {
+    'fruits-legumes':' '
   }
-
 
   //
   // category
   const categoriesToString = (product)=> {
-    if (!product.categories)
-    return 'none';
-    if (typeof product.categories.slug == 'string' )
-        return product.categories.slug;
-    if (product.categories._id)
-        return product.categories._id.toString();
-    return product.categories.toString();
-  }
+    let categories = product.categories;
+    if (!categories)
+      return {categories:'none',context:''};
+    if (typeof categories.slug == 'string' ){
+      categories = categories.slug;
+    }
+    else if (product.categories._id){
+      categories =  product.categories._id.toString();      
+    }
+      
 
-
-
-  let categories = categoriesToString(product).toLocaleLowerCase();
-  let context = mapper[categories]||categories;
-
-  if(categories && product.belong && product.belong.name){
-    context = (context+'; '+product.belong.name).toLocaleLowerCase();
+    //
+    // format categories
+    categories = categories.toLocaleLowerCase();  
+    let context = (mapper[categories]||categories);
+    context = (product.belong&&product.belong.name||context).toLocaleLowerCase();
+    return {categories,context};
   }
 
   //
+  // tags
+  if(!product.details) {
+    const pricing = product.pricing?{price:product.pricing.price,part:product.pricing.part}:{};
+    const tags = product.tags||[];
+    const obj = {
+      sku: product.sku,
+      title: product.title.toLocaleLowerCase().replace(/\s\s+/g, ' '),
+      description: product.description.replace(/\s\s+/g, ' '),
+      pricing,
+      boost:product.boost,
+      discount:product.discount,
+      categories:product.categories,
+      vendor:product.vendor,
+      created:(product.created && new Date(product.created)),
+      updated:(product.updated && new Date(product.updated)),
+      tags,
+      context:product.categories
+    }
+    return obj;
+  }
+  let tags="";
+  if(product.details.biodynamics||product.details.bio||product.details.bioconvertion){    
+    tags=" bio organique organic biodynamie naturel biodynamics";
+  }
+  if(product.details.vegetarian){    
+    tags+=" vegetarian végétarien";
+  }
+
+  if(product.details.gluten){    
+      tags+=" gluten glutenfree sans-gluten";
+  }
+
+  if(product.details.lactose){    
+      tags+=" lactose sans-lactose";
+  }
+
+  if(product.details.grta){
+      tags+=" grta local";
+  }
+
+  if(product.details.gastronomy){
+    tags+=" gastro gastronomy gastronomie finefood gourmet";
+  }
+
+  if(product.details.handmade) {
+    tags+=" handmade Fait-main artisanal";
+  }
+  if(product.details.homemade) {
+    tags+=" homemade fait-maison artisanal";
+  }
+  tags = tags.split(' ').map(tag => tag.trim()).join(',');
+
+  const {categories, context} = categoriesToString(product);
+
+
+  //
   // context
-  const vendor = isLean ? (product.vendor||''):(product.vendor?.urlpath ? product.vendor.urlpath: product.vendor);
-  const discount = (isLean?product.discount:product.attributes.discount);
-  const boost = (isLean?product.boost:product.attributes.boost);
-  const description = cleanTags(product.description||product.details.description).toLocaleLowerCase().replace(/\s\s+/g, ' ');
+  const vendor = (product.vendor?.urlpath || product.vendor);
+  const discount = !!product.attributes.discount;
+  const boost = !!product.attributes.boost;
+  const description = cleanTags(product.details.description).toLocaleLowerCase().replace(/\s\s+/g, ' ');
   const short = sentenceTokenizer.tokenize(description);
+  const pricing = {price:product.pricing.price,part:product.pricing.part};
 
   const obj = {
     sku: product.sku,
     title: product.title.toLocaleLowerCase().replace(/\s\s+/g, ' '),
     description: (short.length?short[0]:description),
+    pricing,
     boost,
     discount,
     categories,
@@ -155,9 +191,6 @@ export const productToLeanObject = (product) => {
     tags,
     context  
   };
-  //
-  // text: (product.title + ' (' + tags.join(',') + ') (description):' + description + ')').replace('()', '')
-
   return obj;
 }
 

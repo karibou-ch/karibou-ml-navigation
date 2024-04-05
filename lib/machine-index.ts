@@ -284,7 +284,7 @@ export class MachineIndex{
     // https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md
     // initIndex(maxElements, m?, efConstruction?, randomSeed?, allowReplaceDeleted?): void
     // (elem,16, 200,100)
-    index.initIndex(maxElements+200, (opts.m||48), (opts.ef||400));
+    index.initIndex(maxElements+1, (opts.m||64), (opts.ef||800));
 
     for(let item of items){    
       if(item == 'timestamp') {continue}
