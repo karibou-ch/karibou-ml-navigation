@@ -97,18 +97,19 @@ On peut soit utiliser un modèle standard, soit utiliser un modèle [fine-tuned]
 
 
 
-* https://api.karibou.ch/v1/products
-* https://world.openfoodfacts.org/categories.json
-* https://ch-fr.openfoodfacts.org/categories.json **(ch-fr)**
-* https://ch-fr.openfoodfacts.org/ingredients.json **(ch-fr)**
-* https://openfoodfacts.github.io/api-documentation/
+# Liens* 
+* https://naturalnode.github.io/natural/ (TF-idf, Stemmers, Token, Bayes, ...)
+* https://github.com/koursaros-ai/nboost (state-of-the-art models to improve the relevance of search results)
+* https://github.com/nmslib/hnswlib (C++ nearest neighbor search)
+* https://qdrant.tech/ (the fastest vector db. also used by openai)
+* https://github.com/neuml/txtai (sqlite vector search)
+* https://github.com/asg017/sqlite-vss (sqlite vector search)
+
+# Autres 
 * https://en.wikipedia.org/wiki/Vector_space_model
 * https://en.wikipedia.org/wiki/Cosine_similarity
+* https://world.openfoodfacts.org/categories
 
-
-# Liens* 
-* [collaborative filtering / recommendation engine](https://www.npmjs.com/search?q=recommendation+engine)
 * https://www.npmjs.com/package/stopword
 * https://fr.wikipedia.org/wiki/TF-IDF 
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
-* LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits

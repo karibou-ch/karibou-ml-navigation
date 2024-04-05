@@ -6,4 +6,7 @@ export { Customers } from './customers';
 export { MachineCreate } from './machine-create';
 export { MachineIndex } from './machine-index';
 export { MachineOpenAI} from './machine-openai';
-export { cleanTags, dateBetweeThan, dateInMonths, datePlusDays,memoryUsage, orderToLeanObject, productToLeanObject } from './utils';
+export {
+    DocumentProcessor, ContentPage, ContentSection, Document, FileInfos,tryToParseNumber
+} from './document-processor';
+export * from './utils';
