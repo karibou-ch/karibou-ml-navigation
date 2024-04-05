@@ -109,12 +109,7 @@ On peut soit utiliser un modèle standard, soit utiliser un modèle [fine-tuned]
 * https://en.wikipedia.org/wiki/Vector_space_model
 * https://en.wikipedia.org/wiki/Cosine_similarity
 * https://world.openfoodfacts.org/categories
-* https://world.openfoodfacts.org/categories.json
-* https://ch-fr.openfoodfacts.org/categories.json **(ch-fr)**
-* https://ch-fr.openfoodfacts.org/ingredients.json **(ch-fr)**
-* https://openfoodfacts.github.io/api-documentation/
 
 * https://www.npmjs.com/package/stopword
 * https://fr.wikipedia.org/wiki/TF-IDF 
 * https://www.desmos.com/calculator/3yogioggkp?lang=fr
-* LateX https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits
